@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин игрушек и товаров</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffccd5 0%, #a7c5eb 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #ff6b6b;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+        }
+        
+        .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .item-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .item-desc {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .popular-products {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .product {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 5px solid #4ecdc4;
+        }
+        
+        .product h3 {
+            color: #333;
+        }
+        
+        .price {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        
+        .contact {
+            background: #ff6b6b;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛍️ МАГАЗИН "ВСЁ В ОДНОМ МЕСТЕ"</h1>
+            <p class="subtitle">Игрушки • Одежда • Аксессуары • Товары для дома</p>
+        </header>
+        
+        <div class="menu-grid">
+            <a href="toys.html" class="menu-item">
+                <div class="icon">🧸</div>
+                <div class="item-title">ИГРУШКИ</div>
+                <div class="item-desc">5 популярных товаров</div>
+            </a>
+            
+            <a href="clothes.html" class="menu-item">
+                <div class="icon">👕</div>
+                <div class="item-title">ОДЕЖДА</div>
+                <div class="item-desc">Модная коллекция</div>
+            </a>
+            
+            <a href="accessories.html" class="menu-item">
+                <div class="icon">🔑</div>
+                <div class="item-title">АКСЕССУАРЫ</div>
+                <div class="item-desc">Брелки и украшения</div>
+            </a>
+            
+            <a href="home.html" class="menu-item">
+                <div class="icon">🏠</div>
+                <div class="item-title">ДЛЯ ДОМА</div>
+                <div class="item-desc">Уют и комфорт</div>
+            </a>
+            
+            <a href="random.html" class="menu-item">
+                <div class="icon">🎲</div>
+                <div class="item-title">СЛУЧАЙНЫЙ ТОВАР</div>
+                <div class="item-desc">Сюрприз со скидкой</div>
+            </a>
+        </div>
+        
+        <div class="popular-products">
+            <h2 style="color: #ff6b6b; margin-bottom: 20px;">🔥 ХИТЫ ПРОДАЖ</h2>
+            
+            <div class="product">
+                <h3>🐉 Дракон светящийся</h3>
+                <p>Светится 7 цветами, двигает крыльями</p>
+                <div class="price">350 ₽</div>
+            </div>
+            
+            <div class="product">
+                <h3>👕 Футболка с драконом</h3>
+                <p>Светящийся принт, 100% хлопок</p>
+                <div class="price">890 ₽</div>
+            </div>
+            
+            <div class="product">
+                <h3>🔑 Брелок-дракон</h3>
+                <p>Светится в темноте, металл</p>
+                <div class="price">250 ₽</div>
+            </div>
+        </div>
+        
+        <div class="contact">
+            <h3>📞 КОНТАКТЫ ДЛЯ ЗАКАЗОВ</h3>
+            <p>Телефон: 8-800-123-45-67</p>
+            <p>Доставка по всей России</p>
+            <p>Работаем с 9:00 до 21:00</p>
+        </div>
+        
+        <footer>
+            <p>© 2024 Магазин "Всё в одном месте"</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                Сайт работает на GitHub Pages • Все цены указаны в рублях
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        // Простая анимация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'opacity 0.5s, transform 0.5s';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
