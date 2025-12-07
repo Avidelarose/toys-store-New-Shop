@@ -619,13 +619,11 @@ window.cart = {
     items: [],
     total: 0,
     selectedColor: '',
-    selectedSize: '',
     
     addItem: function(product) {
         const existingItem = this.items.find(item => 
             item.id === product.id && 
-            item.color === product.color &&
-            item.size === product.size
+            item.color === product.color
         );
         
         if (existingItem) {
@@ -788,67 +786,46 @@ function selectColor(element, color) {
     window.cart.selectedColor = color;
 }
 
-// Функция выбора размера
-function selectSize(element, size) {
-    const container = element.closest('.size-selector');
-    if (!container) return;
-    
-    container.querySelectorAll('.size-btn').forEach(btn => {
-        btn.classList.remove('active');
-        btn.style.background = '';
-        btn.style.color = '';
-    });
-    element.classList.add('active');
-    element.style.background = '#ff9800';
-    element.style.color = 'white';
-    window.cart.selectedSize = size;
-}
-
-// УНИВЕРСАЛЬНАЯ функция добавления в корзину
+// Функция добавления в корзину
 function addToCart(id, title, price) {
     const color = window.cart.selectedColor || '';
-    const size = window.cart.selectedSize || '';
     
-    // Для аксессуаров - требуется цвет
-    const accessoriesIds = ['chain_001', 'watch_001', 'keychain_001', 'bag_001'];
-    // Для одежды - требуется цвет и размер
-    const clothesIds = ['jacket_001', 'longsleeve_001', 'swimsuit_001'];
-    // Для кепки - только цвет
-    const capIds = ['cap_001'];
-    
-    if ((accessoriesIds.includes(id) || capIds.includes(id)) && !color) {
-        alert('Пожалуйста, выберите цвет!');
+    if (!color && (id === 'chain_001' || id === 'watch_001' || id === 'keychain_001' || id === 'bag_001')) {
+        alert('Пожалуйста, выберите цвет или вариант!');
         return;
-    }
-    
-    if (clothesIds.includes(id)) {
-        if (!color) {
-            alert('Пожалуйста, выберите цвет!');
-            return;
-        }
-        if (!size) {
-            alert('Пожалуйста, выберите размер!');
-            return;
-        }
-    }
-    
-    // Формируем заголовок с цветом и размером
-    let displayTitle = title;
-    const options = [];
-    if (color) options.push(color);
-    if (size) options.push(size);
-    if (options.length > 0) {
-        displayTitle += ` (${options.join(', ')})`;
     }
     
     window.cart.addItem({
         id: id,
-        title: displayTitle,
+        title: `${title}${color ? ' (' + color + ')' : ''}`,
         price: price,
-        color: color,
-        size: size
+        color: color
     });
 }
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    window.cart.loadFromStorage();
+    createCartIcon();
+    
+    // Обработка всех кнопок "Купить"
+    document.querySelectorAll('.buy-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+        });
+    });
+    
+    // Автоматически выбираем первый цвет на странице
+    document.querySelectorAll('.color-selector').forEach(selector => {
+        const firstColor = selector.querySelector('.color-option');
+        if (firstColor) {
+            const colorName = firstColor.getAttribute('title') || '';
+            firstColor.style.border = '3px solid #ff9800';
+            firstColor.classList.add('active');
+            window.cart.selectedColor = colorName;
+        }
+    });
+});
 
 // Создание иконки корзины
 function createCartIcon() {
@@ -869,9 +846,12 @@ function createCartIcon() {
     cartIcon.addEventListener('click', showCartModal);
 }
 
-// Показать модальное окно корзины
+// Показать модальное окно корзины - РАБОЧАЯ ВЕРСИЯ
 function showCartModal() {
-    if (document.getElementById('cart-modal')) return;
+    if (document.getElementById('cart-modal')) {
+        hideCartModal();
+        return;
+    }
     
     const overlay = document.createElement('div');
     overlay.id = 'cart-overlay';
@@ -918,12 +898,12 @@ function showCartModal() {
     
     updateCartContent();
     
-    // Обработчик закрытия
+    // Обработчик закрытия по крестику
     document.getElementById('close-cart').addEventListener('click', function() {
         hideCartModal();
     });
     
-    // Клик вне корзины для закрытия
+    // Обработчик закрытия по клику на оверлей
     overlay.addEventListener('click', function(e) {
         if (e.target === overlay) {
             hideCartModal();
@@ -931,7 +911,7 @@ function showCartModal() {
     });
 }
 
-// Скрыть модальное окно корзины
+// Скрыть модальное окно корзины - РАБОЧАЯ ВЕРСИЯ
 function hideCartModal() {
     const modal = document.getElementById('cart-modal');
     const overlay = document.getElementById('cart-overlay');
@@ -993,7 +973,6 @@ function updateCartContent() {
                 </div>
                 <div style="color: #666; font-size: 0.9em; margin-bottom: 15px;">
                     ${item.color ? `<div>Цвет: ${item.color}</div>` : ''}
-                    ${item.size ? `<div>Размер: ${item.size}</div>` : ''}
                     <div>Цена: ${item.price} ₽</div>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -1114,32 +1093,6 @@ window.proceedToCheckout = function() {
         alert('Ошибка копирования текста. Пожалуйста, скопируйте текст вручную:\n\n' + orderText);
     });
 }
-
-// Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', function() {
-    window.cart.loadFromStorage();
-    createCartIcon();
-    
-    // Обработка всех кнопок "Купить"
-    document.querySelectorAll('.buy-button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-        });
-    });
-    
-    // Автоматически выбираем первый цвет, если есть
-    setTimeout(() => {
-        document.querySelectorAll('.color-selector').forEach(selector => {
-            const firstColor = selector.querySelector('.color-option');
-            if (firstColor && !firstColor.classList.contains('active')) {
-                const colorName = firstColor.getAttribute('title') || '';
-                firstColor.style.border = '3px solid #ff9800';
-                firstColor.classList.add('active');
-                window.cart.selectedColor = colorName;
-            }
-        });
-    }, 100);
-});
 </script>
     <script src="newyear.js"></script>
 </body>
