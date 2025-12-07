@@ -481,6 +481,64 @@
                 alert('Корзина доступна на страницах товаров! Перейдите в нужный раздел.');
             });
         }
-    </script>
+    <script>
+// Исправление для кнопки закрытия корзины
+document.addEventListener('DOMContentLoaded', function() {
+    // Перехватываем клик по крестику
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'close-cart' || 
+            e.target.closest('#close-cart') || 
+            (e.target.style.position === 'fixed' && 
+             e.target.style.background === 'rgba(0, 0, 0, 0.5)' && 
+             document.getElementById('cart-modal'))) {
+            
+            // Ждем завершения анимации
+            setTimeout(function() {
+                // Обновляем все динамические элементы
+                if (window.cart && window.cart.updateBadge) {
+                    window.cart.updateBadge();
+                }
+                
+                // Восстанавливаем обработчики кнопок
+                document.querySelectorAll('.buy-button').forEach(btn => {
+                    if (!btn.onclick) {
+                        btn.onclick = function() {
+                            const card = this.closest('.product-card');
+                            if (card) {
+                                const title = card.querySelector('.product-title')?.textContent || 'Товар';
+                                const price = card.querySelector('.product-price')?.textContent?.replace('₽', '').replace(/\s/g, '') || '0';
+                                
+                                if (window.cart && window.cart.addItem) {
+                                    window.cart.addItem({
+                                        id: 'item_' + Date.now(),
+                                        title: title,
+                                        price: price
+                                    });
+                                }
+                            }
+                        };
+                    }
+                });
+            }, 300);
+        }
+    });
+    
+    // Улучшенная иконка корзины
+    const cartIcon = document.getElementById('cart-icon');
+    if (cartIcon) {
+        cartIcon.onclick = function() {
+            if (document.getElementById('cart-modal')) {
+                // Если корзина уже открыта, просто обновляем ее
+                if (typeof updateCartContent === 'function') {
+                    updateCartContent();
+                }
+            } else {
+                // Иначе открываем новую
+                showCartModal();
+            }
+        };
+    }
+});
+</script>
 </body>
 </html>
