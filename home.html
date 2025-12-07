@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товары для дома | Магазин "Всё в одном месте"</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.15);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+            color: white;
+            padding: 25px;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0 80px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #e8f5e9;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(76, 175, 80, 0.2);
+        }
+        
+        .product-header {
+            background: linear-gradient(135deg, #4caf50, #388e3c);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .product-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .product-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .product-content {
+            padding: 25px;
+        }
+        
+        .product-price {
+            font-size: 2em;
+            color: #4caf50;
+            font-weight: bold;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .product-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .spec-item {
+            background: #f1f8e9;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .spec-label {
+            font-weight: bold;
+            color: #4caf50;
+            font-size: 0.9em;
+        }
+        
+        .spec-value {
+            color: #333;
+            margin-top: 5px;
+        }
+        
+        .buy-button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .buy-button:hover {
+            background: linear-gradient(90deg, #2e7d32, #4caf50);
+            transform: scale(1.02);
+        }
+        
+        .special-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff9800;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .stock-info {
+            color: #4caf50;
+            font-weight: bold;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            border-top: 1px solid #eee;
+            background: #f1f8e9;
+        }
+        
+        /* Стили для иконки корзины */
+        #cart-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #2196f3, #0d47a1);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
+            z-index: 9999;
+            transition: all 0.3s;
+        }
+        
+        #cart-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
+        }
+        
+        #cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff5722;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+                margin: 0 60px;
+            }
+            
+            .back-button {
+                position: static;
+                transform: none;
+                margin-bottom: 15px;
+                width: fit-content;
+            }
+            
+            header {
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #cart-icon {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            #cart-badge {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-button">← На главную</a>
+            <h1>🏠 ТОВАРЫ ДЛЯ ДОМА</h1>
+        </header>
+        
+        <div class="products-grid">
+            <!-- Товар 1: Плед новогодний -->
+            <div class="product-card">
+                <div class="special-badge">УЮТ</div>
+                <div class="product-header">
+                    <div class="product-icon">🧣🎄</div>
+                    <div class="product-title">Новогодний плед с оленями</div>
+                </div>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 18 шт</div>
+                    <div class="product-price">1 200 ₽</div>
+                    
+                    <div class="product-description">
+                        <p><strong>Мягкий и теплый новогодний плед с праздничным принтом оленей!</strong></p>
+                        <p>Создайте уютную атмосферу праздника с этим красивым пледом. Идеально подходит для холодных вечеров, создания новогоднего настроения или в качестве подарка близким.</p>
+                        <p><strong>🎁 Особенности:</strong></p>
+                        <p>· Мягкий флис с двухсторонним принтом<br>
+                        · Новогодний дизайн с оленями и снежинками<br>
+                        · Размер: 150×200 см<br>
+                        · Легко стирается, не теряет цвет<br>
+                        · Подходит для дивана, кровати или кресла</p>
+                    </div>
+                    
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-label">РАЗМЕР</div>
+                            <div class="spec-value">150×200 см</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">МАТЕРИАЛ</div>
+                            <div class="spec-value">Флис</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">СТИРКА</div>
+                            <div class="spec-value">Машинная</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">ДИЗАЙН</div>
+                            <div class="spec-value">Олени, снежинки</div>
+                        </div>
+                    </div>
+                    
+                    <button class="buy-button" onclick="addToCart('blanket_001', 'Новогодний плед с оленями', '1200')">
+                        🛒 Купить за 1 200 ₽
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Товар 2: Набор кружек -->
+            <div class="product-card">
+                <div class="special-badge">КОМПЛЕКТ</div>
+                <div class="product-header">
+                    <div class="product-icon">☕🎅</div>
+                    <div class="product-title">Набор новогодних кружек</div>
+                </div>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 10 наборов</div>
+                    <div class="product-price">850 ₽</div>
+                    
+                    <div class="product-description">
+                        <p><strong>Комплект из 4 новогодних кружек с праздничными рисунками!</strong></p>
+                        <p>Прекрасный набор для создания праздничного настроения за утренним кофе или вечерним чаем. Каждая кружка имеет уникальный дизайн с новогодней тематикой.</p>
+                        <p><strong>🎄 В наборе 4 кружки:</strong></p>
+                        <p>1. С Дедом Морозом<br>
+                        2. Со Снегурочкой<br>
+                        3. С ёлочкой и подарками<br>
+                        4. С оленями и снежинками</p>
+                        <p><strong>✨ Идеально для:</strong> семейных посиделок, подарка коллегам, новогоднего декора.</p>
+                    </div>
+                    
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-label">КОЛИЧЕСТВО</div>
+                            <div class="spec-value">4 кружки</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">МАТЕРИАЛ</div>
+                            <div class="spec-value">Керамика</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">ОБЪЁМ</div>
+                            <div class="spec-value">350 мл</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">УПАКОВКА</div>
+                            <div class="spec-value">Подарочная</div>
+                        </div>
+                    </div>
+                    
+                    <button class="buy-button" onclick="addToCart('mugs_001', 'Набор новогодних кружек (4 шт)', '850')">
+                        🛒 Купить за 850 ₽
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Товар 3: Аромалампа -->
+            <div class="product-card">
+                <div class="special-badge">РЕЛАКС</div>
+                <div class="product-header">
+                    <div class="product-icon">🕯️🌸</div>
+                    <div class="product-title">Аромалампа керамическая</div>
+                </div>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 7 шт</div>
+                    <div class="product-price">1 500 ₽</div>
+                    
+                    <div class="product-description">
+                        <p><strong>Керамическая аромалампа для создания уютной атмосферы в доме!</strong></p>
+                        <p>Элегантная аромалампа из натуральной керамики поможет наполнить ваш дом приятными ароматами и создать расслабляющую обстановку.</p>
+                        <p><strong>🌸 В комплекте:</strong></p>
+                        <p>· Керамическая аромалампа<br>
+                        · 3 ароматические свечи<br>
+                        · Набор из 5 масел (лаванда, ваниль, корица, цитрус, хвоя)<br>
+                        · Керамическая ложка для масел</p>
+                        <p><strong>💆‍♀️ Идеально для:</strong> релаксации, медитации, создания романтической атмосферы, ароматерапии.</p>
+                    </div>
+                    
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-label">МАТЕРИАЛ</div>
+                            <div class="spec-value">Керамика</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">В КОМПЛЕКТЕ</div>
+                            <div class="spec-value">Свечи + масла</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">ВЫСОТА</div>
+                            <div class="spec-value">15 см</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">ДИЗАЙН</div>
+                            <div class="spec-value">Ручная роспись</div>
+                        </div>
+                    </div>
+                    
+                    <button class="buy-button" onclick="addToCart('lamp_001', 'Аромалампа керамическая с набором', '1500')">
+                        🛒 Купить за 1 500 ₽
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Товар 4: Органайзер для ванной -->
+            <div class="product-card">
+                <div class="special-badge">ОРГАНИЗАЦИЯ</div>
+                <div class="product-header">
+                    <div class="product-icon">🚿🧴</div>
+                    <div class="product-title">Органайзер для ванной комнаты</div>
+                </div>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 14 шт</div>
+                    <div class="product-price">950 ₽</div>
+                    
+                    <div class="product-description">
+                        <p><strong>Многофункциональный органайзер для порядка в ванной комнате!</strong></p>
+                        <p>Современный и практичный органайзер поможет содержать ванную комнату в идеальном порядке. Вмещает все необходимые принадлежности.</p>
+                        <p><strong>🗂️ Отделения:</strong></p>
+                        <p>· 3 полки для шампуней и гелей<br>
+                        · Отсек для зубных щёток<br>
+                        · Держатель для туалетной бумаги<br>
+                        · Крючки для полотенец<br>
+                        · Полка для мелких предметов</p>
+                        <p><strong>📏 Размеры:</strong> 40×25×15 см. Материал: пластик, устойчивый к влаге.</p>
+                    </div>
+                    
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-label">МАТЕРИАЛ</div>
+                            <div class="spec-value">Влагостойкий пластик</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">РАЗМЕРЫ</div>
+                            <div class="spec-value">40×25×15 см</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">КРЕПЛЕНИЕ</div>
+                            <div class="spec-value">Присоски + винты</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">ЦВЕТ</div>
+                            <div class="spec-value">Белый матовый</div>
+                        </div>
+                    </div>
+                    
+                    <button class="buy-button" onclick="addToCart('organizer_001', 'Органайзер для ванной комнаты', '950')">
+                        🛒 Купить за 950 ₽
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #e3f2fd; padding: 30px; margin: 30px; border-radius: 15px; border: 2px dashed #2196f3;">
+            <h3 style="color: #1976d2; text-align: center; margin-bottom: 20px;">🏡 Создайте уют в доме</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">✨</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Добавьте света</h4>
+                    <p style="color: #666;">Тёплое освещение создает уют</p>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🧵</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Текстиль</h4>
+                    <p style="color: #666;">Пледы, подушки, ковры</p>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🌸</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Ароматы</h4>
+                    <p style="color: #666;">Приятные запахи расслабляют</p>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🗂️</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Порядок</h4>
+                    <p style="color: #666;">Органайзеры и хранение</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2024 Товары для дома | Уют и комфорт в каждый дом</p>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #888;">
+                Бесплатная доставка при заказе от 3000 ₽ • Гарантия на все товары
+            </p>
+            <p style="margin-top: 15px;">
+                <a href="index.html" style="color: #4caf50; text-decoration: none;">На главную</a> • 
+                <a href="toys.html" style="color: #4caf50; text-decoration: none;">Игрушки</a> • 
+                <a href="clothes.html" style="color: #4caf50; text-decoration: none;">Одежда</a>
+            </p>
+        </footer>
+    </div>
+    
+    <!-- Скрипт корзины (упрощенный для этой страницы) -->
+    <script>
+        // Глобальный объект корзины
+        window.cart = {
+            items: [],
+            total: 0,
+            
+            addItem: function(product) {
+                const existingItem = this.items.find(item => item.id === product.id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    this.items.push({
+                        ...product,
+                        quantity: 1
+                    });
+                }
+                
+                this.updateTotal();
+                this.saveToStorage();
+                this.updateBadge();
+                this.showNotification(product.title);
+            },
+            
+            removeItem: function(index) {
+                this.items.splice(index, 1);
+                this.updateTotal();
+                this.saveToStorage();
+                this.updateBadge();
+            },
+            
+            updateQuantity: function(index, quantity) {
+                if (quantity < 1) {
+                    this.removeItem(index);
+                    return;
+                }
+                this.items[index].quantity = quantity;
+                this.updateTotal();
+                this.saveToStorage();
+            },
+            
+            updateTotal: function() {
+                this.total = this.items.reduce((sum, item) => {
+                    return sum + (parseInt(item.price) * item.quantity);
+                }, 0);
+            },
+            
+            saveToStorage: function() {
+                localStorage.setItem('shoppingCart', JSON.stringify({
+                    items: this.items,
+                    total: this.total
+                }));
+            },
+            
+            loadFromStorage: function() {
+                const saved = localStorage.getItem('shoppingCart');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.items = data.items || [];
+                    this.total = data.total || 0;
+                    this.updateBadge();
+                }
+            },
+            
+            showNotification: function(productTitle) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #4CAF50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                    max-width: 300px;
+                `;
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong>Добавлено в корзину!</strong>
+                            <div style="font-size: 0.9em; opacity: 0.9;">${productTitle}</div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+                
+                if (!document.querySelector('#cart-styles')) {
+                    const style = document.createElement('style');
+                    style.id = 'cart-styles';
+                    style.textContent = `
+                        @keyframes slideIn {
+                            from { transform: translateX(100%); opacity: 0; }
+                            to { transform: translateX(0); opacity: 1; }
+                        }
+                        @keyframes slideOut {
+                            from { transform: translateX(0); opacity: 1; }
+                            to { transform: translateX(100%); opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            },
+            
+            updateBadge: function() {
+                const badge = document.getElementById('cart-badge');
+                if (badge) {
+                    const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
+                    badge.textContent = totalItems;
+                    badge.style.display = totalItems > 0 ? 'flex' : 'none';
+                }
+            },
+            
+            clear: function() {
+                this.items = [];
+                this.total = 0;
+                this.saveToStorage();
+                this.updateBadge();
+            },
+            
+            getOrderText: function() {
+                let text = "Здравствуйте, хочу приобрести товары:\n\n";
+                
+                this.items.forEach((item, index) => {
+                    text += `${index + 1}. ${item.title}\n`;
+                    text += `   Цена: ${item.price} ₽\n`;
+                    text += `   Количество: ${item.quantity}\n`;
+                    if (item.color) text += `   Цвет: ${item.color}\n`;
+                    if (item.size) text += `   Размер: ${item.size}\n`;
+                    text += `   Сумма: ${parseInt(item.price) * item.quantity} ₽\n\n`;
+                });
+                
+                text += `\nИтого: ${this.total} ₽\n`;
+                
+                if (this.total > 3000) {
+                    const discount = Math.floor(this.total * 0.1);
+                    text += `Скидка 10%: -${discount} ₽\n`;
+                    text += `Итого со скидкой: ${this.total - discount} ₽\n`;
+                }
+                
+                text += "\n---\n";
+                text += "Ожидаю информацию о доставке.\n";
+                text += "Готов предоставить адрес и данные для доставки.";
+                
+                return text;
+            }
+        };
+
+        // Функция добавления в корзину
+        function addToCart(id, title, price) {
+            window.cart.addItem({
+                id: id,
+                title: title,
+                price: price
+            });
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            window.cart.loadFromStorage();
+            createCartIcon();
+        });
+
+        // Создание иконки корзины
+        function createCartIcon() {
+            if (document.getElementById('cart-icon')) return;
+            
+            const cartIcon = document.createElement('div');
+            cartIcon.id = 'cart-icon';
+            cartIcon.innerHTML = '🛒';
+            
+            const badge = document.createElement('div');
+            badge.id = 'cart-badge';
+            
+            cartIcon.appendChild(badge);
+            document.body.appendChild(cartIcon);
+            
+            window.cart.updateBadge();
+            
+            cartIcon.addEventListener('click', function() {
+                alert('Корзина доступна на страницах товаров! Перейдите в нужный раздел.');
+            });
+        }
+    </script>
+</body>
+</html>
