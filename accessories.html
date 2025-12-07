@@ -1272,27 +1272,41 @@ function showCartModal() {
     }
 }
 
+
 // Скрыть модальное окно корзины
 function hideCartModal() {
     const modal = document.getElementById('cart-modal');
     const overlay = document.querySelector('body > div[style*="background: rgba(0,0,0,0.5)"]');
     
     if (modal) {
-        modal.style.animation = 'slideDown 0.3s ease';
+        modal.style.transition = 'all 0.3s ease';
+        modal.style.opacity = '0';
+        modal.style.transform = 'translate(-50%, -45%)';
+        
         setTimeout(() => {
-            if (modal.parentNode) modal.parentNode.removeChild(modal);
+            if (modal.parentNode) {
+                modal.parentNode.removeChild(modal);
+            }
+            
+            // ВАЖНО: восстанавливаем прокрутку
+            document.body.style.overflow = 'auto';
+            document.body.style.position = 'static';
+            document.documentElement.style.overflow = 'auto';
+            
+            console.log('Корзина закрыта, прокрутка восстановлена');
         }, 300);
     }
     
     if (overlay) {
-        overlay.style.animation = 'fadeOut 0.3s ease';
+        overlay.style.transition = 'opacity 0.3s ease';
+        overlay.style.opacity = '0';
+        
         setTimeout(() => {
-            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+            if (overlay.parentNode) {
+                overlay.parentNode.removeChild(overlay);
+            }
         }, 300);
     }
-    
-    // Восстанавливаем прокрутку страницы
-    document.body.style.overflow = '';
 }
 
 // Обновить содержимое корзины
