@@ -214,13 +214,6 @@
             color: white;
         }
         
-        .section-title {
-            text-align: center;
-            margin: 30px 0;
-            color: #c2185b;
-            font-size: 1.8em;
-        }
-        
         footer {
             text-align: center;
             padding: 25px;
@@ -241,6 +234,50 @@
         
         .color-red { background: #d32f2f; }
         .color-white { background: #ffffff; border: 1px solid #ccc; }
+        .color-black { background: #000000; }
+        .color-green { background: #388e3c; }
+        
+        /* Стили для иконки корзины */
+        #cart-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #2196f3, #0d47a1);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
+            z-index: 9999;
+            transition: all 0.3s;
+        }
+        
+        #cart-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
+        }
+        
+        #cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff5722;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
+        }
         
         @media (max-width: 768px) {
             .products-grid {
@@ -268,6 +305,20 @@
             .specs-grid {
                 grid-template-columns: 1fr;
             }
+            
+            #cart-icon {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            #cart-badge {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
         }
     </style>
 </head>
@@ -277,8 +328,6 @@
             <a href="index.html" class="back-button">← На главную</a>
             <h1>👕 ОДЕЖДА ДЛЯ ВСЕХ</h1>
         </header>
-        
-        <h2 class="section-title">🔥 Модная коллекция</h2>
         
         <div class="products-grid">
             <!-- Товар 1: Мотокуртка Ferrari -->
@@ -299,8 +348,8 @@
                     <div class="color-selector" style="text-align: center; margin: 15px 0;">
                         <strong>Цвета:</strong>
                         <div style="margin-top: 10px;">
-                            <span class="color-option color-red" title="Красный"></span>
-                            <span class="color-option color-white" title="Белый"></span>
+                            <span class="color-option color-red" title="Красный" onclick="selectColor(this, 'Красный')"></span>
+                            <span class="color-option color-white" title="Белый" onclick="selectColor(this, 'Белый')"></span>
                         </div>
                     </div>
                     
@@ -331,15 +380,17 @@
                     </div>
                     
                     <div class="size-selector">
-                        <div class="size-btn" data-size="XL">XL (Белый)</div>
-                        <div class="size-btn" data-size="XXXL">XXXL (Красный)</div>
+                        <div class="size-btn" onclick="selectSize(this, 'XL')">XL (Белый)</div>
+                        <div class="size-btn" onclick="selectSize(this, 'XXXL')">XXXL (Красный)</div>
                     </div>
                     
                     <div style="background: #fff8e1; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px dashed #ffb300;">
                         <p style="color: #e91e63; font-weight: bold; margin: 0;">⚠️ Внимание: через 5post не отправляем — они задерживают сроки заказов!!!</p>
                     </div>
                     
-                    <button class="buy-button">🛒 Купить за 6 000 ₽</button>
+                    <button class="buy-button" onclick="addToCart('jacket_001', 'Кожаная куртка Ferrari', '6000')">
+                        🛒 Купить за 6 000 ₽
+                    </button>
                 </div>
             </div>
             
@@ -354,6 +405,14 @@
                     <div class="stock-info">✅ В наличии: все размеры</div>
                     <div class="product-price">1 200 ₽</div>
                     
+                    <div class="color-selector" style="text-align: center; margin: 15px 0;">
+                        <strong>Цвета:</strong>
+                        <div style="margin-top: 10px;">
+                            <span class="color-option color-black" title="Черный" onclick="selectColor(this, 'Черный')"></span>
+                            <span class="color-option color-white" title="Белый" onclick="selectColor(this, 'Белый')"></span>
+                        </div>
+                    </div>
+                    
                     <div class="product-description">
                         <p><strong>Черно-белый лонгслив Y2K со звездой – стильная унисекс-модель для мужчин и женщин!</strong></p>
                         <p>Обнови гардероб с лонгсливом в черно-белом дизайне в духе Y2K-эстетики! 🔥 Эта модель с контрастной звездой и оверсайз-кроем подчеркнет индивидуальность и обеспечит комфорт в любом образе.</p>
@@ -363,4 +422,737 @@
                     
                     <div class="specs-grid">
                         <div class="spec-item">
-                            <div class="spec-label">СОСТ
+                            <div class="spec-label">СОСТАВ</div>
+                            <div class="spec-value">Хлопок 80%</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">КРОЙ</div>
+                            <div class="spec-value">Оверсайз</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">СТИЛЬ</div>
+                            <div class="spec-value">Y2K, унисекс</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">РУКАВА</div>
+                            <div class="spec-value">Двойные</div>
+                        </div>
+                    </div>
+                    
+                    <div class="size-selector">
+                        <div class="size-btn" onclick="selectSize(this, 'S')">S</div>
+                        <div class="size-btn" onclick="selectSize(this, 'M')">M</div>
+                        <div class="size-btn" onclick="selectSize(this, 'L')">L</div>
+                        <div class="size-btn" onclick="selectSize(this, 'XL')">XL</div>
+                    </div>
+                    
+                    <button class="buy-button" onclick="addToCart('longsleeve_001', 'Лонгслив Y2K унисекс', '1200')">
+                        🛒 Купить за 1 200 ₽
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Товар 3: Кепка с листьями -->
+            <div class="product-card">
+                <div class="special-badge">БЛОГЕР</div>
+                <div class="product-header">
+                    <div class="product-icon">🧢🍃</div>
+                    <div class="product-title">Кепка с листьями</div>
+                </div>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 8 шт</div>
+                    <div class="product-price">1 300 ₽</div>
+                    
+                    <div class="color-selector" style="text-align: center; margin: 15px 0;">
+                        <strong>Цвета:</strong>
+                        <div style="margin-top: 10px;">
+                            <span class="color-option color-black" title="Черный" onclick="selectColor(this, 'Черный')"></span>
+                            <span class="color-option color-green" title="Зеленый" onclick="selectColor(this, 'Зеленый')"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-description">
+                        <p><strong>Кепка с листьями | Стильный головной убор | Как у блогера Каши | Для фанатов PUBG</strong></p>
+                        <p>Внимание: через 5post не отправляем они задерживают сроки заказов!!!</p>
+                        <p>Стильная кепка с ярким лиственным принтом — идеальный аксессуар для поклонников уличной моды и экостиля. Уникальный дизайн, качественные материалы и универсальность — вот что делает эту кепку must-have в вашем гардеробе.</p>
+                        <p><strong>🎯 ДЛЯ КОГО:</strong></p>
+                        <p>· Для поклонников стиля блогера Каши<br>
+                        · Для фанатов PUBG и геймерской эстетики<br>
+                        · Для любителей уличной моды<br>
+                        · Для туристов и путешественников</p>
+                    </div>
+                    
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-label">МАТЕРИАЛ</div>
+                            <div class="spec-value">Хлопок с полиэстером</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">РАЗМЕР</div>
+                            <div class="spec-value">Регулируемый</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">УХОД</div>
+                            <div class="spec-value">Можно стирать</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">КЕЗИРЁК</div>
+                            <div class="spec-value">Широкий</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #fff8e1; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px dashed #ffb300;">
+                        <p style="color: #e91e63; font-weight: bold; margin: 0;">⚠️ Внимание: через 5post не отправляем — они задерживают сроки заказов!!!</p>
+                    </div>
+                    
+                    <button class="buy-button" onclick="addToCart('cap_001', 'Кепка с листьями', '1300')">
+                        🛒 Купить за 1 300 ₽
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Товар 4: Купальник -->
+            <div class="product-card">
+                <div class="special-badge">ПЛЯЖ</div>
+                <div class="product-header">
+                    <div class="product-icon">👙🏖️</div>
+                    <div class="product-title">Купальник женский с шортами</div>
+                </div>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: размеры S, M, L</div>
+                    <div class="product-price">2 000 ₽</div>
+                    
+                    <div class="color-selector" style="text-align: center; margin: 15px 0;">
+                        <strong>Цвета:</strong>
+                        <div style="margin-top: 10px;">
+                            <span class="color-option color-red" title="Красный" onclick="selectColor(this, 'Красный')"></span>
+                            <span class="color-option color-black" title="Черный" onclick="selectColor(this, 'Черный')"></span>
+                            <span class="color-option color-green" title="Зеленый" onclick="selectColor(this, 'Зеленый')"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-description">
+                        <p><strong>🔥 Купальник с шортами "Крипер" — Смешно, Стильно, Удобно!</strong></p>
+                        <p>Забудь о неловких моментах на пляже! Купальник с шортами "Крипер" — это не просто модный комплект, а твой личный антистресс в мире купальников!</p>
+                        <p><strong>✨ Почему это круто?</strong></p>
+                        <p>✔️ Не сползает и не задирается — шорты надежно фиксируются<br>
+                        ✔️ Выглядит дерзко, но мило — сочетание вызывает улыбку<br>
+                        ✔️ Суперкомфорт — мягкая ткань, которая не кусается</p>
+                        <p><strong>💬 "Крипер" — потому что ты будешь ползать по пляжу только за новыми комплиментами!</strong></p>
+                    </div>
+                    
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-label">ТИП</div>
+                            <div class="spec-value">Купальник + шорты</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">РАЗМЕРЫ</div>
+                            <div class="spec-value">S, M, L</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">МАТЕРИАЛ</div>
+                            <div class="spec-value">Быстросохнущий</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">ФИКСАЦИЯ</div>
+                            <div class="spec-value">Надежная</div>
+                        </div>
+                    </div>
+                    
+                    <div class="size-selector">
+                        <div class="size-btn" onclick="selectSize(this, 'S')">S</div>
+                        <div class="size-btn" onclick="selectSize(this, 'M')">M</div>
+                        <div class="size-btn" onclick="selectSize(this, 'L')">L</div>
+                    </div>
+                    
+                    <button class="buy-button" onclick="addToCart('swimsuit_001', 'Купальник женский с шортами', '2000')">
+                        🛒 Купить за 2 000 ₽
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #fff8e1; padding: 30px; margin: 30px; border-radius: 15px; border: 2px dashed #ffb300;">
+            <h3 style="color: #e91e63; text-align: center; margin-bottom: 20px;">🎯 Как выбрать размер?</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📏</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Измерьте себя</h4>
+                    <p style="color: #666;">Грудь, талия, бедра</p>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📱</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Сравните с таблицей</h4>
+                    <p style="color: #666;">У нас на сайте</p>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">👔</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Учитывайте крой</h4>
+                    <p style="color: #666;">Оверсайз или облегающий</p>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🔄</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Обмен</h4>
+                    <p style="color: #666;">Возможен в течение 14 дней</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2024 Магазин одежды | Размерная сетка в описании товаров</p>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #888;">
+                Бесплатная примерка • Обмен в течение 30 дней • Индивидуальный пошив
+            </p>
+            <p style="margin-top: 15px;">
+                <a href="index.html" style="color: #e91e63; text-decoration: none;">На главную</a> • 
+                <a href="toys.html" style="color: #e91e63; text-decoration: none;">Игрушки</a> • 
+                <a href="accessories.html" style="color: #e91e63; text-decoration: none;">Аксессуары</a>
+            </p>
+        </footer>
+    </div>
+    
+    <!-- Скрипт корзины -->
+    <script>
+        // Глобальный объект корзины
+        window.cart = {
+            items: [],
+            total: 0,
+            selectedColor: '',
+            selectedSize: '',
+            
+            addItem: function(product) {
+                const existingItem = this.items.find(item => 
+                    item.id === product.id && 
+                    item.color === product.color && 
+                    item.size === product.size
+                );
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    this.items.push({
+                        ...product,
+                        quantity: 1
+                    });
+                }
+                
+                this.updateTotal();
+                this.saveToStorage();
+                this.updateBadge();
+                this.showNotification(product.title);
+            },
+            
+            removeItem: function(index) {
+                this.items.splice(index, 1);
+                this.updateTotal();
+                this.saveToStorage();
+                this.updateBadge();
+            },
+            
+            updateQuantity: function(index, quantity) {
+                if (quantity < 1) {
+                    this.removeItem(index);
+                    return;
+                }
+                this.items[index].quantity = quantity;
+                this.updateTotal();
+                this.saveToStorage();
+            },
+            
+            updateTotal: function() {
+                this.total = this.items.reduce((sum, item) => {
+                    return sum + (parseInt(item.price) * item.quantity);
+                }, 0);
+            },
+            
+            saveToStorage: function() {
+                localStorage.setItem('shoppingCart', JSON.stringify({
+                    items: this.items,
+                    total: this.total
+                }));
+            },
+            
+            loadFromStorage: function() {
+                const saved = localStorage.getItem('shoppingCart');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.items = data.items || [];
+                    this.total = data.total || 0;
+                    this.updateBadge();
+                }
+            },
+            
+            showNotification: function(productTitle) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #4CAF50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                    max-width: 300px;
+                `;
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong>Добавлено в корзину!</strong>
+                            <div style="font-size: 0.9em; opacity: 0.9;">${productTitle}</div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+                
+                if (!document.querySelector('#cart-styles')) {
+                    const style = document.createElement('style');
+                    style.id = 'cart-styles';
+                    style.textContent = `
+                        @keyframes slideIn {
+                            from { transform: translateX(100%); opacity: 0; }
+                            to { transform: translateX(0); opacity: 1; }
+                        }
+                        @keyframes slideOut {
+                            from { transform: translateX(0); opacity: 1; }
+                            to { transform: translateX(100%); opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            },
+            
+            updateBadge: function() {
+                const badge = document.getElementById('cart-badge');
+                if (badge) {
+                    const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
+                    badge.textContent = totalItems;
+                    badge.style.display = totalItems > 0 ? 'flex' : 'none';
+                }
+            },
+            
+            clear: function() {
+                this.items = [];
+                this.total = 0;
+                this.saveToStorage();
+                this.updateBadge();
+            },
+            
+            getOrderText: function() {
+                let text = "Здравствуйте, хочу приобрести товары:\n\n";
+                
+                this.items.forEach((item, index) => {
+                    text += `${index + 1}. ${item.title}\n`;
+                    text += `   Цена: ${item.price} ₽\n`;
+                    text += `   Количество: ${item.quantity}\n`;
+                    if (item.color) text += `   Цвет: ${item.color}\n`;
+                    if (item.size) text += `   Размер: ${item.size}\n`;
+                    text += `   Сумма: ${parseInt(item.price) * item.quantity} ₽\n\n`;
+                });
+                
+                text += `\nИтого: ${this.total} ₽\n`;
+                
+                if (this.total > 3000) {
+                    const discount = Math.floor(this.total * 0.1);
+                    text += `Скидка 10%: -${discount} ₽\n`;
+                    text += `Итого со скидкой: ${this.total - discount} ₽\n`;
+                }
+                
+                text += "\n---\n";
+                text += "Ожидаю информацию о доставке.\n";
+                text += "Готов предоставить адрес и данные для доставки.";
+                
+                return text;
+            }
+        };
+
+        // Функция выбора цвета
+        function selectColor(element, color) {
+            const container = element.closest('.color-selector');
+            container.querySelectorAll('.color-option').forEach(c => {
+                c.style.border = '2px solid #ddd';
+                c.classList.remove('active');
+            });
+            element.style.border = '3px solid #e91e63';
+            element.classList.add('active');
+            window.cart.selectedColor = color;
+        }
+
+        // Функция выбора размера
+        function selectSize(element, size) {
+            const container = element.closest('.size-selector');
+            container.querySelectorAll('.size-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = 'white';
+                btn.style.color = '#333';
+            });
+            element.classList.add('active');
+            element.style.background = '#e91e63';
+            element.style.color = 'white';
+            window.cart.selectedSize = size;
+        }
+
+        // Функция добавления в корзину
+        function addToCart(id, title, price) {
+            const color = window.cart.selectedColor || '';
+            const size = window.cart.selectedSize || '';
+            
+            if (!color && (id === 'jacket_001' || id === 'longsleeve_001' || id === 'cap_001' || id === 'swimsuit_001')) {
+                alert('Пожалуйста, выберите цвет!');
+                return;
+            }
+            
+            if (!size && (id === 'jacket_001' || id === 'longsleeve_001' || id === 'swimsuit_001')) {
+                alert('Пожалуйста, выберите размер!');
+                return;
+            }
+            
+            window.cart.addItem({
+                id: id,
+                title: `${title} (${color}${color && size ? ', ' : ''}${size})`,
+                price: price,
+                color: color,
+                size: size
+            });
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            window.cart.loadFromStorage();
+            createCartIcon();
+            
+            // Обработка всех кнопок "Купить"
+            document.querySelectorAll('.buy-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                });
+            });
+        });
+
+        // Создание иконки корзины
+        function createCartIcon() {
+            if (document.getElementById('cart-icon')) return;
+            
+            const cartIcon = document.createElement('div');
+            cartIcon.id = 'cart-icon';
+            cartIcon.innerHTML = '🛒';
+            
+            const badge = document.createElement('div');
+            badge.id = 'cart-badge';
+            
+            cartIcon.appendChild(badge);
+            document.body.appendChild(cartIcon);
+            
+            window.cart.updateBadge();
+            
+            cartIcon.addEventListener('click', showCartModal);
+        }
+
+        // Показать модальное окно корзины
+        function showCartModal() {
+            if (document.getElementById('cart-modal')) return;
+            
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            const modal = document.createElement('div');
+            modal.id = 'cart-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                border-radius: 20px;
+                overflow: hidden;
+                z-index: 10001;
+                animation: slideUp 0.3s ease;
+                display: flex;
+                flex-direction: column;
+            `;
+            
+            const header = document.createElement('div');
+            header.style.cssText = `
+                background: linear-gradient(90deg, #e91e63, #9c27b0);
+                color: white;
+                padding: 25px;
+                text-align: center;
+                position: relative;
+            `;
+            header.innerHTML = `
+                <h2 style="margin: 0; font-size: 1.8em;">🛒 Ваша корзина</h2>
+                <button id="close-cart" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
+            `;
+            
+            const content = document.createElement('div');
+            content.id = 'cart-content';
+            content.style.cssText = `
+                padding: 25px;
+                overflow-y: auto;
+                flex-grow: 1;
+            `;
+            
+            const footer = document.createElement('div');
+            footer.style.cssText = `
+                padding: 25px;
+                background: #fff5f7;
+                border-top: 1px solid #eee;
+                text-align: center;
+            `;
+            
+            modal.appendChild(header);
+            modal.appendChild(content);
+            modal.appendChild(footer);
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(modal);
+            
+            updateCartContent();
+            
+            document.getElementById('close-cart').addEventListener('click', hideCartModal);
+            overlay.addEventListener('click', hideCartModal);
+            
+            if (!document.querySelector('#cart-modal-styles')) {
+                const style = document.createElement('style');
+                style.id = 'cart-modal-styles';
+                style.textContent = `
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+                    @keyframes slideUp {
+                        from { transform: translate(-50%, -40%); opacity: 0; }
+                        to { transform: translate(-50%, -50%); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Скрыть модальное окно корзины
+        function hideCartModal() {
+            const modal = document.getElementById('cart-modal');
+            const overlay = document.querySelector('#cart-modal + div');
+            
+            if (modal) {
+                modal.style.animation = 'slideDown 0.3s ease';
+                setTimeout(() => modal.remove(), 300);
+            }
+            
+            if (overlay) {
+                overlay.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => overlay.remove(), 300);
+            }
+            
+            document.body.style.overflow = '';
+            
+            if (!document.querySelector('#cart-close-styles')) {
+                const style = document.createElement('style');
+                style.id = 'cart-close-styles';
+                style.textContent = `
+                    @keyframes slideDown {
+                        from { transform: translate(-50%, -50%); opacity: 1; }
+                        to { transform: translate(-50%, -40%); opacity: 0; }
+                    }
+                    @keyframes fadeOut {
+                        from { opacity: 1; }
+                        to { opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // Обновить содержимое корзины
+        function updateCartContent() {
+            const content = document.getElementById('cart-content');
+            const footer = document.querySelector('#cart-modal > div:last-child');
+            
+            if (!content) return;
+            
+            if (window.cart.items.length === 0) {
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 50px;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">😔</div>
+                        <h3 style="color: #666; margin-bottom: 15px;">Корзина пуста</h3>
+                        <p style="color: #999;">Добавьте товары из каталога</p>
+                    </div>
+                `;
+                
+                footer.innerHTML = `
+                    <button onclick="hideCartModal()" style="padding: 12px 30px; background: #e91e63; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
+                        Продолжить покупки
+                    </button>
+                `;
+                return;
+            }
+            
+            const discount = window.cart.total > 3000 ? Math.floor(window.cart.total * 0.1) : 0;
+            const finalTotal = window.cart.total - discount;
+            
+            let itemsHTML = '';
+            window.cart.items.forEach((item, index) => {
+                const itemTotal = parseInt(item.price) * item.quantity;
+                itemsHTML += `
+                    <div style="background: white; border: 1px solid #eee; border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="margin: 0; color: #333;">${item.title}</h4>
+                            <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #ff5722; cursor: pointer; font-size: 20px;">×</button>
+                        </div>
+                        <div style="color: #666; font-size: 0.9em; margin-bottom: 15px;">
+                            ${item.color ? `<div>Цвет: ${item.color}</div>` : ''}
+                            ${item.size ? `<div>Размер: ${item.size}</div>` : ''}
+                            <div>Цена: ${item.price} ₽</div>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <button onclick="updateQuantity(${index}, ${item.quantity - 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">-</button>
+                                <span style="font-weight: bold;">${item.quantity} шт</span>
+                                <button onclick="updateQuantity(${index}, ${item.quantity + 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">+</button>
+                            </div>
+                            <div style="font-weight: bold; color: #e91e63; font-size: 1.2em;">
+                                ${itemTotal} ₽
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            content.innerHTML = itemsHTML;
+            
+            footer.innerHTML = `
+                <div style="margin-bottom: 25px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>Товары:</span>
+                        <span>${window.cart.total} ₽</span>
+                    </div>
+                    ${discount > 0 ? `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: #4CAF50;">
+                            <span>Скидка 10%:</span>
+                            <span>-${discount} ₽</span>
+                        </div>
+                    ` : ''}
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2em; border-top: 2px solid #e91e63; padding-top: 10px; margin-top: 10px;">
+                        <span>Итого к оплате:</span>
+                        <span>${finalTotal} ₽</span>
+                    </div>
+                    ${window.cart.total >= 3000 ? `
+                        <div style="background: #e8f5e9; padding: 10px; border-radius: 8px; margin-top: 15px; text-align: center; color: #2e7d32;">
+                            ✅ Вы получаете скидку 10%! Бесплатная доставка при заказе от 5000 ₽
+                        </div>
+                    ` : window.cart.total >= 2000 ? `
+                        <div style="background: #fff3e0; padding: 10px; border-radius: 8px; margin-top: 15px; text-align: center; color: #ef6c00;">
+                            🎯 Добавьте товаров ещё на ${3000 - window.cart.total} ₽ и получите скидку 10%!
+                        </div>
+                    ` : ''}
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button onclick="clearCart()" style="padding: 12px 25px; background: #f5f5f5; color: #666; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-size: 16px; flex: 1;">
+                        Очистить корзину
+                    </button>
+                    <button onclick="proceedToCheckout()" style="padding: 12px 25px; background: linear-gradient(90deg, #4CAF50, #2e7d32); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; flex: 2;">
+                        💬 Оформить заказ в Telegram
+                    </button>
+                </div>
+                
+                <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <p style="color: #666; font-size: 0.9em; text-align: center;">
+                        📞 Контактный телефон для оплаты: <strong>8-800-123-45-67</strong><br>
+                        💰 Доставка оплачивается отдельно, стоимость уточняйте
+                    </p>
+                </div>
+            `;
+        }
+
+        // Глобальные функции для работы с корзиной
+        window.removeFromCart = function(index) {
+            window.cart.removeItem(index);
+            updateCartContent();
+        }
+
+        window.updateQuantity = function(index, quantity) {
+            window.cart.updateQuantity(index, quantity);
+            updateCartContent();
+        }
+
+        window.clearCart = function() {
+            if (confirm('Вы уверены, что хотите очистить корзину?')) {
+                window.cart.clear();
+                updateCartContent();
+            }
+        }
+
+        // Переход к оформлению заказа
+        window.proceedToCheckout = function() {
+            const orderText = window.cart.getOrderText();
+            const telegramLink = 'https://t.me/NewshopNm';
+            
+            navigator.clipboard.writeText(orderText).then(() => {
+                const content = document.getElementById('cart-content');
+                
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 60px; color: #4CAF50; margin-bottom: 20px;">✅</div>
+                        <h3 style="color: #333; margin-bottom: 15px;">Текст заказа скопирован!</h3>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left;">
+                            <h4 style="margin-top: 0; color: #666;">Далее сделайте 3 шага:</h4>
+                            <ol style="color: #666; line-height: 1.6;">
+                                <li><strong>Перейдите в Telegram</strong> по ссылке ниже</li>
+                                <li><strong>Отправьте скопированный текст</strong> нашему менеджеру</li>
+                                <li><strong>Укажите адрес доставки</strong> и подтвердите заказ</li>
+                            </ol>
+                        </div>
+                        <p style="color: #666; margin-bottom: 25px;">
+                            После этого мы свяжемся с вами для уточнения стоимости доставки и предоставим реквизиты для оплаты.
+                        </p>
+                        <div style="display: flex; gap: 15px; justify-content: center;">
+                            <a href="${telegramLink}" target="_blank" style="padding: 15px 30px; background: #0088cc; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 20px;">📱</span>
+                                Перейти в Telegram
+                            </a>
+                            <button onclick="updateCartContent()" style="padding: 15px 25px; background: #f5f5f5; color: #666; border: 1px solid #ddd; border-radius: 10px; cursor: pointer;">
+                                Вернуться к корзине
+                            </button>
+                        </div>
+                        <div style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 10px;">
+                            <h4 style="margin-top: 0; color: #1976d2;">📞 Контактная информация:</h4>
+                            <p style="color: #333; margin: 10px 0;">
+                                <strong>Телефон для оплаты:</strong> 8-800-123-45-67<br>
+                                <strong>Telegram:</strong> @NewshopNm<br>
+                                <strong>Доставка:</strong> Рассчитывается индивидуально
+                            </p>
+                        </div>
+                    </div>
+                `;
+            }).catch(err => {
+                alert('Ошибка копирования текста. Пожалуйста, скопируйте текст вручную:\n\n' + orderText);
+            });
+        }
+    </script>
+</body>
+</html>
