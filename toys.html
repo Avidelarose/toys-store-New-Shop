@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -23,12 +23,12 @@
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.15);
             overflow: hidden;
         }
         
         header {
-            background: linear-gradient(90deg, #ff9800, #ff5722);
+            background: linear-gradient(90deg, #2196f3, #0d47a1);
             color: white;
             padding: 25px;
             position: relative;
@@ -53,14 +53,14 @@
         }
         
         h1 {
-            font-size: 2.2em;
+            font-size: 2.5em;
             text-align: center;
             margin: 0 80px;
         }
         
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
             padding: 40px;
         }
@@ -71,61 +71,74 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
-            border: 2px solid #ffebee;
+            border: 2px solid #e3f2fd;
+            position: relative;
         }
         
         .product-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(255,87,34,0.2);
-            border-color: #ff5722;
+            box-shadow: 0 15px 30px rgba(33, 150, 243, 0.2);
         }
         
-        .product-image {
-            height: 200px;
-            background: linear-gradient(45deg, #ffecb3, #ffccbc);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-        }
-        
-        .product-info {
+        .product-header {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            color: white;
             padding: 20px;
+            text-align: center;
+        }
+        
+        .product-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
         }
         
         .product-title {
-            font-size: 1.3em;
-            color: #333;
-            margin-bottom: 10px;
-            min-height: 60px;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .product-content {
+            padding: 25px;
         }
         
         .product-price {
-            font-size: 1.8em;
-            color: #ff5722;
+            font-size: 2em;
+            color: #2196f3;
             font-weight: bold;
             margin: 15px 0;
+            text-align: center;
         }
         
-        .product-features {
-            list-style: none;
-            margin: 15px 0;
+        .product-description {
             color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95em;
         }
         
-        .product-features li {
-            padding: 5px 0;
-            border-bottom: 1px dashed #eee;
+        .features-list {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
         }
         
-        .product-features li:last-child {
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features-list li:last-child {
             border-bottom: none;
         }
         
         .buy-button {
             width: 100%;
-            padding: 12px;
-            background: linear-gradient(90deg, #ff9800, #ff5722);
+            padding: 14px;
+            background: linear-gradient(90deg, #2196f3, #0d47a1);
             color: white;
             border: none;
             border-radius: 8px;
@@ -133,62 +146,53 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 10px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .buy-button:hover {
-            background: linear-gradient(90deg, #ff5722, #ff9800);
-            transform: scale(1.05);
+            background: linear-gradient(90deg, #0d47a1, #2196f3);
+            transform: scale(1.02);
         }
         
-        .special-offer {
+        .special-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
             background: #ff5722;
             color: white;
-            padding: 5px 10px;
-            border-radius: 12px;
+            padding: 5px 15px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
+            z-index: 1;
         }
         
-        .stock {
+        .stock-info {
             color: #4caf50;
             font-weight: bold;
             margin: 10px 0;
-        }
-        
-        .category-nav {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 20px;
-            background: #f5f5f5;
-            border-bottom: 1px solid #eee;
+            align-items: center;
+            gap: 8px;
         }
         
-        .nav-link {
-            padding: 8px 20px;
-            background: white;
-            border-radius: 20px;
-            text-decoration: none;
-            color: #333;
-            border: 2px solid #ff9800;
-            transition: all 0.3s;
-        }
-        
-        .nav-link:hover {
-            background: #ff9800;
-            color: white;
+        .section-title {
+            text-align: center;
+            margin: 30px 0;
+            color: #1976d2;
+            font-size: 1.8em;
         }
         
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 25px;
             color: #666;
             border-top: 1px solid #eee;
-            background: #f9f9f9;
+            background: #f5f9ff;
         }
         
         @media (max-width: 768px) {
@@ -198,7 +202,7 @@
             }
             
             h1 {
-                font-size: 1.8em;
+                font-size: 2em;
                 margin: 0 60px;
             }
             
@@ -220,178 +224,233 @@
     <div class="container">
         <header>
             <a href="index.html" class="back-button">← На главную</a>
-            <h1>🧸 Игрушки и игры</h1>
+            <h1>🧸 ИГРУШКИ И ИГРЫ</h1>
         </header>
         
-        <div class="category-nav">
-            <a href="#dragons" class="nav-link">Драконы</a>
-            <a href="#collectibles" class="nav-link">Коллекционные</a>
-            <a href="#toys" class="nav-link">Игровые наборы</a>
-        </div>
+        <h2 class="section-title">🔥 Популярные игрушки</h2>
         
         <div class="products-grid">
             <!-- Товар 1: Дракон светящийся -->
             <div class="product-card">
-                <div class="special-offer">ХИТ ПРОДАЖ</div>
-                <div class="product-image">
-                    🐉✨
+                <div class="special-badge">ХИТ ПРОДАЖ</div>
+                <div class="product-header">
+                    <div class="product-icon">🐉✨</div>
+                    <div class="product-title">Дракон светящийся в темноте</div>
                 </div>
-                <div class="product-info">
-                    <h3 class="product-title">Дракон светящийся в темноте</h3>
-                    <div class="stock">В наличии: 15 шт</div>
-                    <div class="product-price">350 ₽</div>
-                    <ul class="product-features">
-                        <li>📏 Размер: 25 см</li>
-                        <li>🔋 Работает от батареек</li>
-                        <li>🌈 7 цветов свечения</li>
-                        <li>🎮 Интерактивный (двигает крыльями)</li>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 15 шт</div>
+                    <div class="product-price">450 ₽</div>
+                    <div class="product-description">
+                        <p><strong>30 см подвижный дракон 29,5см светится в темноте.</strong> Развивает мелкую моторику, успокаивающий эффект. 3D дракон.</p>
+                        <p>Дракончика можно использовать и как ёлочная игрушка. Волшебная новогодняя ночь радует вместе с светящимися в темноте дракончиками!</p>
+                        <p style="font-style: italic; color: #555; margin-top: 10px;">
+                            "Представь... Полная темнота. И вдруг — едва уловимое движение. Плавный изгиб хвоста, Мерцание, которое затягивает взгляд..... Ты проводишь пальцем по прохладной глади — лёгкий асмр-скрежет чешуек, будто настоящих..."
+                        </p>
+                    </div>
+                    <ul class="features-list">
+                        <li>🎨 3D дизайн с детальной проработкой</li>
+                        <li>✨ Свечение в полной темноте</li>
+                        <li>🎮 Подвижные элементы (хвост, крылья)</li>
+                        <li>🎄 Можно использовать как ёлочную игрушку</li>
+                        <li>🧠 Развивает моторику и воображение</li>
                     </ul>
-                    <button class="buy-button">🛒 Добавить в корзину</button>
+                    <button class="buy-button">🛒 Купить за 450 ₽</button>
                 </div>
             </div>
             
-            <!-- Товар 2: Лабубу -->
+            <!-- Товар 2: Новогодний домик -->
             <div class="product-card">
-                <div class="special-offer">НОВИНКА</div>
-                <div class="product-image">
-                    🦊❤️
+                <div class="special-badge">НОВИНКА</div>
+                <div class="product-header">
+                    <div class="product-icon">🏠🎄</div>
+                    <div class="product-title">Светящийся новогодний домик</div>
                 </div>
-                <div class="product-info">
-                    <h3 class="product-title">Интерактивная игрушка Лабубу</h3>
-                    <div class="stock">В наличии: 8 шт</div>
-                    <div class="product-price">1 500 ₽</div>
-                    <ul class="product-features">
-                        <li>🎤 Говорит и поет песенки</li>
-                        <li>💓 Реагирует на прикосновения</li>
-                        <li>🎵 20 обучающих песен</li>
-                        <li>🔋 Аккумулятор 1500 мАч</li>
-                        <li>📱 Управление через приложение</li>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 22 шт</div>
+                    <div class="product-price">550 ₽</div>
+                    <div class="product-description">
+                        <p><strong>Подарите себе и своим близким волшебную атмосферу Нового года!</strong> Эта красивая и уютная фигура станет ярким акцентом в вашем интерьере и создаст неповторимое ощущение тепла и праздника.</p>
+                        <p><strong>🌟 Почему этот домик — отличная покупка?</strong></p>
+                        <p>· Создает настроение: Мягкое постоянное свечение моментально преображает пространство</p>
+                        <p>· Стильный дизайн: Фигура выполнена из керамики и металла</p>
+                        <p>· Полная автономность: Работает от батареек!</p>
+                        <p>· Универсальность: Настольный светильник, украшение, декор для фотозоны</p>
+                    </div>
+                    <ul class="features-list">
+                        <li>✨ Автоматическое свечение в темноте</li>
+                        <li>🔋 Работает от батареек (3x AAA)</li>
+                        <li>🎅 Новогодний дизайн с ёлкой</li>
+                        <li>🏠 Размер: 25×20×15 см</li>
+                        <li>🎁 Идеальный подарок на Новый год</li>
                     </ul>
-                    <button class="buy-button">🛒 Добавить в корзину</button>
+                    <button class="buy-button">🛒 Купить за 550 ₽</button>
                 </div>
             </div>
             
-            <!-- Товар 3: Новогодний домик -->
+            <!-- Товар 3: Какаши -->
             <div class="product-card">
-                <div class="special-offer">СКИДКА 15%</div>
-                <div class="product-image">
-                    🏠🎄
+                <div class="special-badge">КОЛЛЕКЦИОННАЯ</div>
+                <div class="product-header">
+                    <div class="product-icon">🎭👑</div>
+                    <div class="product-title">Коллекционная фигурка Какаши</div>
                 </div>
-                <div class="product-info">
-                    <h3 class="product-title">Светящийся новогодний домик</h3>
-                    <div class="stock">В наличии: 22 шт</div>
-                    <div class="product-price">570 ₽</div>
-                    <ul class="product-features">
-                        <li>✨ Автоматическое свечение</li>
-                        <li>🎅 Новогодняя музыка</li>
-                        <li>🎁 В комплекте фигурки</li>
-                        <li>⚡ Питание от сети/USB</li>
-                        <li>📏 Высота: 35 см</li>
-                    </ul>
-                    <button class="buy-button">🛒 Добавить в корзину</button>
-                </div>
-            </div>
-            
-            <!-- Товар 4: Коллекционная фигурка -->
-            <div class="product-card">
-                <div class="special-offer">КОЛЛЕКЦИОННАЯ</div>
-                <div class="product-image">
-                    🎭👑
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Коллекционная фигурка Какани</h3>
-                    <div class="stock">В наличии: 3 шт</div>
+                <div class="product-content">
+                    <div class="stock-info">⏳ В наличии: 3 шт</div>
                     <div class="product-price">3 900 ₽</div>
-                    <ul class="product-features">
-                        <li>🎨 Ручная роспись</li>
-                        <li>📏 Высота: 45 см</li>
-                        <li>⚖️ Вес: 1.2 кг</li>
-                        <li>📜 Сертификат подлинности</li>
+                    <div class="product-description">
+                        <p><strong>Эксклюзивная фигурка Какаши Хатаке (Наруто) 1/6, 10 см, из Японии!</strong></p>
+                        <p>Продается коллекционная фигурка Какаши Хатаке из аниме «Наруто». Это редкий экземпляр, привезенный из Японии, купить который сейчас из-за санкций практически невозможно.</p>
+                        <p>Фигурка выполнена в классическом стиле — Какаши в его iconic форме ниндзя Скрытого Листа с жилетом чунина. Масштаб 1/6, высота около 10 см.</p>
+                    </div>
+                    <ul class="features-list">
+                        <li>🇯🇵 Привезена из Японии</li>
+                        <li>📏 Масштаб 1/6 (10 см)</li>
+                        <li>⚡ В комплекте: молния для руки</li>
+                        <li>🎭 Детализированная роспись</li>
+                        <li>📜 Ограниченная серия</li>
                         <li>🎁 Подарочная упаковка</li>
-                        <li>🌟 Ограниченная серия</li>
                     </ul>
-                    <button class="buy-button">🛒 Добавить в корзину</button>
+                    <button class="buy-button">🛒 Купить за 3 900 ₽</button>
                 </div>
             </div>
             
-            <!-- Товар 5: Пистолетик -->
+            <!-- Товар 4: Пистолет -->
             <div class="product-card">
-                <div class="special-offer">ПОПУЛЯРНО</div>
-                <div class="product-image">
-                    🔫🎯
+                <div class="special-badge">ПОСЛЕДНИЙ</div>
+                <div class="product-header">
+                    <div class="product-icon">🔫🎯</div>
+                    <div class="product-title">Пистолет с пульками и гильзами</div>
                 </div>
-                <div class="product-info">
-                    <h3 class="product-title">Пистолетик с пульками и гильзами</h3>
-                    <div class="stock">В наличии: 12 шт</div>
-                    <div class="product-price">1 500 ₽</div>
-                    <ul class="product-features">
-                        <li>🎯 6 пулек в комплекте</li>
-                        <li>🔊 Звуковые эффекты</li>
-                        <li>💡 Светодиодная подсветка</li>
-                        <li>🔋 Батарейки в комплекте</li>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 12 шт</div>
+                    <div class="product-price">1 600 ₽</div>
+                    <div class="product-description">
+                        <p><strong>Пистолет с пульками и выбросом гильз. Автоматика, подвижный затвор. 2 магазина. Всё в наборе!</strong></p>
+                        <p>Остался последний, успейте купить по сниженной цене!</p>
+                        <p><strong>ВНИМАНИЕ: РАБОТАЕТ В АВТОМАТИЧЕСКОМ РЕЖИМЕ БЕЗ БАТАРЕЕК И АККУМУЛЯТОРА!</strong></p>
+                        <p>Почему этот пистолет — лучший выбор?</p>
+                        <p>· Максимальная реалистичность: гильза вылетает, затвор двигается</p>
+                        <p>· Автоматическая стрельба: не нужно перезаряжать</p>
+                        <p>· Патронник в патронник: уникальная система перезарядки</p>
+                        <p>· Полный комплект: всё для игры сразу</p>
+                    </div>
+                    <ul class="features-list">
+                        <li>🎯 2 магазина в комплекте</li>
+                        <li>🔊 Реалистичные звуковые эффекты</li>
+                        <li>⚡ Автоматическая работа</li>
                         <li>🛡️ Безопасные пульки</li>
-                        <li>🎁 Дополнительные гильзы</li>
+                        <li>🎁 Полный набор аксессуаров</li>
                     </ul>
-                    <button class="buy-button">🛒 Добавить в корзину</button>
+                    <button class="buy-button">🛒 Купить за 1 600 ₽</button>
                 </div>
             </div>
             
-            <!-- Товар 6: Дополнительный (бесплатный подарок) -->
+            <!-- Товар 5: Конструктор LEGO -->
             <div class="product-card">
-                <div class="special-offer">ПОДАРОК</div>
-                <div class="product-image">
-                    🎁✨
+                <div class="special-badge">НОВОГОДНИЙ</div>
+                <div class="product-header">
+                    <div class="product-icon">🎅🧱</div>
+                    <div class="product-title">Конструктор LEGO Новогодний Эльф</div>
                 </div>
-                <div class="product-info">
-                    <h3 class="product-title">Набор наклеек с драконами</h3>
-                    <div class="stock">Бесплатно при заказе от 2000₽</div>
-                    <div class="product-price">0 ₽</div>
-                    <ul class="product-features">
-                        <li>🐉 24 наклейки в наборе</li>
-                        <li>🌈 Разноцветные</li>
-                        <li>📏 Размер: от 3 до 15 см</li>
-                        <li>🎨 Качественная печать</li>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 18 шт</div>
+                    <div class="product-price">600 ₽</div>
+                    <div class="product-description">
+                        <p><strong>Новогодний конструктор LEGO Эльф | Сборная модель | Подарок на Новый год!</strong></p>
+                        <p>Продается новый волшебный конструктор LEGO «Новогодний Эльф». Соберите своими руками кусочек праздника и подарите близким незабываемое настроение!</p>
+                        <p>После сборки вы получите детализированную фигурку доброго эльфа-помощника с яркими праздничными цветами.</p>
+                        <p><strong>Есть Эльфы и новогодние Олени!</strong></p>
+                    </div>
+                    <ul class="features-list">
+                        <li>🎁 Идеальный новогодний подарок</li>
+                        <li>🧩 Развивает логику и моторику</li>
+                        <li>🎄 Праздничный декор для дома</li>
+                        <li>👨‍👩‍👧‍👦 Для всей семьи</li>
+                        <li>📦 Новая упаковка</li>
                     </ul>
-                    <button class="buy-button" style="background: #4caf50;">🎁 Получить подарок</button>
+                    <button class="buy-button">🛒 Купить за 600 ₽</button>
+                </div>
+            </div>
+            
+            <!-- Товар 6: Карты UNO -->
+            <div class="product-card">
+                <div class="special-badge">НАСТОЛЬНАЯ ИГРА</div>
+                <div class="product-header">
+                    <div class="product-icon">🃏🎲</div>
+                    <div class="product-title">Настольная игра UNO</div>
+                </div>
+                <div class="product-content">
+                    <div class="stock-info">✅ В наличии: 25 шт</div>
+                    <div class="product-price">400 ₽</div>
+                    <div class="product-description">
+                        <p><strong>Классическая настольная игра UNO для веселого времяпровождения!</strong></p>
+                        <p>Легендарная карточная игра, которая объединяет семьи и компании друзей. Простые правила, динамичный геймплей и море эмоций!</p>
+                        <p>Идеально для вечеринок, семейных вечеров, поездок и отдыха на природе. От 2 до 10 игроков, возраст 7+.</p>
+                    </div>
+                    <ul class="features-list">
+                        <li>👨‍👩‍👧‍👦 Для 2-10 игроков</li>
+                        <li>⏱️ Быстрая и динамичная игра</li>
+                        <li>🎯 Простые правила</li>
+                        <li>🎉 Для любого возраста</li>
+                        <li>🎁 Отличный подарок</li>
+                    </ul>
+                    <button class="buy-button">🛒 Купить за 400 ₽</button>
                 </div>
             </div>
         </div>
         
-        <div style="padding: 30px; background: #fff8e1; margin: 20px; border-radius: 15px;">
-            <h3 style="color: #ff9800; margin-bottom: 15px;">🎯 Акции и скидки:</h3>
-            <ul style="color: #666; line-height: 1.6;">
-                <li>🤑 При покупке 2 игрушек - скидка 10%</li>
-                <li>🚚 Бесплатная доставка при заказе от 3000₽</li>
-                <li>🎁 Подарок к каждому заказу</li>
-                <li>⭐ Накопительная система скидок</li>
-            </ul>
+        <div style="background: #fff8e1; padding: 30px; margin: 30px; border-radius: 15px; border: 2px dashed #ffb300;">
+            <h3 style="color: #1976d2; text-align: center; margin-bottom: 20px;">💬 Почему выбирают нас?</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">⭐</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Честные отзывы</h4>
+                    <p style="color: #666;">Наши покупатели довольны!</p>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🚚</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Быстрая отправка</h4>
+                    <p style="color: #666;">Отгружаем в день заказа</p>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🛡️</div>
+                    <h4 style="color: #333; margin-bottom: 10px;">Гарантия качества</h4>
+                    <p style="color: #666;">Проверяем каждый товар</p>
+                </div>
+            </div>
         </div>
         
         <footer>
             <p>© 2024 Магазин игрушек | 8-800-123-45-67</p>
             <p style="margin-top: 10px; font-size: 0.9em; color: #888;">
-                Доставка по всей России • Гарантия качества • Возврат в течение 14 дней
+                Доставка по всей России • Гарантия 14 дней • Возврат товара
+            </p>
+            <p style="margin-top: 15px;">
+                <a href="index.html" style="color: #2196f3; text-decoration: none;">На главную</a> • 
+                <a href="clothes.html" style="color: #2196f3; text-decoration: none;">Одежда</a> • 
+                <a href="accessories.html" style="color: #2196f3; text-decoration: none;">Аксессуары</a>
             </p>
         </footer>
     </div>
     
     <script>
-        // Обработка кнопок "Купить"
+        // Обработка кнопок покупки
         document.querySelectorAll('.buy-button').forEach(button => {
             button.addEventListener('click', function() {
                 const product = this.closest('.product-card');
                 const title = product.querySelector('.product-title').textContent;
                 const price = product.querySelector('.product-price').textContent;
                 
-                alert(`🎉 Товар добавлен в корзину!\n\n${title}\n${price}\n\nПерейдите в корзину для оформления заказа.`);
+                alert(`🎊 ТОВАР ДОБАВЛЕН В КОРЗИНУ!\n\n${title}\n${price}\n\nПерейдите в корзину для оформления заказа.`);
                 
-                // Анимация кнопки
-                this.innerHTML = '✅ Добавлено!';
-                this.style.background = '#4caf50';
+                // Визуальный эффект
+                const originalText = this.innerHTML;
+                this.innerHTML = '✅ ДОБАВЛЕНО В КОРЗИНУ!';
+                this.style.background = '#4CAF50';
                 this.disabled = true;
                 
                 setTimeout(() => {
-                    this.innerHTML = '🛒 Добавить в корзину';
+                    this.innerHTML = originalText;
                     this.style.background = '';
                     this.disabled = false;
                 }, 2000);
