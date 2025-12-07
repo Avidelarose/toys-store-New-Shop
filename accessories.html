@@ -1081,66 +1081,149 @@
                 alert('Ошибка копирования текста. Пожалуйста, скопируйте текст вручную:\n\n' + orderText);
             });
         }
- <script>
-// Исправление для кнопки закрытия корзины
+         <script>
+        
 document.addEventListener('DOMContentLoaded', function() {
-    // Перехватываем клик по крестику
+    // Перехватываем ВСЕ клики на странице
     document.addEventListener('click', function(e) {
-        if (e.target.id === 'close-cart' || 
-            e.target.closest('#close-cart') || 
-            (e.target.style.position === 'fixed' && 
-             e.target.style.background === 'rgba(0, 0, 0, 0.5)' && 
-             document.getElementById('cart-modal'))) {
+        console.log('Клик на элементе:', e.target);
+        
+        // 1. Клик на крестик корзины
+        if (e.target.id === 'close-cart' || e.target.closest('#close-cart')) {
+            console.log('Кликнули на крестик корзины');
             
-            // Ждем завершения анимации
-            setTimeout(function() {
-                // Обновляем все динамические элементы
-                if (window.cart && window.cart.updateBadge) {
-                    window.cart.updateBadge();
-                }
+            // Находим и удаляем модальное окно
+            const modal = document.getElementById('cart-modal');
+            if (modal) {
+                modal.style.transition = 'all 0.3s ease';
+                modal.style.opacity = '0';
+                modal.style.transform = 'translate(-50%, -45%)';
                 
-                // Восстанавливаем обработчики кнопок
-                document.querySelectorAll('.buy-button').forEach(btn => {
-                    if (!btn.onclick) {
-                        btn.onclick = function() {
-                            const card = this.closest('.product-card');
-                            if (card) {
-                                const title = card.querySelector('.product-title')?.textContent || 'Товар';
-                                const price = card.querySelector('.product-price')?.textContent?.replace('₽', '').replace(/\s/g, '') || '0';
-                                
-                                if (window.cart && window.cart.addItem) {
-                                    window.cart.addItem({
-                                        id: 'item_' + Date.now(),
-                                        title: title,
-                                        price: price
-                                    });
-                                }
-                            }
-                        };
+                setTimeout(() => {
+                    if (modal.parentNode) {
+                        modal.parentNode.removeChild(modal);
+                        console.log('Модальное окно удалено');
                     }
-                });
+                }, 300);
+            }
+            
+            // Находим и удаляем оверлей (темный фон)
+            const overlay = document.querySelector('body > div[style*="background: rgba(0,0,0,0.5)"]');
+            if (overlay) {
+                overlay.style.transition = 'opacity 0.3s ease';
+                overlay.style.opacity = '0';
+                
+                setTimeout(() => {
+                    if (overlay.parentNode) {
+                        overlay.parentNode.removeChild(overlay);
+                        console.log('Оверлей удален');
+                    }
+                }, 300);
+            }
+            
+            // ВОССТАНАВЛИВАЕМ ПРОКРУТКУ СТРАНИЦЫ
+            document.body.style.overflow = 'auto';
+            document.body.style.position = 'static';
+            
+            // Обновляем иконку корзины
+            if (window.cart && window.cart.updateBadge) {
+                window.cart.updateBadge();
+            }
+            
+            // Останавливаем дальнейшую обработку события
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+        }
+        
+        // 2. Клик на темный оверлей (фон)
+        if (e.target.style.background === 'rgba(0, 0, 0, 0.5)' && 
+            e.target.style.position === 'fixed' &&
+            document.getElementById('cart-modal')) {
+            
+            console.log('Кликнули на темный фон');
+            
+            // Удаляем модальное окно
+            const modal = document.getElementById('cart-modal');
+            if (modal) {
+                modal.style.transition = 'all 0.3s ease';
+                modal.style.opacity = '0';
+                modal.style.transform = 'translate(-50%, -45%)';
+                
+                setTimeout(() => {
+                    if (modal.parentNode) modal.parentNode.removeChild(modal);
+                }, 300);
+            }
+            
+            // Удаляем сам оверлей
+            const overlay = e.target;
+            overlay.style.transition = 'opacity 0.3s ease';
+            overlay.style.opacity = '0';
+            
+            setTimeout(() => {
+                if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
             }, 300);
+            
+            // Восстанавливаем прокрутку
+            document.body.style.overflow = 'auto';
+            document.body.style.position = 'static';
+            
+            // Обновляем иконку корзины
+            if (window.cart && window.cart.updateBadge) {
+                window.cart.updateBadge();
+            }
+            
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
         }
     });
     
-    // Улучшенная иконка корзины
+    // Исправляем иконку корзины
     const cartIcon = document.getElementById('cart-icon');
     if (cartIcon) {
-        cartIcon.onclick = function() {
+        // Сохраняем оригинальный обработчик
+        const originalClick = cartIcon.onclick;
+        
+        cartIcon.onclick = function(e) {
+            console.log('Клик на иконке корзины');
+            
             if (document.getElementById('cart-modal')) {
-                // Если корзина уже открыта, просто обновляем ее
-                if (typeof updateCartContent === 'function') {
-                    updateCartContent();
-                }
+                // Если корзина уже открыта - закрываем ее
+                const modal = document.getElementById('cart-modal');
+                const overlay = document.querySelector('body > div[style*="background: rgba(0,0,0,0.5)"]');
+                
+                if (modal) modal.remove();
+                if (overlay) overlay.remove();
+                
+                document.body.style.overflow = 'auto';
+                document.body.style.position = 'static';
             } else {
-                // Иначе открываем новую
-                showCartModal();
+                // Иначе открываем новую корзину
+                if (typeof showCartModal === 'function') {
+                    showCartModal();
+                }
             }
+            
+            if (originalClick) originalClick.call(this, e);
         };
     }
+    
+    // Дополнительно: очищаем все модальные окна при загрузке страницы
+    window.addEventListener('load', function() {
+        const modal = document.getElementById('cart-modal');
+        const overlay = document.querySelector('body > div[style*="background: rgba(0,0,0,0.5)"]');
+        
+        if (modal) modal.remove();
+        if (overlay) overlay.remove();
+        
+        document.body.style.overflow = 'auto';
+        document.body.style.position = 'static';
+    });
+    
+    console.log('ФИКС КОРЗИНЫ ЗАГРУЖЕН И АКТИВЕН');
 });
-        <script src="cart-fix.js"></script>
-</script>
+
     
 </body>
 </html>
