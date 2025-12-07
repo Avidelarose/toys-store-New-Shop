@@ -8,177 +8,52 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: Arial;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             padding: 20px;
-            min-height: 100vh;
             transition: background 0.8s ease;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        header {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(90deg, #4f46e5, #7e22ce);
-            color: white;
             border-radius: 20px;
+            padding: 30px;
+        }
+        header { 
+            text-align: center; 
+            padding: 30px;
+            background: #4f46e5;
+            color: white;
+            border-radius: 15px;
             margin-bottom: 30px;
         }
-        h1 { font-size: 2.5em; margin-bottom: 10px; }
-        
-        /* СЕТКА ТОВАРОВ */
-        .products-grid {
+        .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
-        
-        .product-card {
+        .product {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-            border: 2px solid #e5e7eb;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        /* ВИЗУАЛИЗАТОР ВЫБОРА ЦВЕТА */
-        .color-selector {
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .color-circle {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin: 8px;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .color-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-        
-        .color-circle:hover img {
-            transform: scale(1.1);
-        }
-        
-        .color-circle.active {
-            border-color: #7e22ce;
-            transform: scale(1.2);
-            box-shadow: 0 0 25px rgba(126, 34, 206, 0.5);
-        }
-        
-        .color-label {
-            font-size: 13px;
-            margin-top: 8px;
-            color: #4b5563;
-            font-weight: 600;
-        }
-        
-        /* ГЛАВНОЕ ИЗОБРАЖЕНИЕ */
-        .main-image {
-            width: 100%;
-            height: 250px;
-            object-fit: contain;
             border-radius: 15px;
-            margin: 20px 0;
-            background: #f9fafb;
-            padding: 15px;
-            border: 2px solid #e5e7eb;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: all 0.5s ease;
-        }
-        
-        .product-title {
-            font-size: 1.5em;
-            margin: 15px 0 10px;
-            color: #1f2937;
-            font-weight: 700;
-        }
-        
-        .product-price {
-            font-size: 2em;
-            color: #7e22ce;
-            font-weight: bold;
-            margin: 15px 0;
-        }
-        
-        .product-description {
-            color: #6b7280;
-            line-height: 1.6;
-            margin: 15px 0;
-            font-size: 0.95em;
-        }
-        
-        .buy-button {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(90deg, #4f46e5, #7e22ce);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
-        }
-        
-        .buy-button:hover {
-            background: linear-gradient(90deg, #7e22ce, #4f46e5);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(79, 70, 229, 0.4);
-        }
-        
-        .status-message {
+            padding: 20px;
             text-align: center;
-            padding: 15px;
-            margin-top: 20px;
-            background: #f0f9ff;
-            border-radius: 10px;
-            border: 2px solid #0ea5e9;
-            color: #0369a1;
+            border: 2px solid #e5e7eb;
         }
-        
-        /* АДАПТИВНОСТЬ */
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            .color-circle {
-                width: 45px;
-                height: 45px;
-            }
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #f9fafb;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px dashed #d1d5db;
+        }
+        .debug {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid #4f46e5;
         }
     </style>
 </head>
@@ -186,327 +61,126 @@
     <div class="container">
         <header>
             <h1>🧸 Магазин игрушек</h1>
-            <p>Теперь с правильными расширениями файлов!</p>
+            <p>Username: Avidelarose</p>
         </header>
         
-        <div class="products-grid">
-            <!-- ТОВАР 1: ДРАКОН (PNG) -->
-            <div class="product-card" data-product="dragon">
-                <h2 class="product-title">🐉 Дракон светящийся</h2>
-                
-                <div class="color-selector">
-                    <div class="color-circle active" onclick="selectColor(this, 'dragon', 'white', 'png')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/dragons/white.png" 
-                             alt="Белый дракон" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&h=200&fit=crop'">
-                    </div>
-                    <div class="color-label">Белый</div>
-                </div>
-                
-                <img class="main-image" id="dragon-image"
-                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/dragons/white.png" 
-                     alt="Дракон"
-                     onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop'">
-                
-                <div class="product-price">450 ₽</div>
-                <div class="product-description">
-                    Светящийся в темноте дракон. 30 см, подвижные элементы.
-                    Идеально для новогоднего настроения и детских игр.
-                </div>
-                
-                <button class="buy-button" onclick="addToCart('Дракон светящийся', 450, 'Белый')">
-                    🛒 Добавить в корзину
-                </button>
+        <div class="product-grid">
+            <div class="product">
+                <h3>🐉 Дракон</h3>
+                <img class="product-image" id="img-dragon" src="" alt="Дракон">
+                <div id="status-dragon">⏳ Ищу фото...</div>
             </div>
             
-            <!-- ТОВАР 2: КАКАШИ (PNG) -->
-            <div class="product-card" data-product="kakashi">
-                <h2 class="product-title">🎭 Фигурка Какаши</h2>
-                
-                <div class="color-selector">
-                    <div class="color-circle active" onclick="selectColor(this, 'kakashi', 'blue', 'png')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/kakashi/blue.png" 
-                             alt="Синий Какаши" onerror="this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=200&fit=crop'">
-                    </div>
-                    <div class="color-label">Синий</div>
-                </div>
-                
-                <img class="main-image" id="kakashi-image"
-                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/kakashi/blue.png" 
-                     alt="Какаши"
-                     onerror="this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop'">
-                
-                <div class="product-price">3 900 ₽</div>
-                <div class="product-description">
-                    Коллекционная фигурка Какаши из Наруто.
-                    Привезена из Японии, детализированная роспись.
-                </div>
-                
-                <button class="buy-button" onclick="addToCart('Фигурка Какаши', 3900, 'Синий')">
-                    🛒 Добавить в корзину
-                </button>
+            <div class="product">
+                <h3>🎭 Какаши</h3>
+                <img class="product-image" id="img-kakashi" src="" alt="Какаши">
+                <div id="status-kakashi">⏳ Ищу фото...</div>
             </div>
             
-            <!-- ТОВАР 3: LABUBU (JPEG) -->
-            <div class="product-card" data-product="labubu">
-                <h2 class="product-title">🧸 Лабубу коллекционная</h2>
-                
-                <div class="color-selector">
-                    <div class="color-circle active" onclick="selectColor(this, 'labubu', 'grey', 'jpeg')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/grey.jpeg" 
-                             alt="Серый Лабубу" onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop'">
-                    </div>
-                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'purple', 'jpeg')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/purple.jpeg" 
-                             alt="Фиолетовый Лабубу" onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop'">
-                    </div>
-                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'red', 'jpeg')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/red.jpeg" 
-                             alt="Красный Лабубу" onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop'">
-                    </div>
-                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'white', 'jpeg')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/white.jpeg" 
-                             alt="Белый Лабубу" onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop'">
-                    </div>
-                </div>
-                
-                <img class="main-image" id="labubu-image"
-                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/grey.jpeg" 
-                     alt="Лабубу"
-                     onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop'">
-                
-                <div class="product-price">2 500 ₽</div>
-                <div class="product-description">
-                    Популярная коллекционная фигурка Лабубу.
-                    4 цвета на выбор. Ограниченная серия.
-                </div>
-                
-                <button class="buy-button" onclick="addToCart('Лабубу коллекционная', 2500, 'Серый')">
-                    🛒 Добавить в корзину
-                </button>
+            <div class="product">
+                <h3>🧸 Лабубу</h3>
+                <img class="product-image" id="img-labubu" src="" alt="Лабубу">
+                <div id="status-labubu">⏳ Ищу фото...</div>
             </div>
             
-            <!-- ТОВАР 4: ПИСТОЛЕТ (PNG) -->
-            <div class="product-card" data-product="pistol">
-                <h2 class="product-title">🔫 Пистолет с пульками</h2>
-                
-                <div class="color-selector">
-                    <div class="color-circle active" onclick="selectColor(this, 'pistol', 'white', 'png')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/pistol/white.png" 
-                             alt="Белый пистолет" onerror="this.src='https://images.unsplash.com/photo-1595263181606-4d9f8b5c832a?w=200&h=200&fit=crop'">
-                    </div>
-                    <div class="color-label">Белый</div>
-                </div>
-                
-                <img class="main-image" id="pistol-image"
-                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/pistol/white.png" 
-                     alt="Пистолет"
-                     onerror="this.src='https://images.unsplash.com/photo-1595263181606-4d9f8b5c832a?w=400&h=300&fit=crop'">
-                
-                <div class="product-price">1 600 ₽</div>
-                <div class="product-description">
-                    Пистолет с автоматическим выбросом гильз.
-                    В комплекте 2 магазина и безопасные пульки.
-                </div>
-                
-                <button class="buy-button" onclick="addToCart('Пистолет с пульками', 1600, 'Белый')">
-                    🛒 Добавить в корзину
-                </button>
+            <div class="product">
+                <h3>🔫 Пистолет</h3>
+                <img class="product-image" id="img-pistol" src="" alt="Пистолет">
+                <div id="status-pistol">⏳ Ищу фото...</div>
             </div>
         </div>
         
-        <div class="status-message" id="status-message">
-            ⏳ Проверяю загрузку фото...
+        <div class="debug">
+            <h3>🔧 Режим отладки:</h3>
+            <div id="debug-info">Запускаю проверку...</div>
+            <button onclick="findAllImages()" style="background: #4f46e5; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-top: 10px;">
+                🔄 Перезапустить поиск
+            </button>
         </div>
     </div>
     
     <script>
-        // КОНФИГУРАЦИЯ С РАЗНЫМИ РАСШИРЕНИЯМИ
         const username = 'Avidelarose';
         const repo = 'toys-images';
         
-        // У каждого товара своё расширение
-        const productExtensions = {
-            'dragon': 'png',
-            'kakashi': 'png', 
-            'labubu': 'jpeg',  // Лабубу - JPEG!
-            'pistol': 'png'
-        };
+        const products = [
+            { id: 'dragon', folder: 'dragons', colors: ['white'] },
+            { id: 'kakashi', folder: 'kakashi', colors: ['blue'] },
+            { id: 'labubu', folder: 'labubu', colors: ['grey', 'purple', 'red', 'white'] },
+            { id: 'pistol', folder: 'pistol', colors: ['white'] }
+        ];
         
-        // Названия цветов
-        const colorNames = {
-            'white': 'Белый',
-            'blue': 'Синий',
-            'grey': 'Серый',
-            'purple': 'Фиолетовый',
-            'red': 'Красный'
-        };
+        // Все возможные расширения
+        const extensions = ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG'];
         
-        // Фоны для цветов
-        const backgroundColors = {
-            'white': 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-            'blue': 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-            'grey': 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
-            'purple': 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
-            'red': 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
-        };
-        
-        // КОРЗИНА
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        // ФУНКЦИЯ ВЫБОРА ЦВЕТА (теперь с расширением)
-        function selectColor(element, product, color, extension) {
-            const card = element.closest('.product-card');
-            
-            // Убираем активный класс
-            card.querySelectorAll('.color-circle').forEach(circle => {
-                circle.classList.remove('active');
-            });
-            
-            // Добавляем активный класс
-            element.classList.add('active');
-            
-            // Обновляем главное фото
-            const mainImage = document.getElementById(`${product}-image`);
+        async function findImage(folder, color) {
             const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/main`;
             
-            // Используем правильное расширение
-            let imageUrl = `${baseUrl}/${product}/${color}.${extension}`;
-            
-            // Анимация смены
-            mainImage.style.opacity = '0.5';
-            mainImage.style.transform = 'scale(0.95)';
-            
-            setTimeout(() => {
-                mainImage.src = imageUrl;
-                mainImage.style.opacity = '1';
-                mainImage.style.transform = 'scale(1)';
-                
-                // Обновляем кнопку
-                const button = card.querySelector('.buy-button');
-                const price = button.getAttribute('onclick').match(/(\d+)/)[0];
-                const productName = button.getAttribute('onclick').match(/'(.*?)'/)[1];
-                const colorName = colorNames[color];
-                
-                button.setAttribute('onclick', `addToCart('${productName}', ${price}, '${colorName}')`);
-                button.innerHTML = `🛒 Добавить в корзину (${colorName})`;
-                
-                // Меняем фон страницы
-                if (backgroundColors[color]) {
-                    document.body.style.background = backgroundColors[color];
-                }
-                
-            }, 200);
-        }
-        
-        // ДОБАВЛЕНИЕ В КОРЗИНУ
-        function addToCart(name, price, color) {
-            const item = {
-                id: Date.now(),
-                name: `${name} (${color})`,
-                price: price,
-                color: color,
-                quantity: 1,
-                date: new Date().toLocaleString('ru-RU')
-            };
-            
-            cart.push(item);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Уведомление
-            const status = document.getElementById('status-message');
-            status.innerHTML = `✅ "${name} (${color})" добавлен в корзину!`;
-            status.style.background = '#d1fae5';
-            status.style.color = '#065f46';
-            status.style.borderColor = '#10b981';
-            
-            setTimeout(() => {
-                status.innerHTML = 'Выберите цвет и добавьте товары в корзину';
-                status.style.background = '#f0f9ff';
-                status.style.color = '#0369a1';
-                status.style.borderColor = '#0ea5e9';
-            }, 3000);
-        }
-        
-        // ПРОВЕРКА ЗАГРУЗКИ ФОТО
-        async function checkImageLoad() {
-            const status = document.getElementById('status-message');
-            const products = ['dragon', 'kakashi', 'labubu', 'pistol'];
-            
-            let loadedCount = 0;
-            
-            for (const product of products) {
-                const extension = productExtensions[product];
-                const color = product === 'labubu' ? 'grey' : 
-                             product === 'kakashi' ? 'blue' : 'white';
-                
-                const imageUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/${product}/${color}.${extension}`;
-                const imgElement = document.getElementById(`${product}-image`);
+            for (const ext of extensions) {
+                const url = `${baseUrl}/${folder}/${color}${ext}`;
                 
                 try {
-                    const response = await fetch(imageUrl, { method: 'HEAD' });
+                    const response = await fetch(url, { method: 'HEAD' });
                     if (response.ok) {
-                        loadedCount++;
-                        console.log(`✅ ${product}: загружено (${extension})`);
-                    } else {
-                        console.log(`❌ ${product}: не найдено`);
-                        // Если фото не найдено, оставляем fallback из onerror
+                        console.log(`✅ Найдено: ${folder}/${color}${ext}`);
+                        return url;
                     }
                 } catch (error) {
-                    console.log(`⚠️ ${product}: ошибка загрузки`);
+                    continue;
                 }
             }
             
-            if (loadedCount === 4) {
-                status.innerHTML = '✅ Все фото загружены с GitHub!';
-                status.style.background = '#d1fae5';
-                status.style.color = '#065f46';
-            } else if (loadedCount > 0) {
-                status.innerHTML = `⚠️ Загружено ${loadedCount}/4 фото. Остальные - демо-изображения.`;
-                status.style.background = '#fef3c7';
-                status.style.color = '#92400e';
-            } else {
-                status.innerHTML = '❌ Фото не загружены. Используются демо-изображения.';
-                status.style.background = '#fee2e2';
-                status.style.color = '#991b1b';
+            // Если не нашли, пробуем Unsplash
+            const unsplashImages = {
+                'dragons/white': 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop',
+                'kakashi/blue': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&fit=crop',
+                'labubu/grey': 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&fit=crop',
+                'pistol/white': 'https://images.unsplash.com/photo-1595263181606-4d9f8b5c832a?w=400&fit=crop'
+            };
+            
+            const fallback = unsplashImages[`${folder}/${color}`];
+            if (fallback) {
+                console.log(`⚠️ Использую Unsplash для: ${folder}/${color}`);
+                return fallback;
             }
+            
+            return null;
         }
         
-        // ИНИЦИАЛИЗАЦИЯ
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🛒 Магазин загружен');
-            console.log('👤 Username:', username);
-            console.log('📁 Репозиторий:', repo);
-            console.log('📸 Расширения:', productExtensions);
+        async function findAllImages() {
+            const debug = document.getElementById('debug-info');
+            debug.innerHTML = '🔍 Начинаю поиск фото...<br>';
             
-            // Проверяем загрузку фото
-            setTimeout(checkImageLoad, 1000);
-            
-            // Автоповорот цветов для Лабубу
-            autoRotateLabubuColors();
-        });
-        
-        // АВТОПОВОРОТ ЦВЕТОВ ДЛЯ LABUBU
-        function autoRotateLabubuColors() {
-            const labubuColors = ['grey', 'purple', 'red', 'white'];
-            let currentIndex = 0;
-            
-            setInterval(() => {
-                const card = document.querySelector('[data-product="labubu"]');
-                if (!card) return;
+            for (const product of products) {
+                const imgElement = document.getElementById(`img-${product.id}`);
+                const statusElement = document.getElementById(`status-${product.id}`);
                 
-                const circles = card.querySelectorAll('.color-circle');
-                const nextColor = labubuColors[currentIndex];
-                
-                circles.forEach(circle => {
-                    const onclickText = circle.getAttribute('onclick');
-                    if (onclickText && onclickText.includes(`'${nextColor}'`)) {
-                        circle.click();
+                // Ищем первое доступное фото для этого товара
+                for (const color of product.colors) {
+                    const url = await findImage(product.folder, color);
+                    
+                    if (url) {
+                        imgElement.src = url;
+                        statusElement.innerHTML = `✅ ${product.folder}/${color}`;
+                        statusElement.style.color = 'green';
+                        debug.innerHTML += `✅ ${product.folder}: ${color}<br>`;
+                        break;
+                    } else {
+                        statusElement.innerHTML = `❌ Фото не найдено`;
+                        statusElement.style.color = 'red';
+                        debug.innerHTML += `❌ ${product.folder}: фото не найдено<br>`;
                     }
-                });
-                
-                currentIndex = (currentIndex + 1) % labubuColors.length;
-            }, 5000); // Меняем цвет каждые 5 секунд
+                }
+            }
+            
+            debug.innerHTML += '<br><strong>📋 Проверьте:</strong><br>' +
+                              '1. Репозиторий должен быть PUBLIC<br>' +
+                              '2. Папки: dragons, kakashi, labubu, pistol<br>' +
+                              '3. Файлы: white.jpg, blue.jpg, grey.jpg и т.д.';
         }
+        
+        // Автозапуск
+        document.addEventListener('DOMContentLoaded', findAllImages);
     </script>
 </body>
 </html>
