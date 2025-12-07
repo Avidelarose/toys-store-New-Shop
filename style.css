@@ -1,0 +1,529 @@
+/* ============================================
+   ГЛОБАЛЬНЫЙ АДАПТИВНЫЙ CSS ФАЙЛ
+   Подключите этот файл ко всем страницам сайта
+   <link rel="stylesheet" href="style.css">
+   ============================================ */
+
+/* 1. META-ТЕГ - добавьте в <head> каждой страницы */
+/*
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+*/
+
+/* 2. СБРОС СТИЛЕЙ И БАЗОВЫЕ НАСТРОЙКИ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: #fff;
+}
+
+/* 3. ОБЩИЕ ЭЛЕМЕНТЫ */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+ul, ol {
+    list-style-position: inside;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 4. КОНТЕЙНЕРЫ И СЕТКА */
+.container {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.col {
+    flex: 1 0 100%;
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+/* 5. ТИПОГРАФИКА (Mobile First) */
+h1 { font-size: 2rem; line-height: 1.2; margin-bottom: 1rem; }
+h2 { font-size: 1.75rem; line-height: 1.3; margin-bottom: 0.875rem; }
+h3 { font-size: 1.5rem; line-height: 1.4; margin-bottom: 0.75rem; }
+h4 { font-size: 1.25rem; line-height: 1.4; margin-bottom: 0.625rem; }
+h5 { font-size: 1.125rem; line-height: 1.5; margin-bottom: 0.5rem; }
+h6 { font-size: 1rem; line-height: 1.5; margin-bottom: 0.5rem; }
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* 6. НАВИГАЦИЯ (адаптивное меню) */
+.navbar {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem 0;
+    position: relative;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #2c3e50;
+    flex-direction: column;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.nav-menu.active {
+    display: flex;
+}
+
+.nav-menu li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.menu-toggle {
+    display: block;
+    background: none;
+    color: white;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+}
+
+/* 7. КНОПКИ */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #3498db;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    border: 2px solid #3498db;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #2980b9;
+    border-color: #2980b9;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #3498db;
+}
+
+.btn-outline:hover {
+    background: #3498db;
+    color: white;
+}
+
+/* 8. КАРТОЧКИ */
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* 9. ФОРМЫ */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* 10. ФУТЕР */
+.footer {
+    background: #34495e;
+    color: white;
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+
+/* ============================================
+   MEDIA QUERIES - АДАПТИВНЫЕ ТОЧКИ ПЕРЕЛОМА
+   ============================================ */
+
+/* ПЛАНШЕТЫ (≥576px) */
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    .col-sm-4 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+    
+    h1 { font-size: 2.25rem; }
+    h2 { font-size: 2rem; }
+}
+
+/* ПЛАНШЕТЫ (горизонтальные ≥768px) */
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    html {
+        font-size: 17px;
+    }
+    
+    .nav-menu {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        background: none;
+        padding: 0;
+    }
+    
+    .nav-menu li {
+        padding: 0 15px;
+        border: none;
+    }
+    
+    .menu-toggle {
+        display: none;
+    }
+    
+    .col-md-4 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+    
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2.25rem; }
+}
+
+/* НОУТБУКИ (≥992px) */
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    html {
+        font-size: 18px;
+    }
+    
+    .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    
+    .col-lg-4 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+    
+    .col-lg-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.5rem; }
+    
+    .row {
+        margin: 0 -15px;
+    }
+    
+    .col {
+        padding: 0 15px;
+    }
+}
+
+/* БОЛЬШИЕ ЭКРАНЫ (≥1200px) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+    
+    html {
+        font-size: 19px;
+    }
+    
+    .col-xl-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    
+    .col-xl-2 {
+        flex: 0 0 16.666%;
+        max-width: 16.666%;
+    }
+    
+    h1 { font-size: 3.5rem; }
+    h2 { font-size: 3rem; }
+}
+
+/* ОЧЕНЬ БОЛЬШИЕ ЭКРАНЫ (≥1400px) */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}
+
+/* ============================================
+   УТИЛИТЫ И ПОМОЩНИКИ
+   ============================================ */
+
+/* Отступы */
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mt-3 { margin-top: 3rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mb-3 { margin-bottom: 3rem; }
+.p-1 { padding: 1rem; }
+.p-2 { padding: 2rem; }
+.p-3 { padding: 3rem; }
+
+/* Выравнивание текста */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Flex утилиты */
+.d-flex { display: flex; }
+.flex-column { flex-direction: column; }
+.justify-center { justify-content: center; }
+.align-center { align-items: center; }
+.flex-wrap { flex-wrap: wrap; }
+
+/* Скрытие/показ по устройствам */
+.mobile-only { display: block; }
+.tablet-only { display: none; }
+.desktop-only { display: none; }
+
+@media (min-width: 768px) {
+    .mobile-only { display: none; }
+    .tablet-only { display: block; }
+}
+
+@media (min-width: 992px) {
+    .tablet-only { display: none; }
+    .desktop-only { display: block; }
+}
+
+/* Фоны и цвета */
+.bg-light { background: #f8f9fa; }
+.bg-dark { background: #343a40; color: white; }
+.text-primary { color: #3498db; }
+.text-secondary { color: #7f8c8d; }
+
+/* Адаптивные изображения */
+.responsive-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.img-cover {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    .img-cover {
+        height: 400px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .img-cover {
+        height: 500px;
+    }
+}
+
+/* Скрыть элемент на мобильных */
+@media (max-width: 575px) {
+    .hide-on-mobile {
+        display: none !important;
+    }
+}
+
+/* Анимации */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   ГОТОВЫЕ КОМПОНЕНТЫ ДЛЯ БЫСТРОГО ИСПОЛЬЗОВАНИЯ
+   ============================================ */
+
+/* Hero секция */
+.hero {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+}
+
+/* Features сетка */
+.features {
+    padding: 3rem 0;
+}
+
+.feature-item {
+    text-align: center;
+    padding: 2rem;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #3498db;
+}
+
+/* Testimonials */
+.testimonial {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+/* Call to Action */
+.cta {
+    background: #2c3e50;
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.cta h2 {
+    margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   ОБРАТНАЯ СОВМЕСТИМОСТЬ И ФИКСЫ
+   ============================================ */
+
+/* Фикс для старых браузеров */
+@supports not (display: grid) {
+    .row {
+        display: block;
+    }
+    
+    .col {
+        float: left;
+        margin-right: 2%;
+    }
+    
+    .col:last-child {
+        margin-right: 0;
+    }
+}
+
+/* Фикс для iOS */
+input, textarea, select {
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+/* Печать */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+    }
+}
