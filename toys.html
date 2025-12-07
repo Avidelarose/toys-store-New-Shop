@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -180,19 +180,54 @@
             gap: 8px;
         }
         
-        .section-title {
-            text-align: center;
-            margin: 30px 0;
-            color: #1976d2;
-            font-size: 1.8em;
-        }
-        
         footer {
             text-align: center;
             padding: 25px;
             color: #666;
             border-top: 1px solid #eee;
             background: #f5f9ff;
+        }
+        
+        /* Стили для иконки корзины */
+        #cart-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #2196f3, #0d47a1);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
+            z-index: 9999;
+            transition: all 0.3s;
+        }
+        
+        #cart-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
+        }
+        
+        #cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff5722;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
         }
         
         @media (max-width: 768px) {
@@ -217,6 +252,20 @@
                 text-align: center;
                 padding: 20px;
             }
+            
+            #cart-icon {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            #cart-badge {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
         }
     </style>
 </head>
@@ -226,8 +275,6 @@
             <a href="index.html" class="back-button">← На главную</a>
             <h1>🧸 ИГРУШКИ И ИГРЫ</h1>
         </header>
-        
-        <h2 class="section-title">🔥 Популярные игрушки</h2>
         
         <div class="products-grid">
             <!-- Товар 1: Дракон светящийся -->
@@ -244,7 +291,7 @@
                         <p><strong>30 см подвижный дракон 29,5см светится в темноте.</strong> Развивает мелкую моторику, успокаивающий эффект. 3D дракон.</p>
                         <p>Дракончика можно использовать и как ёлочная игрушка. Волшебная новогодняя ночь радует вместе с светящимися в темноте дракончиками!</p>
                         <p style="font-style: italic; color: #555; margin-top: 10px;">
-                            "Представь... Полная темнота. И вдруг — едва уловимое движение. Плавный изгиб хвоста, Мерцание, которое затягивает взгляд..... Ты проводишь пальцем по прохладной глади — лёгкий асмр-скрежет чешуек, будто настоящих..."
+                            "Представь... Полная темнота. И вдруг — едва уловимое движение. Плавный изгиб хвоста, Мерцание, которое затягивает взгляд....."
                         </p>
                     </div>
                     <ul class="features-list">
@@ -254,7 +301,9 @@
                         <li>🎄 Можно использовать как ёлочную игрушку</li>
                         <li>🧠 Развивает моторику и воображение</li>
                     </ul>
-                    <button class="buy-button">🛒 Купить за 450 ₽</button>
+                    <button class="buy-button" onclick="addToCart('dragon_001', 'Дракон светящийся в темноте', '450')">
+                        🛒 Купить за 450 ₽
+                    </button>
                 </div>
             </div>
             
@@ -269,12 +318,11 @@
                     <div class="stock-info">✅ В наличии: 22 шт</div>
                     <div class="product-price">550 ₽</div>
                     <div class="product-description">
-                        <p><strong>Подарите себе и своим близким волшебную атмосферу Нового года!</strong> Эта красивая и уютная фигура станет ярким акцентом в вашем интерьере и создаст неповторимое ощущение тепла и праздника.</p>
+                        <p><strong>Подарите себе и своим близким волшебную атмосферу Нового года!</strong> Эта красивая и уютная фигура станет ярким акцентом в вашем интерьере.</p>
                         <p><strong>🌟 Почему этот домик — отличная покупка?</strong></p>
                         <p>· Создает настроение: Мягкое постоянное свечение моментально преображает пространство</p>
                         <p>· Стильный дизайн: Фигура выполнена из керамики и металла</p>
                         <p>· Полная автономность: Работает от батареек!</p>
-                        <p>· Универсальность: Настольный светильник, украшение, декор для фотозоны</p>
                     </div>
                     <ul class="features-list">
                         <li>✨ Автоматическое свечение в темноте</li>
@@ -283,7 +331,9 @@
                         <li>🏠 Размер: 25×20×15 см</li>
                         <li>🎁 Идеальный подарок на Новый год</li>
                     </ul>
-                    <button class="buy-button">🛒 Купить за 550 ₽</button>
+                    <button class="buy-button" onclick="addToCart('house_001', 'Светящийся новогодний домик', '550')">
+                        🛒 Купить за 550 ₽
+                    </button>
                 </div>
             </div>
             
@@ -299,8 +349,8 @@
                     <div class="product-price">3 900 ₽</div>
                     <div class="product-description">
                         <p><strong>Эксклюзивная фигурка Какаши Хатаке (Наруто) 1/6, 10 см, из Японии!</strong></p>
-                        <p>Продается коллекционная фигурка Какаши Хатаке из аниме «Наруто». Это редкий экземпляр, привезенный из Японии, купить который сейчас из-за санкций практически невозможно.</p>
-                        <p>Фигурка выполнена в классическом стиле — Какаши в его iconic форме ниндзя Скрытого Листа с жилетом чунина. Масштаб 1/6, высота около 10 см.</p>
+                        <p>Продается коллекционная фигурка Какаши Хатаке из аниме «Наруто». Это редкий экземпляр, привезенный из Японии.</p>
+                        <p>Фигурка выполнена в классическом стиле — Какаши в его iconic форме ниндзя Скрытого Листа с жилетом чунина.</p>
                     </div>
                     <ul class="features-list">
                         <li>🇯🇵 Привезена из Японии</li>
@@ -308,9 +358,10 @@
                         <li>⚡ В комплекте: молния для руки</li>
                         <li>🎭 Детализированная роспись</li>
                         <li>📜 Ограниченная серия</li>
-                        <li>🎁 Подарочная упаковка</li>
                     </ul>
-                    <button class="buy-button">🛒 Купить за 3 900 ₽</button>
+                    <button class="buy-button" onclick="addToCart('kakashi_001', 'Коллекционная фигурка Какаши', '3900')">
+                        🛒 Купить за 3 900 ₽
+                    </button>
                 </div>
             </div>
             
@@ -328,11 +379,6 @@
                         <p><strong>Пистолет с пульками и выбросом гильз. Автоматика, подвижный затвор. 2 магазина. Всё в наборе!</strong></p>
                         <p>Остался последний, успейте купить по сниженной цене!</p>
                         <p><strong>ВНИМАНИЕ: РАБОТАЕТ В АВТОМАТИЧЕСКОМ РЕЖИМЕ БЕЗ БАТАРЕЕК И АККУМУЛЯТОРА!</strong></p>
-                        <p>Почему этот пистолет — лучший выбор?</p>
-                        <p>· Максимальная реалистичность: гильза вылетает, затвор двигается</p>
-                        <p>· Автоматическая стрельба: не нужно перезаряжать</p>
-                        <p>· Патронник в патронник: уникальная система перезарядки</p>
-                        <p>· Полный комплект: всё для игры сразу</p>
                     </div>
                     <ul class="features-list">
                         <li>🎯 2 магазина в комплекте</li>
@@ -341,7 +387,9 @@
                         <li>🛡️ Безопасные пульки</li>
                         <li>🎁 Полный набор аксессуаров</li>
                     </ul>
-                    <button class="buy-button">🛒 Купить за 1 600 ₽</button>
+                    <button class="buy-button" onclick="addToCart('pistol_001', 'Пистолет с пульками и гильзами', '1600')">
+                        🛒 Купить за 1 600 ₽
+                    </button>
                 </div>
             </div>
             
@@ -357,7 +405,7 @@
                     <div class="product-price">600 ₽</div>
                     <div class="product-description">
                         <p><strong>Новогодний конструктор LEGO Эльф | Сборная модель | Подарок на Новый год!</strong></p>
-                        <p>Продается новый волшебный конструктор LEGO «Новогодний Эльф». Соберите своими руками кусочек праздника и подарите близким незабываемое настроение!</p>
+                        <p>Продается новый волшебный конструктор LEGO «Новогодний Эльф». Соберите своими руками кусочек праздника!</p>
                         <p>После сборки вы получите детализированную фигурку доброго эльфа-помощника с яркими праздничными цветами.</p>
                         <p><strong>Есть Эльфы и новогодние Олени!</strong></p>
                     </div>
@@ -368,7 +416,9 @@
                         <li>👨‍👩‍👧‍👦 Для всей семьи</li>
                         <li>📦 Новая упаковка</li>
                     </ul>
-                    <button class="buy-button">🛒 Купить за 600 ₽</button>
+                    <button class="buy-button" onclick="addToCart('lego_001', 'Конструктор LEGO Новогодний Эльф', '600')">
+                        🛒 Купить за 600 ₽
+                    </button>
                 </div>
             </div>
             
@@ -394,7 +444,9 @@
                         <li>🎉 Для любого возраста</li>
                         <li>🎁 Отличный подарок</li>
                     </ul>
-                    <button class="buy-button">🛒 Купить за 400 ₽</button>
+                    <button class="buy-button" onclick="addToCart('uno_001', 'Настольная игра UNO', '400')">
+                        🛒 Купить за 400 ₽
+                    </button>
                 </div>
             </div>
         </div>
@@ -433,29 +485,500 @@
         </footer>
     </div>
     
+    <!-- Скрипт корзины -->
     <script>
-        // Обработка кнопок покупки
-        document.querySelectorAll('.buy-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const product = this.closest('.product-card');
-                const title = product.querySelector('.product-title').textContent;
-                const price = product.querySelector('.product-price').textContent;
+        // Глобальный объект корзины
+        window.cart = {
+            items: [],
+            total: 0,
+            
+            addItem: function(product) {
+                const existingItem = this.items.find(item => item.id === product.id);
                 
-                alert(`🎊 ТОВАР ДОБАВЛЕН В КОРЗИНУ!\n\n${title}\n${price}\n\nПерейдите в корзину для оформления заказа.`);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    this.items.push({
+                        ...product,
+                        quantity: 1
+                    });
+                }
                 
-                // Визуальный эффект
-                const originalText = this.innerHTML;
-                this.innerHTML = '✅ ДОБАВЛЕНО В КОРЗИНУ!';
-                this.style.background = '#4CAF50';
-                this.disabled = true;
+                this.updateTotal();
+                this.saveToStorage();
+                this.updateBadge();
+                this.showNotification(product.title);
+            },
+            
+            removeItem: function(index) {
+                this.items.splice(index, 1);
+                this.updateTotal();
+                this.saveToStorage();
+                this.updateBadge();
+            },
+            
+            updateQuantity: function(index, quantity) {
+                if (quantity < 1) {
+                    this.removeItem(index);
+                    return;
+                }
+                this.items[index].quantity = quantity;
+                this.updateTotal();
+                this.saveToStorage();
+            },
+            
+            updateTotal: function() {
+                this.total = this.items.reduce((sum, item) => {
+                    return sum + (parseInt(item.price) * item.quantity);
+                }, 0);
+            },
+            
+            saveToStorage: function() {
+                localStorage.setItem('shoppingCart', JSON.stringify({
+                    items: this.items,
+                    total: this.total
+                }));
+            },
+            
+            loadFromStorage: function() {
+                const saved = localStorage.getItem('shoppingCart');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.items = data.items || [];
+                    this.total = data.total || 0;
+                    this.updateBadge();
+                }
+            },
+            
+            showNotification: function(productTitle) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #4CAF50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                    max-width: 300px;
+                `;
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong>Добавлено в корзину!</strong>
+                            <div style="font-size: 0.9em; opacity: 0.9;">${productTitle}</div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
                 
                 setTimeout(() => {
-                    this.innerHTML = originalText;
-                    this.style.background = '';
-                    this.disabled = false;
-                }, 2000);
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+                
+                if (!document.querySelector('#cart-styles')) {
+                    const style = document.createElement('style');
+                    style.id = 'cart-styles';
+                    style.textContent = `
+                        @keyframes slideIn {
+                            from { transform: translateX(100%); opacity: 0; }
+                            to { transform: translateX(0); opacity: 1; }
+                        }
+                        @keyframes slideOut {
+                            from { transform: translateX(0); opacity: 1; }
+                            to { transform: translateX(100%); opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            },
+            
+            updateBadge: function() {
+                const badge = document.getElementById('cart-badge');
+                if (badge) {
+                    const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
+                    badge.textContent = totalItems;
+                    badge.style.display = totalItems > 0 ? 'flex' : 'none';
+                }
+            },
+            
+            clear: function() {
+                this.items = [];
+                this.total = 0;
+                this.saveToStorage();
+                this.updateBadge();
+            },
+            
+            getOrderText: function() {
+                let text = "Здравствуйте, хочу приобрести товары:\n\n";
+                
+                this.items.forEach((item, index) => {
+                    text += `${index + 1}. ${item.title}\n`;
+                    text += `   Цена: ${item.price} ₽\n`;
+                    text += `   Количество: ${item.quantity}\n`;
+                    if (item.color) text += `   Цвет: ${item.color}\n`;
+                    if (item.size) text += `   Размер: ${item.size}\n`;
+                    text += `   Сумма: ${parseInt(item.price) * item.quantity} ₽\n\n`;
+                });
+                
+                text += `\nИтого: ${this.total} ₽\n`;
+                
+                if (this.total > 3000) {
+                    const discount = Math.floor(this.total * 0.1);
+                    text += `Скидка 10%: -${discount} ₽\n`;
+                    text += `Итого со скидкой: ${this.total - discount} ₽\n`;
+                }
+                
+                text += "\n---\n";
+                text += "Ожидаю информацию о доставке.\n";
+                text += "Готов предоставить адрес и данные для доставки.";
+                
+                return text;
+            }
+        };
+
+        // Функция добавления в корзину
+        function addToCart(id, title, price) {
+            window.cart.addItem({
+                id: id,
+                title: title,
+                price: price,
+                color: '',
+                size: ''
+            });
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            window.cart.loadFromStorage();
+            createCartIcon();
+            
+            // Обработка всех кнопок "Купить"
+            document.querySelectorAll('.buy-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                });
             });
         });
+
+        // Создание иконки корзины
+        function createCartIcon() {
+            if (document.getElementById('cart-icon')) return;
+            
+            const cartIcon = document.createElement('div');
+            cartIcon.id = 'cart-icon';
+            cartIcon.innerHTML = '🛒';
+            
+            const badge = document.createElement('div');
+            badge.id = 'cart-badge';
+            
+            cartIcon.appendChild(badge);
+            document.body.appendChild(cartIcon);
+            
+            window.cart.updateBadge();
+            
+            cartIcon.addEventListener('click', showCartModal);
+        }
+
+        // Показать модальное окно корзины
+        function showCartModal() {
+            if (document.getElementById('cart-modal')) return;
+            
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            const modal = document.createElement('div');
+            modal.id = 'cart-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                border-radius: 20px;
+                overflow: hidden;
+                z-index: 10001;
+                animation: slideUp 0.3s ease;
+                display: flex;
+                flex-direction: column;
+            `;
+            
+            const header = document.createElement('div');
+            header.style.cssText = `
+                background: linear-gradient(90deg, #2196f3, #0d47a1);
+                color: white;
+                padding: 25px;
+                text-align: center;
+                position: relative;
+            `;
+            header.innerHTML = `
+                <h2 style="margin: 0; font-size: 1.8em;">🛒 Ваша корзина</h2>
+                <button id="close-cart" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
+            `;
+            
+            const content = document.createElement('div');
+            content.id = 'cart-content';
+            content.style.cssText = `
+                padding: 25px;
+                overflow-y: auto;
+                flex-grow: 1;
+            `;
+            
+            const footer = document.createElement('div');
+            footer.style.cssText = `
+                padding: 25px;
+                background: #f5f9ff;
+                border-top: 1px solid #eee;
+                text-align: center;
+            `;
+            
+            modal.appendChild(header);
+            modal.appendChild(content);
+            modal.appendChild(footer);
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(modal);
+            
+            updateCartContent();
+            
+            document.getElementById('close-cart').addEventListener('click', hideCartModal);
+            overlay.addEventListener('click', hideCartModal);
+            
+            if (!document.querySelector('#cart-modal-styles')) {
+                const style = document.createElement('style');
+                style.id = 'cart-modal-styles';
+                style.textContent = `
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+                    @keyframes slideUp {
+                        from { transform: translate(-50%, -40%); opacity: 0; }
+                        to { transform: translate(-50%, -50%); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Скрыть модальное окно корзины
+        function hideCartModal() {
+            const modal = document.getElementById('cart-modal');
+            const overlay = document.querySelector('#cart-modal + div');
+            
+            if (modal) {
+                modal.style.animation = 'slideDown 0.3s ease';
+                setTimeout(() => modal.remove(), 300);
+            }
+            
+            if (overlay) {
+                overlay.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => overlay.remove(), 300);
+            }
+            
+            document.body.style.overflow = '';
+            
+            if (!document.querySelector('#cart-close-styles')) {
+                const style = document.createElement('style');
+                style.id = 'cart-close-styles';
+                style.textContent = `
+                    @keyframes slideDown {
+                        from { transform: translate(-50%, -50%); opacity: 1; }
+                        to { transform: translate(-50%, -40%); opacity: 0; }
+                    }
+                    @keyframes fadeOut {
+                        from { opacity: 1; }
+                        to { opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // Обновить содержимое корзины
+        function updateCartContent() {
+            const content = document.getElementById('cart-content');
+            const footer = document.querySelector('#cart-modal > div:last-child');
+            
+            if (!content) return;
+            
+            if (window.cart.items.length === 0) {
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 50px;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">😔</div>
+                        <h3 style="color: #666; margin-bottom: 15px;">Корзина пуста</h3>
+                        <p style="color: #999;">Добавьте товары из каталога</p>
+                    </div>
+                `;
+                
+                footer.innerHTML = `
+                    <button onclick="hideCartModal()" style="padding: 12px 30px; background: #2196f3; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
+                        Продолжить покупки
+                    </button>
+                `;
+                return;
+            }
+            
+            const discount = window.cart.total > 3000 ? Math.floor(window.cart.total * 0.1) : 0;
+            const finalTotal = window.cart.total - discount;
+            
+            let itemsHTML = '';
+            window.cart.items.forEach((item, index) => {
+                const itemTotal = parseInt(item.price) * item.quantity;
+                itemsHTML += `
+                    <div style="background: white; border: 1px solid #eee; border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="margin: 0; color: #333;">${item.title}</h4>
+                            <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #ff5722; cursor: pointer; font-size: 20px;">×</button>
+                        </div>
+                        <div style="color: #666; font-size: 0.9em; margin-bottom: 15px;">
+                            <div>Цена: ${item.price} ₽</div>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <button onclick="updateQuantity(${index}, ${item.quantity - 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">-</button>
+                                <span style="font-weight: bold;">${item.quantity} шт</span>
+                                <button onclick="updateQuantity(${index}, ${item.quantity + 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">+</button>
+                            </div>
+                            <div style="font-weight: bold; color: #2196f3; font-size: 1.2em;">
+                                ${itemTotal} ₽
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            content.innerHTML = itemsHTML;
+            
+            footer.innerHTML = `
+                <div style="margin-bottom: 25px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>Товары:</span>
+                        <span>${window.cart.total} ₽</span>
+                    </div>
+                    ${discount > 0 ? `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: #4CAF50;">
+                            <span>Скидка 10%:</span>
+                            <span>-${discount} ₽</span>
+                        </div>
+                    ` : ''}
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2em; border-top: 2px solid #2196f3; padding-top: 10px; margin-top: 10px;">
+                        <span>Итого к оплате:</span>
+                        <span>${finalTotal} ₽</span>
+                    </div>
+                    ${window.cart.total >= 3000 ? `
+                        <div style="background: #e8f5e9; padding: 10px; border-radius: 8px; margin-top: 15px; text-align: center; color: #2e7d32;">
+                            ✅ Вы получаете скидку 10%! Бесплатная доставка при заказе от 5000 ₽
+                        </div>
+                    ` : window.cart.total >= 2000 ? `
+                        <div style="background: #fff3e0; padding: 10px; border-radius: 8px; margin-top: 15px; text-align: center; color: #ef6c00;">
+                            🎯 Добавьте товаров ещё на ${3000 - window.cart.total} ₽ и получите скидку 10%!
+                        </div>
+                    ` : ''}
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button onclick="clearCart()" style="padding: 12px 25px; background: #f5f5f5; color: #666; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-size: 16px; flex: 1;">
+                        Очистить корзину
+                    </button>
+                    <button onclick="proceedToCheckout()" style="padding: 12px 25px; background: linear-gradient(90deg, #4CAF50, #2e7d32); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; flex: 2;">
+                        💬 Оформить заказ в Telegram
+                    </button>
+                </div>
+                
+                <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <p style="color: #666; font-size: 0.9em; text-align: center;">
+                        📞 Контактный телефон для оплаты: <strong>8-800-123-45-67</strong><br>
+                        💰 Доставка оплачивается отдельно, стоимость уточняйте
+                    </p>
+                </div>
+            `;
+        }
+
+        // Глобальные функции для работы с корзиной
+        window.removeFromCart = function(index) {
+            window.cart.removeItem(index);
+            updateCartContent();
+        }
+
+        window.updateQuantity = function(index, quantity) {
+            window.cart.updateQuantity(index, quantity);
+            updateCartContent();
+        }
+
+        window.clearCart = function() {
+            if (confirm('Вы уверены, что хотите очистить корзину?')) {
+                window.cart.clear();
+                updateCartContent();
+            }
+        }
+
+        // Переход к оформлению заказа
+        window.proceedToCheckout = function() {
+            const orderText = window.cart.getOrderText();
+            const telegramLink = 'https://t.me/NewshopNm';
+            
+            navigator.clipboard.writeText(orderText).then(() => {
+                const content = document.getElementById('cart-content');
+                
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 60px; color: #4CAF50; margin-bottom: 20px;">✅</div>
+                        <h3 style="color: #333; margin-bottom: 15px;">Текст заказа скопирован!</h3>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left;">
+                            <h4 style="margin-top: 0; color: #666;">Далее сделайте 3 шага:</h4>
+                            <ol style="color: #666; line-height: 1.6;">
+                                <li><strong>Перейдите в Telegram</strong> по ссылке ниже</li>
+                                <li><strong>Отправьте скопированный текст</strong> нашему менеджеру</li>
+                                <li><strong>Укажите адрес доставки</strong> и подтвердите заказ</li>
+                            </ol>
+                        </div>
+                        <p style="color: #666; margin-bottom: 25px;">
+                            После этого мы свяжемся с вами для уточнения стоимости доставки и предоставим реквизиты для оплаты.
+                        </p>
+                        <div style="display: flex; gap: 15px; justify-content: center;">
+                            <a href="${telegramLink}" target="_blank" style="padding: 15px 30px; background: #0088cc; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 20px;">📱</span>
+                                Перейти в Telegram
+                            </a>
+                            <button onclick="updateCartContent()" style="padding: 15px 25px; background: #f5f5f5; color: #666; border: 1px solid #ddd; border-radius: 10px; cursor: pointer;">
+                                Вернуться к корзине
+                            </button>
+                        </div>
+                        <div style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 10px;">
+                            <h4 style="margin-top: 0; color: #1976d2;">📞 Контактная информация:</h4>
+                            <p style="color: #333; margin: 10px 0;">
+                                <strong>Телефон для оплаты:</strong> 8-800-123-45-67<br>
+                                <strong>Telegram:</strong> @NewshopNm<br>
+                                <strong>Доставка:</strong> Рассчитывается индивидуально
+                            </p>
+                        </div>
+                    </div>
+                `;
+            }).catch(err => {
+                alert('Ошибка копирования текста. Пожалуйста, скопируйте текст вручную:\n\n' + orderText);
+            });
+        }
     </script>
 </body>
 </html>
