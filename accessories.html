@@ -1017,7 +1017,7 @@
             `;
         }
 
-     // Глобальные функции для работы с корзиной
+    // Глобальные функции для работы с корзиной
 window.removeFromCart = function(index) {
     window.cart.removeItem(index);
     updateCartContent();
@@ -1111,37 +1111,6 @@ function addToCart(id, title, price) {
     });
 }
 
-// Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', function() {
-    window.cart.loadFromStorage();
-    createCartIcon(); // Создаем иконку корзины
-    
-    // Обработка всех кнопок "Купить"
-    document.querySelectorAll('.buy-button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-        });
-    });
-    
-    // Устанавливаем первый цвет как выбранный по умолчанию
-    document.querySelectorAll('.color-selector').forEach(selector => {
-        const firstColor = selector.querySelector('.color-option');
-        if (firstColor) {
-            const colorName = firstColor.getAttribute('title') || '';
-            firstColor.style.border = '3px solid #ff9800';
-            firstColor.classList.add('active');
-            window.cart.selectedColor = colorName;
-        }
-    });
-    
-    // Форсированное создание иконки на всякий случай
-    setTimeout(function() {
-        if (!document.getElementById('cart-icon')) {
-            createCartIcon();
-        }
-    }, 100);
-});
-
 // Создание иконки корзины
 function createCartIcon() {
     if (document.getElementById('cart-icon')) return;
@@ -1169,9 +1138,15 @@ function createCartIcon() {
 
 // Показать модальное окно корзины
 function showCartModal() {
-    if (document.getElementById('cart-modal')) return;
+    // Проверяем, не открыта ли уже корзина
+    if (document.getElementById('cart-modal')) {
+        hideCartModal();
+        return;
+    }
     
+    // Создаем оверлей
     const overlay = document.createElement('div');
+    overlay.id = 'cart-overlay';
     overlay.style.cssText = `
         position: fixed;
         top: 0;
@@ -1180,16 +1155,18 @@ function showCartModal() {
         height: 100%;
         background: rgba(0,0,0,0.5);
         z-index: 10000;
-        animation: fadeIn 0.3s ease;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     `;
     
+    // Создаем модальное окно
     const modal = document.createElement('div');
     modal.id = 'cart-modal';
     modal.style.cssText = `
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%) scale(0.9);
         background: white;
         width: 90%;
         max-width: 800px;
@@ -1197,7 +1174,8 @@ function showCartModal() {
         border-radius: 20px;
         overflow: hidden;
         z-index: 10001;
-        animation: slideUp 0.3s ease;
+        opacity: 0;
+        transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
     `;
@@ -1235,78 +1213,72 @@ function showCartModal() {
     modal.appendChild(content);
     modal.appendChild(footer);
     
+    // Добавляем на страницу
     document.body.appendChild(overlay);
     document.body.appendChild(modal);
     
+    // Блокируем прокрутку страницы
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    
+    // Показываем с анимацией
+    setTimeout(() => {
+        overlay.style.opacity = '1';
+        modal.style.opacity = '1';
+        modal.style.transform = 'translate(-50%, -50%) scale(1)';
+    }, 10);
+    
+    // Обновляем содержимое
     updateCartContent();
     
+    // Обработчики закрытия
     document.getElementById('close-cart').addEventListener('click', hideCartModal);
     overlay.addEventListener('click', hideCartModal);
     
-    // Блокируем прокрутку страницы
-    document.body.style.overflow = 'hidden';
+    // Обработчик ESC
+    const escHandler = function(e) {
+        if (e.key === 'Escape') hideCartModal();
+    };
+    document.addEventListener('keydown', escHandler);
     
-    // Добавляем стили для анимации
-    if (!document.querySelector('#cart-modal-styles')) {
-        const style = document.createElement('style');
-        style.id = 'cart-modal-styles';
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @keyframes slideUp {
-                from { transform: translate(-50%, -40%); opacity: 0; }
-                to { transform: translate(-50%, -50%); opacity: 1; }
-            }
-            @keyframes slideDown {
-                from { transform: translate(-50%, -50%); opacity: 1; }
-                to { transform: translate(-50%, -40%); opacity: 0; }
-            }
-            @keyframes fadeOut {
-                from { opacity: 1; }
-                to { opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
+    // Сохраняем обработчик для удаления при закрытии
+    modal.dataset.escHandler = 'true';
 }
 
-
-// Скрыть модальное окно корзины
+// Скрыть модальное окно корзины - РАБОЧАЯ ВЕРСИЯ
 function hideCartModal() {
     const modal = document.getElementById('cart-modal');
-    const overlay = document.querySelector('body > div[style*="background: rgba(0,0,0,0.5)"]');
+    const overlay = document.getElementById('cart-overlay');
     
     if (modal) {
-        modal.style.transition = 'all 0.3s ease';
         modal.style.opacity = '0';
-        modal.style.transform = 'translate(-50%, -45%)';
-        
-        setTimeout(() => {
-            if (modal.parentNode) {
-                modal.parentNode.removeChild(modal);
-            }
-            
-            // ВАЖНО: восстанавливаем прокрутку
-            document.body.style.overflow = 'auto';
-            document.body.style.position = 'static';
-            document.documentElement.style.overflow = 'auto';
-            
-            console.log('Корзина закрыта, прокрутка восстановлена');
-        }, 300);
+        modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
     }
     
     if (overlay) {
-        overlay.style.transition = 'opacity 0.3s ease';
         overlay.style.opacity = '0';
-        
-        setTimeout(() => {
-            if (overlay.parentNode) {
-                overlay.parentNode.removeChild(overlay);
-            }
-        }, 300);
     }
+    
+    // Удаляем обработчик ESC
+    document.removeEventListener('keydown', (e) => {
+        if (e.key === 'Escape') hideCartModal();
+    });
+    
+    // Ждем окончания анимации и удаляем элементы
+    setTimeout(() => {
+        if (modal && modal.parentNode) {
+            modal.parentNode.removeChild(modal);
+        }
+        if (overlay && overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+        }
+        
+        // ВОССТАНАВЛИВАЕМ ПРОКРУТКУ СТРАНИЦЫ - ЭТО САМОЕ ВАЖНОЕ!
+        document.body.style.overflow = 'auto';
+        document.body.style.position = '';
+        document.documentElement.style.overflow = 'auto';
+        document.documentElement.style.position = '';
+    }, 300);
 }
 
 // Обновить содержимое корзины
@@ -1409,4 +1381,35 @@ function updateCartContent() {
         </div>
     `;
 }
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    window.cart.loadFromStorage();
+    createCartIcon(); // Создаем иконку корзины
+    
+    // Обработка всех кнопок "Купить"
+    document.querySelectorAll('.buy-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+        });
+    });
+    
+    // Устанавливаем первый цвет как выбранный по умолчанию
+    document.querySelectorAll('.color-selector').forEach(selector => {
+        const firstColor = selector.querySelector('.color-option');
+        if (firstColor) {
+            const colorName = firstColor.getAttribute('title') || '';
+            firstColor.style.border = '3px solid #ff9800';
+            firstColor.classList.add('active');
+            window.cart.selectedColor = colorName;
+        }
+    });
+    
+    // На всякий случай проверяем иконку
+    setTimeout(function() {
+        if (!document.getElementById('cart-icon')) {
+            createCartIcon();
+        }
+    }, 100);
+});
 </script>
