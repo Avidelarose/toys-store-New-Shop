@@ -514,15 +514,17 @@
     </div>
     
     <script>
-        // КОНФИГУРАЦИЯ С ВАШИМ USERNAME
-        const GITHUB_USERNAME = 'Avidelarose';
+        // ВАЖНО: ВСЕ USERNAME = Avidelarose
+        const GITHUB_USERNAME = 'Avidelarose';  // ← ВОТ ТУТ ИСПРАВЛЕНО!
         const REPO_NAME = 'toys-images';
         const BRANCH = 'main';
         
-        // БАЗОВЫЙ URL ДЛЯ ФОТО
+        // БАЗОВЫЙ URL ДЛЯ ФОТО - ВОТ ОН С Avidelarose!
         const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/${BRANCH}`;
         
-        // МАПИНГ ЦВЕТОВ: имя файла → русское название
+        console.log('🔗 Базовая ссылка для фото:', BASE_URL); // Проверка в консоли
+        
+        // МАПИНГ ЦВЕТОВ
         const COLOR_NAMES = {
             'white': 'Белый',
             'blue': 'Синий',
@@ -547,15 +549,15 @@
         function selectColor(element, product, color) {
             const card = element.closest('.product-card');
             
-            // Убираем активный класс у всех кружков этого товара
+            // Убираем активный класс
             card.querySelectorAll('.color-circle').forEach(circle => {
                 circle.classList.remove('active');
             });
             
-            // Добавляем активный класс нажатому
+            // Добавляем активный класс
             element.classList.add('active');
             
-            // Обновляем главное изображение с анимацией
+            // Обновляем главное изображение
             const mainImage = document.getElementById(`${product}-image`);
             if (mainImage) {
                 mainImage.style.opacity = '0.5';
@@ -568,7 +570,7 @@
                 }, 200);
             }
             
-            // Обновляем текст на кнопке
+            // Обновляем кнопку
             const button = card.querySelector('.buy-button');
             const price = button.getAttribute('onclick').match(/(\d+)/)[0];
             const productName = button.getAttribute('onclick').match(/'(.*?)'/)[1];
@@ -576,16 +578,16 @@
             button.setAttribute('onclick', `addToCart('${productName}', ${price}, '${colorName}')`);
             button.innerHTML = `🛒 Добавить в корзину (${colorName})`;
             
-            // Обновляем текущий цвет для Labubu
+            // Обновляем текст цвета для Labubu
             if (product === 'labubu') {
                 document.getElementById('labubu-current-color').textContent = colorName;
             }
             
-            // Меняем фон страницы в зависимости от цвета
+            // Меняем фон
             changeBackgroundColor(color);
         }
         
-        // СМЕНА ФОНА СТРАНИЦЫ
+        // СМЕНА ФОНА
         function changeBackgroundColor(color) {
             if (BACKGROUND_COLORS[color]) {
                 document.body.style.background = BACKGROUND_COLORS[color];
@@ -597,16 +599,20 @@
             const item = {
                 id: Date.now(),
                 name: `${name} (${color})`,
-                price: price,
+                price: parseInt(price),
                 color: color,
                 quantity: 1,
                 date: new Date().toLocaleString('ru-RU'),
-                image: `${BASE_URL}/${name.toLowerCase().includes('дракон') ? 'dragons' : 
-                        name.toLowerCase().includes('какаши') ? 'kakashi' :
-                        name.toLowerCase().includes('лабубу') ? 'labubu' : 'pistol'}/${color === 'Белый' ? 'white' :
-                        color === 'Синий' ? 'blue' :
-                        color === 'Серый' ? 'grey' :
-                        color === 'Фиолетовый' ? 'purple' : 'red'}.jpg`
+                image: `${BASE_URL}/${
+                    name.toLowerCase().includes('дракон') ? 'dragons' : 
+                    name.toLowerCase().includes('какаши') ? 'kakashi' :
+                    name.toLowerCase().includes('лабубу') ? 'labubu' : 'pistol'
+                }/${
+                    color === 'Белый' ? 'white' :
+                    color === 'Синий' ? 'blue' :
+                    color === 'Серый' ? 'grey' :
+                    color === 'Фиолетовый' ? 'purple' : 'red'
+                }.jpg`
             };
             
             cart.push(item);
@@ -615,7 +621,7 @@
             showNotification(`✅ "${name} (${color})" добавлен в корзину!`);
         }
         
-        // ОБНОВЛЕНИЕ БЕЙДЖА КОРЗИНЫ
+        // ОБНОВЛЕНИЕ БЕЙДЖА
         function updateCartBadge() {
             const badge = document.getElementById('cart-badge');
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -626,11 +632,11 @@
         // ПОКАЗ КОРЗИНЫ
         function showCart() {
             if (cart.length === 0) {
-                showNotification('🛒 Корзина пуста! Добавьте товары из каталога.');
+                showNotification('🛒 Корзина пуста! Добавьте товары.');
                 return;
             }
             
-            // Создаем модальное окно корзины
+            // Модальное окно
             const modal = document.createElement('div');
             modal.style.cssText = `
                 position: fixed;
@@ -677,15 +683,18 @@
                 `;
             });
             
+            const discount = total > 3000 ? Math.floor(total * 0.1) : 0;
+            const finalTotal = total - discount;
+            
             html += `
                 <div style="border-top: 2px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">
                     <div style="display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold; color: #1f2937;">
                         <span>Итого:</span>
-                        <span>${total} ₽</span>
+                        <span>${finalTotal} ₽</span>
                     </div>
-                    ${total > 3000 ? `
+                    ${discount > 0 ? `
                         <div style="background: #d1fae5; color: #065f46; padding: 10px; border-radius: 10px; margin-top: 15px; text-align: center;">
-                            🎉 Вы получаете скидку 10%! Итого: ${Math.floor(total * 0.9)} ₽
+                            🎉 Вы получаете скидку 10%! Итого: ${finalTotal} ₽
                         </div>
                     ` : total > 2000 ? `
                         <div style="background: #fef3c7; color: #92400e; padding: 10px; border-radius: 10px; margin-top: 15px; text-align: center;">
@@ -705,7 +714,7 @@
             
             modal.innerHTML = html;
             
-            // Добавляем оверлей
+            // Оверлей
             const overlay = document.createElement('div');
             overlay.style.cssText = `
                 position: fixed;
@@ -726,12 +735,12 @@
             document.body.appendChild(modal);
         }
         
-        // УДАЛЕНИЕ ТОВАРА ИЗ КОРЗИНЫ
+        // УДАЛЕНИЕ ТОВАРА
         function removeFromCart(index) {
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartBadge();
-            showCart(); // Обновляем вид корзины
+            showCart();
         }
         
         // ИЗМЕНЕНИЕ КОЛИЧЕСТВА
@@ -743,12 +752,12 @@
             cart[index].quantity = newQuantity;
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartBadge();
-            showCart(); // Обновляем вид корзины
+            showCart();
         }
         
         // ОЧИСТКА КОРЗИНЫ
         function clearCart() {
-            if (confirm('Вы уверены, что хотите очистить корзину?')) {
+            if (confirm('Очистить корзину?')) {
                 cart = [];
                 localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartBadge();
@@ -779,31 +788,22 @@
                 orderText += `Скидка 10%: -${discount} ₽\n`;
             }
             orderText += `ИТОГО К ОПЛАТЕ: ${finalTotal} ₽\n\n`;
-            orderText += `Способ оплаты: по согласованию в Telegram\n`;
-            orderText += `Доставка: рассчитывается индивидуально\n\n`;
+            orderText += `Telegram для связи: @NewshopNm\n`;
             orderText += `Готов предоставить адрес для доставки.`;
             
-            // Копируем в буфер обмена
+            // Копируем в буфер
             navigator.clipboard.writeText(orderText).then(() => {
-                const modal = document.querySelector('[style*="position: fixed"][style*="background: white"]');
-                if (modal) modal.remove();
-                const overlay = document.querySelector('[style*="background: rgba(0,0,0,0.5)"]');
-                if (overlay) overlay.remove();
-                
-                showNotification('📋 Текст заказа скопирован! Откройте Telegram...');
-                
-                setTimeout(() => {
-                    window.open('https://t.me/NewshopNm', '_blank');
-                }, 1000);
+                document.querySelectorAll('[style*="position: fixed"]').forEach(el => el.remove());
+                showNotification('📋 Текст заказа скопирован! Открываю Telegram...');
+                setTimeout(() => window.open('https://t.me/NewshopNm', '_blank'), 1000);
             }).catch(() => {
-                alert('Пожалуйста, скопируйте текст вручную:\n\n' + orderText);
+                alert('Скопируйте вручную:\n\n' + orderText);
                 window.open('https://t.me/NewshopNm', '_blank');
             });
         }
         
         // УВЕДОМЛЕНИЕ
         function showNotification(text) {
-            // Удаляем предыдущие уведомления
             document.querySelectorAll('.notification').forEach(n => n.remove());
             
             const notification = document.createElement('div');
@@ -833,7 +833,7 @@
             }, 3000);
         }
         
-        // АВТОСМЕНА ЦВЕТОВ ДЛЯ LABUBU
+        // АВТОСМЕНА ЦВЕТОВ
         function autoRotateLabubuColors() {
             const labubuColors = ['grey', 'purple', 'red', 'white'];
             let currentIndex = 0;
@@ -857,14 +857,11 @@
         
         // ИНИЦИАЛИЗАЦИЯ
         document.addEventListener('DOMContentLoaded', () => {
-            // Загружаем корзину
             cart = JSON.parse(localStorage.getItem('cart')) || [];
             updateCartBadge();
-            
-            // Запускаем автоповорот цветов для Labubu
             autoRotateLabubuColors();
             
-            // Добавляем CSS для анимаций
+            // CSS для анимаций
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes slideIn {
@@ -877,20 +874,14 @@
                 }
             `;
             document.head.appendChild(style);
-            
-            console.log('✅ Магазин Avidelarose загружен!');
-            console.log('📸 Фото загружаются с:', BASE_URL);
         });
         
-        // Глобальные функции для кнопок в корзине
+        // Глобальные функции
         window.removeFromCart = removeFromCart;
         window.updateQuantity = updateQuantity;
         window.clearCart = clearCart;
         window.checkout = checkout;
     </script>
-    <script src="newyear.js"></script>
-
-<script>
 document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
