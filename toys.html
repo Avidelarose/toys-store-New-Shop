@@ -7,17 +7,17 @@
     <style>
         * {
             margin: 0;
-            padding: 0;  
+            padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -26,14 +26,14 @@
             box-shadow: 0 10px 30px rgba(33, 150, 243, 0.15);
             overflow: hidden;
         }
-        
+
         header {
             background: linear-gradient(90deg, #2196f3, #0d47a1);
             color: white;
             padding: 25px;
             position: relative;
         }
-        
+
         .back-button {
             position: absolute;
             left: 25px;
@@ -51,20 +51,20 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         h1 {
             font-size: 2.5em;
             text-align: center;
             margin: 0 80px;
         }
-        
+
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
             padding: 40px;
         }
-        
+
         .product-card {
             background: white;
             border-radius: 15px;
@@ -73,36 +73,35 @@
             transition: all 0.3s ease;
             border: 2px solid #e3f2fd;
             position: relative;
-            cursor: pointer;
         }
-        
+
         .product-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(33, 150, 243, 0.2);
         }
-        
+
         .product-header {
             background: linear-gradient(135deg, #2196f3, #1976d2);
             color: white;
             padding: 20px;
             text-align: center;
         }
-        
+
         .product-icon {
             font-size: 50px;
             margin-bottom: 10px;
         }
-        
+
         .product-title {
             font-size: 1.4em;
             font-weight: bold;
             margin-bottom: 5px;
         }
-        
+
         .product-content {
             padding: 25px;
         }
-        
+
         .product-price {
             font-size: 2em;
             color: #2196f3;
@@ -110,20 +109,20 @@
             margin: 15px 0;
             text-align: center;
         }
-        
+
         .product-description {
             color: #666;
             line-height: 1.6;
             margin-bottom: 20px;
             font-size: 0.95em;
         }
-        
+
         .features-list {
             list-style: none;
             margin: 20px 0;
             padding: 0;
         }
-        
+
         .features-list li {
             padding: 8px 0;
             border-bottom: 1px dashed #e0e0e0;
@@ -131,11 +130,11 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .features-list li:last-child {
             border-bottom: none;
         }
-        
+
         .buy-button {
             width: 100%;
             padding: 14px;
@@ -153,12 +152,12 @@
             justify-content: center;
             gap: 10px;
         }
-        
+
         .buy-button:hover {
             background: linear-gradient(90deg, #0d47a1, #2196f3);
             transform: scale(1.02);
         }
-        
+
         .special-badge {
             position: absolute;
             top: 15px;
@@ -171,7 +170,7 @@
             font-weight: bold;
             z-index: 1;
         }
-        
+
         .stock-info {
             color: #4caf50;
             font-weight: bold;
@@ -180,7 +179,7 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         footer {
             text-align: center;
             padding: 25px;
@@ -188,134 +187,197 @@
             border-top: 1px solid #eee;
             background: #f5f9ff;
         }
-        
-        /* Стили для иконки корзины */
-        #cart-icon {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #2196f3, #0d47a1);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+
+        /* НОВЫЕ СТИЛИ ДЛЯ ВЫБОРА ЦВЕТА */
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
-            z-index: 9999;
+        }
+
+        .main-product-image {
+            font-size: 80px;
             transition: all 0.3s;
         }
-        
-        #cart-icon:hover {
+
+        .product-image-container:hover .main-product-image {
             transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
         }
-        
-        #cart-badge {
+
+        .click-hint {
             position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff5722;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(33, 150, 243, 0.9);
             color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
             font-weight: bold;
-            display: none;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        
-        /* СТИЛИ ДЛЯ КРУГОВОГО ВЫБОРА ЦВЕТА */
-        .carousel-overlay {
-            display: none;
+
+        .product-image-container:hover .click-hint {
+            opacity: 1;
+        }
+
+        .selected-color-info {
+            text-align: center;
+            margin: 10px 0;
+            padding: 8px 15px;
+            background: #e3f2fd;
+            border-radius: 20px;
+            border: 2px solid #2196f3;
+            display: inline-block;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* КРУГОВОЕ МЕНЮ ВЫБОРА ЦВЕТА */
+        .color-carousel-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 10000;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
             justify-content: center;
             align-items: center;
+            z-index: 10000;
         }
-        
-        .carousel-container {
+
+        .color-carousel-container {
             position: relative;
-            width: 90%;
-            max-width: 500px;
-            height: 500px;
-            perspective: 1000px;
+            width: 600px;
+            height: 600px;
+            perspective: 1200px;
         }
-        
+
         .carousel-semicircle {
             position: absolute;
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-        
-        .carousel-item {
+
+        .color-item {
             position: absolute;
-            width: 150px;
-            height: 150px;
-            border-radius: 10px;
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .carousel-item:hover {
-            transform: scale(1.05);
+            transition: all 0.4s;
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border: 3px solid white;
         }
-        
-        .carousel-item img {
+
+        .color-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        .carousel-center {
+
+        .color-item:hover {
+            transform: scale(1.15);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+
+        .center-display {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             background: white;
-            border-radius: 15px;
-            z-index: 10;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            z-index: 100;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
         }
-        
-        .carousel-center img {
+
+        .center-display img {
             width: 120px;
             height: 120px;
             object-fit: contain;
             margin-bottom: 10px;
+            border-radius: 10px;
         }
-        
-        .carousel-center .color-name {
+
+        .center-color-name {
             font-size: 18px;
             font-weight: bold;
             color: #333;
-            margin-top: 10px;
+            margin-top: 5px;
         }
-        
+
+        .carousel-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 101;
+        }
+
+        .carousel-btn {
+            background: rgba(33, 150, 243, 0.9);
+            border: none;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(33, 150, 243, 1);
+            transform: scale(1.1);
+        }
+
+        .select-color-btn {
+            background: linear-gradient(90deg, #4CAF50, #2e7d32);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .select-color-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
         .close-carousel {
             position: absolute;
             top: 20px;
@@ -323,145 +385,117 @@
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 10001;
-        }
-        
-        .carousel-nav {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 10001;
-        }
-        
-        .carousel-nav button {
-            background: rgba(255,255,255,0.3);
-            border: none;
-            color: white;
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            font-size: 24px;
+            font-size: 30px;
             cursor: pointer;
+            z-index: 10001;
             transition: all 0.3s;
         }
-        
-        .carousel-nav button:hover {
-            background: rgba(255,255,255,0.5);
-            transform: scale(1.1);
+
+        .close-carousel:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
         }
-        
-        .product-image-placeholder {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+        /* ИКОНКА КОРЗИНЫ */
+        #cart-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #2196f3, #0d47a1);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
-            margin-bottom: 20px;
+            font-size: 28px;
             cursor: pointer;
-            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
+            z-index: 9999;
+            transition: all 0.3s;
         }
-        
-        .color-label {
-            text-align: center;
-            margin-top: 10px;
+
+        #cart-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
+        }
+
+        #cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff5722;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
             font-weight: bold;
-            color: #666;
+            display: none;
         }
-        
-        .selected-color {
-            background: #e3f2fd;
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin-top: 10px;
-            display: inline-block;
-            border: 2px solid #2196f3;
-        }
-        
+
         @media (max-width: 768px) {
             .products-grid {
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
-            
+
             h1 {
                 font-size: 2em;
                 margin: 0 60px;
             }
-            
+
             .back-button {
                 position: static;
                 transform: none;
                 margin-bottom: 15px;
                 width: fit-content;
             }
-            
+
             header {
                 text-align: center;
                 padding: 20px;
             }
-            
-            #cart-icon {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-            
-            #cart-badge {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
-            }
-            
-            .carousel-container {
+
+            .color-carousel-container {
+                width: 90%;
                 height: 400px;
             }
-            
-            .carousel-item {
-                width: 120px;
-                height: 120px;
+
+            .color-item {
+                width: 90px;
+                height: 90px;
             }
-            
-            .carousel-center {
-                width: 150px;
-                height: 150px;
+
+            .center-display {
+                width: 140px;
+                height: 140px;
             }
-            
-            .carousel-center img {
+
+            .center-display img {
                 width: 80px;
                 height: 80px;
             }
-        }
-        
-        @media (max-width: 480px) {
-            .carousel-container {
-                height: 300px;
+
+            .carousel-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
             }
-            
-            .carousel-item {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .carousel-center {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .carousel-center img {
+
+            #cart-icon {
+                bottom: 20px;
+                right: 20px;
                 width: 60px;
                 height: 60px;
+                font-size: 24px;
             }
         }
     </style>
@@ -472,41 +506,41 @@
             <a href="index.html" class="back-button">← На главную</a>
             <h1>🧸 ИГРУШКИ И ИГРЫ</h1>
         </header>
-        
+
         <div class="products-grid">
             <!-- Товар 1: Дракон светящийся -->
-            <div class="product-card" data-product-id="dragon_001" data-product-name="Дракон светящийся в темноте" data-product-price="450">
+            <div class="product-card">
                 <div class="special-badge">ХИТ ПРОДАЖ</div>
                 <div class="product-header">
                     <div class="product-icon">🐉✨</div>
                     <div class="product-title">Дракон светящийся в темноте</div>
                 </div>
                 <div class="product-content">
-                    <div class="product-image-placeholder" onclick="openColorCarousel('dragon_001')">
-                        🐉✨
+                    <div class="product-image-container" onclick="openColorSelector('dragon')">
+                        <div class="main-product-image">🐉</div>
+                        <div class="click-hint">Выбрать цвет</div>
                     </div>
-                    <div class="selected-color" id="selected-color-dragon_001" style="display: none;">
-                        Выбран цвет: <span id="color-name-dragon_001">белый</span>
+                    <div class="selected-color-info" id="selected-color-dragon" style="display: none;">
+                        Выбран цвет: <span id="color-name-dragon">белый</span>
                     </div>
                     <div class="stock-info">✅ В наличии: 15 шт</div>
                     <div class="product-price">450 ₽</div>
                     <div class="product-description">
                         <p><strong>30 см подвижный дракон 29,5см светится в темноте.</strong> Развивает мелкую моторику, успокаивающий эффект. 3D дракон.</p>
-                        <p>Дракончика можно использовать и как ёлочная игрушка. Волшебная новогодняя ночь радует вместе с светящимися в темноте дракончиками!</p>
+                        <p>Дракончика можно использовать и как ёлочная игрушка.</p>
                     </div>
                     <ul class="features-list">
                         <li>🎨 3D дизайн с детальной проработкой</li>
                         <li>✨ Свечение в полной темноте</li>
-                        <li>🎮 Подвижные элементы (хвост, крылья)</li>
-                        <li>🎄 Можно использовать как ёлочную игрушку</li>
-                        <li>🧠 Развивает моторику и воображение</li>
+                        <li>🎮 Подвижные элементы</li>
+                        <li>🎄 Можно как ёлочная игрушка</li>
                     </ul>
-                    <button class="buy-button" onclick="addToCart('dragon_001')">
+                    <button class="buy-button" onclick="addToCart('dragon')">
                         🛒 Купить за 450 ₽
                     </button>
                 </div>
             </div>
-            
+
             <!-- Товар 2: Новогодний домик -->
             <div class="product-card">
                 <div class="special-badge">НОВИНКА</div>
@@ -518,34 +552,34 @@
                     <div class="stock-info">✅ В наличии: 22 шт</div>
                     <div class="product-price">550 ₽</div>
                     <div class="product-description">
-                        <p><strong>Подарите себе и своим близким волшебную атмосферу Нового года!</strong> Эта красивая и уютная фигура станет ярким акцентом в вашем интерьере.</p>
+                        <p><strong>Подарите себе и своим близким волшебную атмосферу Нового года!</strong></p>
                     </div>
                     <ul class="features-list">
-                        <li>✨ Автоматическое свечение в темноте</li>
-                        <li>🔋 Работает от батареек (3x AAA)</li>
-                        <li>🎅 Новогодний дизайн с ёлкой</li>
-                        <li>🏠 Размер: 25×20×15 см</li>
-                        <li>🎁 Идеальный подарок на Новый год</li>
+                        <li>✨ Автоматическое свечение</li>
+                        <li>🔋 Работает от батареек</li>
+                        <li>🎅 Новогодний дизайн</li>
+                        <li>🎁 Идеальный подарок</li>
                     </ul>
-                    <button class="buy-button" onclick="addToCart('house_001', 'Светящийся новогодний домик', '550')">
+                    <button class="buy-button" onclick="addToCart('house', 'Светящийся новогодний домик', '550')">
                         🛒 Купить за 550 ₽
                     </button>
                 </div>
             </div>
-            
+
             <!-- Товар 3: Какаши -->
-            <div class="product-card" data-product-id="kakahi_001" data-product-name="Коллекционная фигурка Какаши" data-product-price="3900">
+            <div class="product-card">
                 <div class="special-badge">КОЛЛЕКЦИОННАЯ</div>
                 <div class="product-header">
                     <div class="product-icon">🎭👑</div>
                     <div class="product-title">Коллекционная фигурка Какаши</div>
                 </div>
                 <div class="product-content">
-                    <div class="product-image-placeholder" onclick="openColorCarousel('kakahi_001')">
-                        🎭👑
+                    <div class="product-image-container" onclick="openColorSelector('kakashi')">
+                        <div class="main-product-image">🎭</div>
+                        <div class="click-hint">Выбрать цвет</div>
                     </div>
-                    <div class="selected-color" id="selected-color-kakahi_001" style="display: none;">
-                        Выбран цвет: <span id="color-name-kakahi_001">синий</span>
+                    <div class="selected-color-info" id="selected-color-kakashi" style="display: none;">
+                        Выбран цвет: <span id="color-name-kakashi">синий</span>
                     </div>
                     <div class="stock-info">⏳ В наличии: 3 шт</div>
                     <div class="product-price">3 900 ₽</div>
@@ -555,80 +589,79 @@
                     <ul class="features-list">
                         <li>🇯🇵 Привезена из Японии</li>
                         <li>📏 Масштаб 1/6 (10 см)</li>
-                        <li>⚡ В комплекте: молния для руки</li>
+                        <li>⚡ В комплекте молния для руки</li>
                         <li>🎭 Детализированная роспись</li>
-                        <li>📜 Ограниченная серия</li>
                     </ul>
-                    <button class="buy-button" onclick="addToCart('kakahi_001')">
+                    <button class="buy-button" onclick="addToCart('kakashi')">
                         🛒 Купить за 3 900 ₽
                     </button>
                 </div>
             </div>
-            
+
             <!-- Товар 4: Пистолет -->
-            <div class="product-card" data-product-id="pistol_001" data-product-name="Пистолет с пульками и гильзами" data-product-price="1600">
+            <div class="product-card">
                 <div class="special-badge">ПОСЛЕДНИЙ</div>
                 <div class="product-header">
                     <div class="product-icon">🔫🎯</div>
                     <div class="product-title">Пистолет с пульками и гильзами</div>
                 </div>
                 <div class="product-content">
-                    <div class="product-image-placeholder" onclick="openColorCarousel('pistol_001')">
-                        🔫🎯
+                    <div class="product-image-container" onclick="openColorSelector('pistol')">
+                        <div class="main-product-image">🔫</div>
+                        <div class="click-hint">Выбрать цвет</div>
                     </div>
-                    <div class="selected-color" id="selected-color-pistol_001" style="display: none;">
-                        Выбран цвет: <span id="color-name-pistol_001">белый</span>
+                    <div class="selected-color-info" id="selected-color-pistol" style="display: none;">
+                        Выбран цвет: <span id="color-name-pistol">белый</span>
                     </div>
                     <div class="stock-info">✅ В наличии: 12 шт</div>
                     <div class="product-price">1 600 ₽</div>
                     <div class="product-description">
-                        <p><strong>Пистолет с пульками и выбросом гильз. Автоматика, подвижный затвор. 2 магазина. Всё в наборе!</strong></p>
+                        <p><strong>Пистолет с пульками и выбросом гильз. Автоматика, подвижный затвор.</strong></p>
                     </div>
                     <ul class="features-list">
                         <li>🎯 2 магазина в комплекте</li>
                         <li>🔊 Реалистичные звуковые эффекты</li>
                         <li>⚡ Автоматическая работа</li>
                         <li>🛡️ Безопасные пульки</li>
-                        <li>🎁 Полный набор аксессуаров</li>
                     </ul>
-                    <button class="buy-button" onclick="addToCart('pistol_001')">
+                    <button class="buy-button" onclick="addToCart('pistol')">
                         🛒 Купить за 1 600 ₽
                     </button>
                 </div>
             </div>
-            
+
             <!-- Товар 5: Лабубу -->
-            <div class="product-card" data-product-id="labubu_001" data-product-name="Фигурка Лабубу" data-product-price="800">
-                <div class="special-badge">ПОПУЛЯРНЫЙ</div>
+            <div class="product-card">
+                <div class="special-badge">РАЗНЫЕ ЦВЕТА</div>
                 <div class="product-header">
                     <div class="product-icon">🧸🌈</div>
                     <div class="product-title">Коллекционная фигурка Лабубу</div>
                 </div>
                 <div class="product-content">
-                    <div class="product-image-placeholder" onclick="openColorCarousel('labubu_001')">
-                        🧸🌈
+                    <div class="product-image-container" onclick="openColorSelector('labubu')">
+                        <div class="main-product-image">🧸</div>
+                        <div class="click-hint">Выбрать цвет (4 варианта)</div>
                     </div>
-                    <div class="selected-color" id="selected-color-labubu_001" style="display: none;">
-                        Выбран цвет: <span id="color-name-labubu_001">серый</span>
+                    <div class="selected-color-info" id="selected-color-labubu" style="display: none;">
+                        Выбран цвет: <span id="color-name-labubu">серый</span>
                     </div>
                     <div class="stock-info">✅ В наличии: 8 шт</div>
                     <div class="product-price">800 ₽</div>
                     <div class="product-description">
-                        <p><strong>Коллекционная фигурка Лабубу из популярной серии.</strong> Высокое качество изготовления, детализация.</p>
+                        <p><strong>Коллекционная фигурка Лабубу из популярной серии.</strong></p>
                     </div>
                     <ul class="features-list">
-                        <li>🎨 Несколько вариантов расцветок</li>
+                        <li>🎨 4 варианта расцветок</li>
                         <li>📏 Высота: 12 см</li>
                         <li>✨ Глянцевое покрытие</li>
                         <li>🎁 Идеально для коллекции</li>
-                        <li>💝 Отличный подарок</li>
                     </ul>
-                    <button class="buy-button" onclick="addToCart('labubu_001')">
+                    <button class="buy-button" onclick="addToCart('labubu')">
                         🛒 Купить за 800 ₽
                     </button>
                 </div>
             </div>
-            
+
             <!-- Товар 6: Карты UNO -->
             <div class="product-card">
                 <div class="special-badge">НАСТОЛЬНАЯ ИГРА</div>
@@ -647,132 +680,127 @@
                         <li>⏱️ Быстрая и динамичная игра</li>
                         <li>🎯 Простые правила</li>
                         <li>🎉 Для любого возраста</li>
-                        <li>🎁 Отличный подарок</li>
                     </ul>
-                    <button class="buy-button" onclick="addToCart('uno_001', 'Настольная игра UNO', '400')">
+                    <button class="buy-button" onclick="addToCart('uno', 'Настольная игра UNO', '400')">
                         🛒 Купить за 400 ₽
                     </button>
                 </div>
             </div>
         </div>
-        
+
         <footer>
             <p>© 2024 Магазин игрушек | 8-800-123-45-67</p>
             <p style="margin-top: 10px; font-size: 0.9em; color: #888;">
                 Доставка по всей России • Гарантия 14 дней • Возврат товара
             </p>
-            <p style="margin-top: 15px;">
-                <a href="index.html" style="color: #2196f3; text-decoration: none;">На главную</a> • 
-                <a href="clothes.html" style="color: #2196f3; text-decoration: none;">Одежда</a> • 
-                <a href="accessories.html" style="color: #2196f3; text-decoration: none;">Аксессуары</a>
-            </p>
         </footer>
     </div>
-    
-    <!-- Круговое меню выбора цвета -->
-    <div class="carousel-overlay" id="colorCarousel">
-        <button class="close-carousel" onclick="closeColorCarousel()">×</button>
-        <div class="carousel-container">
+
+    <!-- КРУГОВОЕ МЕНЮ ВЫБОРА ЦВЕТА -->
+    <div class="color-carousel-overlay" id="colorCarousel">
+        <button class="close-carousel" onclick="closeColorSelector()">×</button>
+        <div class="color-carousel-container">
             <div class="carousel-semicircle" id="carouselSemicircle"></div>
-            <div class="carousel-center">
+            <div class="center-display">
                 <img id="centerImage" src="" alt="Выбранный цвет">
-                <div class="color-name" id="centerColorName"></div>
-                <button class="buy-button" style="margin-top: 15px; padding: 8px 20px;" id="selectColorBtn">
+                <div class="center-color-name" id="centerColorName"></div>
+                <button class="select-color-btn" onclick="selectColor()">
                     Выбрать этот цвет
                 </button>
             </div>
-            <div class="carousel-nav">
-                <button onclick="rotateCarousel('prev')">←</button>
-                <button onclick="rotateCarousel('next')">→</button>
+            <div class="carousel-controls">
+                <button class="carousel-btn" onclick="rotateCarousel('left')">←</button>
+                <button class="carousel-btn" onclick="rotateCarousel('right')">→</button>
             </div>
         </div>
     </div>
-    
-    <!-- Иконка корзины -->
+
+    <!-- ИКОНКА КОРЗИНЫ -->
     <div id="cart-icon">
         🛒
         <div id="cart-badge"></div>
     </div>
-    
+
 <script>
-// Данные для товаров (для GitHub Pages - относительные пути)
-const productsData = {
-    'dragon_001': {
+// ДАННЫЕ ТОВАРОВ С ИЗОБРАЖЕНИЯМИ (для GitHub Pages)
+const products = {
+    'dragon': {
         name: 'Дракон светящийся в темноте',
         price: '450',
         colors: [
             {
                 image: 'https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/dragons/white.jpg',
                 name: 'белый',
-                color: 'white'
+                code: 'white'
             }
         ]
     },
-    'kakahi_001': {
+    'kakashi': {
         name: 'Коллекционная фигурка Какаши',
         price: '3900',
         colors: [
             {
                 image: 'https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/kakahi/blu.jpg',
                 name: 'синий',
-                color: 'blu'
+                code: 'blu'
             }
         ]
     },
-    'pistol_001': {
+    'pistol': {
         name: 'Пистолет с пульками и гильзами',
         price: '1600',
         colors: [
             {
                 image: 'https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/pistol/white.jpg',
                 name: 'белый',
-                color: 'white'
+                code: 'white'
             }
         ]
     },
-    'labubu_001': {
-        name: 'Фигурка Лабубу',
+    'labubu': {
+        name: 'Коллекционная фигурка Лабубу',
         price: '800',
         colors: [
             {
                 image: 'https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/labubu/grey.jpg',
                 name: 'серый',
-                color: 'grey'
+                code: 'grey'
             },
             {
                 image: 'https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/labubu/purple.jpg',
                 name: 'фиолетовый',
-                color: 'purple'
+                code: 'purple'
             },
             {
                 image: 'https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/labubu/red.jpg',
                 name: 'красный',
-                color: 'red'
+                code: 'red'
             },
             {
                 image: 'https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/labubu/white.jpg',
                 name: 'белый',
-                color: 'white'
+                code: 'white'
             }
         ]
     }
 };
 
-// Глобальные переменные
-let currentProductId = null;
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+let currentProduct = null;
 let currentAngle = 0;
-let selectedColorIndex = 0;
-const itemRadius = 200; // Радиус полукруга
+let currentItemIndex = 0;
+const radius = 200; // Радиус полукруга
+let selectedColors = {}; // Хранит выбранные цвета для каждого товара
 
-// Открыть круговое меню
-function openColorCarousel(productId) {
-    currentProductId = productId;
-    selectedColorIndex = 0;
+// ОТКРЫТЬ КРУГОВОЙ ВЫБОР ЦВЕТА
+function openColorSelector(productId) {
+    currentProduct = productId;
+    currentItemIndex = 0;
     currentAngle = 0;
     
     const carousel = document.getElementById('colorCarousel');
     const semicircle = document.getElementById('carouselSemicircle');
-    const product = productsData[productId];
+    const product = products[productId];
     
     if (!product) return;
     
@@ -780,133 +808,167 @@ function openColorCarousel(productId) {
     semicircle.innerHTML = '';
     
     // Создаем элементы для каждого цвета
-    const totalItems = product.colors.length;
-    const angleStep = Math.PI / (totalItems - 1); // Распределяем по полукругу
+    const items = product.colors;
+    const angleStep = Math.PI / (items.length - 1 || 1); // Угол между элементами
     
-    product.colors.forEach((color, index) => {
-        const item = document.createElement('div');
-        item.className = 'carousel-item';
-        item.dataset.index = index;
+    items.forEach((item, index) => {
+        const colorItem = document.createElement('div');
+        colorItem.className = 'color-item';
+        colorItem.dataset.index = index;
         
-        // Позиционируем по полукругу
+        // Рассчитываем позицию на полукруге
         const angle = -Math.PI/2 + (index * angleStep);
-        const x = Math.cos(angle) * itemRadius;
-        const y = Math.sin(angle) * itemRadius;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
         
-        item.style.transform = `
+        // Добавляем эффект "выпячивания" - центральный элемент ближе
+        const zOffset = Math.sin(angle) * 50;
+        
+        colorItem.style.transform = `
             translate(-50%, -50%)
-            translate3d(${x}px, ${y}px, 0)
+            translate3d(${x}px, ${y}px, ${zOffset}px)
             rotateY(${currentAngle}deg)
         `;
         
         // Создаем изображение
         const img = document.createElement('img');
-        img.src = color.image;
-        img.alt = color.name;
+        img.src = item.image;
+        img.alt = item.name;
         img.onerror = function() {
-            this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><rect width="100%" height="100%" fill="' + (color.color === 'white' ? '#f0f0f0' : color.color) + '"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="' + (color.color === 'white' ? '#000' : '#fff') + '">' + color.name + '</text></svg>';
+            // Если изображение не загрузилось, показываем цветной блок
+            this.style.display = 'none';
+            colorItem.style.backgroundColor = getColorHex(item.code);
+            colorItem.style.display = 'flex';
+            colorItem.style.alignItems = 'center';
+            colorItem.style.justifyContent = 'center';
+            colorItem.style.color = item.code === 'white' ? '#333' : '#fff';
+            colorItem.innerHTML = `<span style="font-weight: bold;">${item.name}</span>`;
         };
         
-        item.appendChild(img);
-        item.onclick = () => selectCarouselItem(index);
-        semicircle.appendChild(item);
+        colorItem.appendChild(img);
+        colorItem.onclick = () => selectCarouselItem(index);
+        semicircle.appendChild(colorItem);
     });
     
-    // Устанавливаем центральное изображение
-    updateCenterImage();
+    // Обновляем центральное изображение
+    updateCenterDisplay();
     
     // Показываем карусель
     carousel.style.display = 'flex';
     
-    // Настраиваем кнопку выбора
-    document.getElementById('selectColorBtn').onclick = function() {
-        selectColor(productId, selectedColorIndex);
-    };
+    // Анимируем появление
+    setTimeout(() => {
+        semicircle.style.transform = `rotateY(${currentAngle}deg)`;
+    }, 10);
 }
 
-// Закрыть круговое меню
-function closeColorCarousel() {
+// ПОЛУЧИТЬ HEX КОД ЦВЕТА
+function getColorHex(colorName) {
+    const colors = {
+        'white': '#ffffff',
+        'blu': '#2196f3',
+        'blue': '#2196f3',
+        'grey': '#9e9e9e',
+        'gray': '#9e9e9e',
+        'purple': '#9c27b0',
+        'red': '#f44336',
+        'black': '#000000',
+        'green': '#4caf50',
+        'yellow': '#ffeb3b',
+        'orange': '#ff9800',
+        'pink': '#e91e63'
+    };
+    return colors[colorName.toLowerCase()] || '#cccccc';
+}
+
+// ЗАКРЫТЬ ВЫБОР ЦВЕТА
+function closeColorSelector() {
     document.getElementById('colorCarousel').style.display = 'none';
 }
 
-// Вращение карусели
+// ВРАЩЕНИЕ КАРУСЕЛИ
 function rotateCarousel(direction) {
-    const product = productsData[currentProductId];
-    if (!product) return;
+    const product = products[currentProduct];
+    if (!product || product.colors.length <= 1) return;
     
-    const totalItems = product.colors.length;
-    const angleStep = 360 / totalItems;
+    const itemsCount = product.colors.length;
+    const angleStep = 360 / itemsCount;
     
-    if (direction === 'next') {
+    if (direction === 'right') {
         currentAngle -= angleStep;
-        selectedColorIndex = (selectedColorIndex + 1) % totalItems;
+        currentItemIndex = (currentItemIndex + 1) % itemsCount;
     } else {
         currentAngle += angleStep;
-        selectedColorIndex = (selectedColorIndex - 1 + totalItems) % totalItems;
+        currentItemIndex = (currentItemIndex - 1 + itemsCount) % itemsCount;
     }
     
     updateCarousel();
-    updateCenterImage();
+    updateCenterDisplay();
 }
 
-// Обновление позиций элементов
-function updateCarousel() {
-    const semicircle = document.getElementById('carouselSemicircle');
-    const product = productsData[currentProductId];
+// ВЫБРАТЬ ЭЛЕМЕНТ В КАРУСЕЛИ
+function selectCarouselItem(index) {
+    const product = products[currentProduct];
     if (!product) return;
     
-    const items = semicircle.querySelectorAll('.carousel-item');
-    const totalItems = items.length;
-    const angleStep = Math.PI / (totalItems - 1);
+    const itemsCount = product.colors.length;
+    const diff = index - currentItemIndex;
+    const angleStep = 360 / itemsCount;
+    
+    currentAngle -= diff * angleStep;
+    currentItemIndex = index;
+    
+    updateCarousel();
+    updateCenterDisplay();
+}
+
+// ОБНОВИТЬ КАРУСЕЛЬ
+function updateCarousel() {
+    const semicircle = document.getElementById('carouselSemicircle');
+    const product = products[currentProduct];
+    
+    if (!product) return;
+    
+    const items = semicircle.querySelectorAll('.color-item');
+    const itemsCount = items.length;
+    const angleStep = Math.PI / (itemsCount - 1 || 1);
     
     items.forEach((item, index) => {
         const angle = -Math.PI/2 + (index * angleStep);
-        const x = Math.cos(angle) * itemRadius;
-        const y = Math.sin(angle) * itemRadius;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+        const zOffset = Math.sin(angle) * 50;
         
-        // Добавляем 3D эффект
-        const z = Math.sin(angle) * 50; // Выпячивание вперед
+        // Центральный элемент делаем более выпуклым
+        const scale = index === currentItemIndex ? 1.2 : 1;
+        const z = index === currentItemIndex ? zOffset + 30 : zOffset;
         
         item.style.transform = `
             translate(-50%, -50%)
             translate3d(${x}px, ${y}px, ${z}px)
             rotateY(${currentAngle}deg)
+            scale(${scale})
         `;
         
-        // Делаем центральный элемент больше
-        if (index === selectedColorIndex) {
-            item.style.zIndex = '5';
-            item.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5)';
+        // Подсвечиваем выбранный элемент
+        if (index === currentItemIndex) {
+            item.style.border = '3px solid #4CAF50';
+            item.style.boxShadow = '0 15px 35px rgba(76, 175, 80, 0.6)';
         } else {
-            item.style.zIndex = '1';
-            item.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+            item.style.border = '3px solid white';
+            item.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
         }
     });
     
-    // Анимируем вращение полукруга
     semicircle.style.transform = `rotateY(${currentAngle}deg)`;
 }
 
-// Выбор элемента в карусели
-function selectCarouselItem(index) {
-    const product = productsData[currentProductId];
+// ОБНОВИТЬ ЦЕНТРАЛЬНОЕ ИЗОБРАЖЕНИЕ
+function updateCenterDisplay() {
+    const product = products[currentProduct];
     if (!product) return;
     
-    const totalItems = product.colors.length;
-    const targetAngle = -((index - selectedColorIndex) * (360 / totalItems));
-    currentAngle += targetAngle;
-    selectedColorIndex = index;
-    
-    updateCarousel();
-    updateCenterImage();
-}
-
-// Обновление центрального изображения
-function updateCenterImage() {
-    const product = productsData[currentProductId];
-    if (!product) return;
-    
-    const color = product.colors[selectedColorIndex];
+    const color = product.colors[currentItemIndex];
     const centerImage = document.getElementById('centerImage');
     const centerColorName = document.getElementById('centerColorName');
     
@@ -915,47 +977,53 @@ function updateCenterImage() {
     
     // Обработка ошибки загрузки изображения
     centerImage.onerror = function() {
-        this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="100%" height="100%" fill="' + (color.color === 'white' ? '#f0f0f0' : color.color) + '"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="' + (color.color === 'white' ? '#000' : '#fff') + '">' + color.name + '</text></svg>';
+        this.style.display = 'none';
+        const centerDisplay = document.querySelector('.center-display');
+        centerDisplay.style.backgroundColor = getColorHex(color.code);
+        centerDisplay.style.color = color.code === 'white' ? '#333' : '#fff';
     };
 }
 
-// Выбор цвета
-function selectColor(productId, colorIndex) {
-    const product = productsData[productId];
+// ВЫБРАТЬ ЦВЕТ
+function selectColor() {
+    const product = products[currentProduct];
     if (!product) return;
     
-    const color = product.colors[colorIndex];
+    const color = product.colors[currentItemIndex];
     
-    // Обновляем отображение выбранного цвета
-    const selectedColorElement = document.getElementById(`selected-color-${productId}`);
-    const colorNameElement = document.getElementById(`color-name-${productId}`);
+    // Сохраняем выбранный цвет
+    selectedColors[currentProduct] = color;
     
-    if (selectedColorElement && colorNameElement) {
-        selectedColorElement.style.display = 'block';
-        colorNameElement.textContent = color.name;
+    // Обновляем отображение на карточке товара
+    const colorInfo = document.getElementById(`selected-color-${currentProduct}`);
+    const colorName = document.getElementById(`color-name-${currentProduct}`);
+    
+    if (colorInfo && colorName) {
+        colorInfo.style.display = 'block';
+        colorName.textContent = color.name;
     }
     
-    // Сохраняем выбранный цвет для этого товара
-    if (!window.selectedColors) window.selectedColors = {};
-    window.selectedColors[productId] = color;
+    // Закрываем карусель
+    closeColorSelector();
     
-    closeColorCarousel();
+    // Показываем уведомление
+    showNotification(`Выбран цвет: ${color.name}`);
 }
 
-// Добавление в корзину с учетом выбранного цвета
+// ДОБАВИТЬ В КОРЗИНУ
 function addToCart(productId, productName, productPrice) {
     let name, price;
     
-    if (productsData[productId]) {
-        name = productsData[productId].name;
-        price = productsData[productId].price;
+    if (products[productId]) {
+        name = products[productId].name;
+        price = products[productId].price;
     } else {
         name = productName;
         price = productPrice;
     }
     
-    // Проверяем, есть ли цвет для этого товара
-    const color = window.selectedColors ? window.selectedColors[productId] : null;
+    // Проверяем выбранный цвет
+    const color = selectedColors[productId];
     const colorText = color ? ` (${color.name})` : '';
     
     // Добавляем в корзину
@@ -966,230 +1034,263 @@ function addToCart(productId, productName, productPrice) {
         color: color ? color.name : ''
     };
     
-    // Вызываем функцию корзины из вашего кода
+    // Используем существующую корзину или создаем новую
     if (window.cart && window.cart.addItem) {
         window.cart.addItem(item);
     } else {
-        // Простая заглушка если корзина не инициализирована
-        alert(`Товар "${name}${colorText}" добавлен в корзину!`);
+        // Простая реализация корзины
+        if (!window.simpleCart) {
+            window.simpleCart = {
+                items: [],
+                addItem: function(item) {
+                    this.items.push(item);
+                    updateCartUI();
+                    showNotification(`Добавлено: ${item.title}`);
+                }
+            };
+        }
+        window.simpleCart.addItem(item);
     }
 }
 
-// Инициализация при загрузке
+// ПОКАЗАТЬ УВЕДОМЛЕНИЕ
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+        max-width: 300px;
+        font-weight: bold;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 2000);
+    
+    // Добавляем стили для анимации
+    if (!document.querySelector('#notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+// ОБНОВИТЬ ИНТЕРФЕЙС КОРЗИНЫ
+function updateCartUI() {
+    if (!window.simpleCart) return;
+    
+    const badge = document.getElementById('cart-badge');
+    if (badge) {
+        const totalItems = window.simpleCart.items.length;
+        badge.textContent = totalItems;
+        badge.style.display = totalItems > 0 ? 'flex' : 'none';
+    }
+}
+
+// ПРОСТАЯ КОРЗИНА
+function showSimpleCart() {
+    if (!window.simpleCart || window.simpleCart.items.length === 0) {
+        showNotification('Корзина пуста');
+        return;
+    }
+    
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+    
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    `;
+    
+    let itemsHTML = '';
+    let total = 0;
+    
+    window.simpleCart.items.forEach((item, index) => {
+        const price = parseInt(item.price) || 0;
+        total += price;
+        
+        itemsHTML += `
+            <div style="border-bottom: 1px solid #eee; padding: 15px 0;">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <strong>${item.title}</strong>
+                        <div style="color: #666; font-size: 14px;">${price} ₽</div>
+                    </div>
+                    <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #f44336; cursor: pointer; font-size: 20px;">×</button>
+                </div>
+            </div>
+        `;
+    });
+    
+    modal.innerHTML = `
+        <h2 style="margin-top: 0; color: #2196f3;">🛒 Ваша корзина</h2>
+        ${itemsHTML}
+        <div style="border-top: 2px solid #2196f3; margin-top: 20px; padding-top: 20px;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 18px;">
+                <span>Итого:</span>
+                <span>${total} ₽</span>
+            </div>
+        </div>
+        <div style="margin-top: 25px; display: flex; gap: 15px;">
+            <button onclick="checkoutOrder()" style="flex: 2; padding: 12px; background: linear-gradient(90deg, #4CAF50, #2e7d32); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                💬 Оформить в Telegram
+            </button>
+            <button onclick="clearCart()" style="flex: 1; padding: 12px; background: #f5f5f5; color: #666; border: none; border-radius: 8px; cursor: pointer;">
+                Очистить
+            </button>
+        </div>
+    `;
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '×';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 30px;
+        color: #666;
+        cursor: pointer;
+    `;
+    closeBtn.onclick = () => overlay.remove();
+    
+    modal.appendChild(closeBtn);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    
+    // Закрытие по клику вне модального окна
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.remove();
+    });
+}
+
+// УДАЛИТЬ ИЗ КОРЗИНЫ
+function removeFromCart(index) {
+    if (window.simpleCart && window.simpleCart.items[index]) {
+        window.simpleCart.items.splice(index, 1);
+        updateCartUI();
+        showSimpleCart();
+    }
+}
+
+// ОЧИСТИТЬ КОРЗИНУ
+function clearCart() {
+    if (window.simpleCart) {
+        window.simpleCart.items = [];
+        updateCartUI();
+        document.querySelector('[style*="background: rgba(0,0,0,0.5)"]')?.remove();
+        showNotification('Корзина очищена');
+    }
+}
+
+// ОФОРМИТЬ ЗАКАЗ
+function checkoutOrder() {
+    if (!window.simpleCart || window.simpleCart.items.length === 0) return;
+    
+    let orderText = "Здравствуйте! Хочу приобрести:\n\n";
+    
+    window.simpleCart.items.forEach((item, index) => {
+        orderText += `${index + 1}. ${item.title} - ${item.price} ₽\n`;
+    });
+    
+    const total = window.simpleCart.items.reduce((sum, item) => sum + (parseInt(item.price) || 0), 0);
+    orderText += `\nИтого: ${total} ₽`;
+    orderText += "\n\n---\nОжидаю информацию о доставке.";
+    
+    const telegramLink = "https://t.me/NewshopNm";
+    const encodedText = encodeURIComponent(orderText);
+    const fullLink = `${telegramLink}?text=${encodedText}`;
+    
+    window.open(fullLink, '_blank');
+    clearCart();
+}
+
+// ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ
 document.addEventListener('DOMContentLoaded', function() {
-    // Создаем корзину если её нет
-    if (!window.cart) {
-        window.cart = {
+    // Назначаем обработчик для иконки корзины
+    const cartIcon = document.getElementById('cart-icon');
+    if (cartIcon) {
+        cartIcon.addEventListener('click', showSimpleCart);
+    }
+    
+    // Инициализируем корзину если её нет
+    if (!window.simpleCart) {
+        window.simpleCart = {
             items: [],
             addItem: function(item) {
                 this.items.push(item);
-                updateCartBadge();
-                showNotification(item.title);
+                updateCartUI();
+                showNotification(`Добавлено: ${item.title}`);
             }
         };
     }
     
-    // Функция показа уведомления
-    function showNotification(title) {
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-            max-width: 300px;
-        `;
-        notification.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 24px;">✅</span>
-                <div>
-                    <strong>Добавлено в корзину!</strong>
-                    <div style="font-size: 0.9em; opacity: 0.9;">${title}</div>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }, 3000);
-        
-        // Добавляем стили для анимации
-        if (!document.querySelector('#notification-styles')) {
-            const style = document.createElement('style');
-            style.id = 'notification-styles';
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes slideOut {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(100%); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-    }
+    // Обновляем интерфейс корзины
+    updateCartUI();
     
-    // Обновление бейджа корзины
-    function updateCartBadge() {
-        const badge = document.getElementById('cart-badge');
-        if (badge) {
-            const totalItems = window.cart.items.length;
-            badge.textContent = totalItems;
-            badge.style.display = totalItems > 0 ? 'flex' : 'none';
-        }
-    }
-    
-    // Обработчик клика по иконке корзины
-    document.getElementById('cart-icon').addEventListener('click', function() {
-        showSimpleCartModal();
-    });
-    
-    // Простой показ корзины
-    function showSimpleCartModal() {
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 10000;
-        `;
-        
-        const modal = document.createElement('div');
-        modal.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
-            border-radius: 20px;
-            overflow: hidden;
-            z-index: 10001;
-        `;
-        
-        let itemsHTML = '';
-        let total = 0;
-        
-        if (window.cart.items.length === 0) {
-            itemsHTML = `
-                <div style="padding: 40px; text-align: center;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">😔</div>
-                    <h3 style="color: #666;">Корзина пуста</h3>
-                </div>
-            `;
-        } else {
-            window.cart.items.forEach((item, index) => {
-                total += parseInt(item.price);
-                itemsHTML += `
-                    <div style="padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
-                        <div>
-                            <strong>${item.title}</strong>
-                            <div style="color: #666; font-size: 0.9em;">${item.price} ₽</div>
-                        </div>
-                        <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #ff5722; cursor: pointer;">×</button>
-                    </div>
-                `;
-            });
+    // Автоматически выбираем первый цвет для каждого товара
+    Object.keys(products).forEach(productId => {
+        const product = products[productId];
+        if (product && product.colors.length > 0) {
+            selectedColors[productId] = product.colors[0];
             
-            itemsHTML += `
-                <div style="padding: 20px; background: #f5f9ff;">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2em;">
-                        <span>Итого:</span>
-                        <span>${total} ₽</span>
-                    </div>
-                </div>
-            `;
-        }
-        
-        modal.innerHTML = `
-            <div style="background: linear-gradient(90deg, #2196f3, #0d47a1); color: white; padding: 20px; text-align: center;">
-                <h2 style="margin: 0;">🛒 Ваша корзина</h2>
-                <button onclick="this.closest('div').parentElement.remove(); overlay.remove()" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
-            </div>
-            <div style="max-height: 400px; overflow-y: auto;">
-                ${itemsHTML}
-            </div>
-            <div style="padding: 20px; text-align: center;">
-                ${window.cart.items.length > 0 ? `
-                    <button onclick="checkout()" style="padding: 12px 30px; background: linear-gradient(90deg, #4CAF50, #2e7d32); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; margin-right: 10px;">
-                        Оформить заказ
-                    </button>
-                ` : ''}
-                <button onclick="this.closest('div').parentElement.remove(); overlay.remove()" style="padding: 12px 30px; background: #f5f5f5; color: #666; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
-                    Закрыть
-                </button>
-            </div>
-        `;
-        
-        overlay.appendChild(modal);
-        document.body.appendChild(overlay);
-        
-        // Закрытие по клику вне модального окна
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) {
-                overlay.remove();
+            // Обновляем отображение
+            const colorInfo = document.getElementById(`selected-color-${productId}`);
+            const colorName = document.getElementById(`color-name-${productId}`);
+            
+            if (colorInfo && colorName) {
+                colorInfo.style.display = 'block';
+                colorName.textContent = product.colors[0].name;
             }
-        });
-    }
-    
-    // Функция удаления из корзины
-    window.removeFromCart = function(index) {
-        if (window.cart.items[index]) {
-            window.cart.items.splice(index, 1);
-            updateCartBadge();
-            
-            // Перезагружаем модальное окно корзины
-            document.querySelectorAll('[style*="background: rgba(0,0,0,0.5)"]').forEach(el => el.remove());
-            showSimpleCartModal();
         }
-    };
-    
-    // Функция оформления заказа
-    window.checkout = function() {
-        let orderText = "Здравствуйте! Хочу приобрести:\n\n";
-        
-        window.cart.items.forEach((item, index) => {
-            orderText += `${index + 1}. ${item.title} - ${item.price} ₽\n`;
-        });
-        
-        orderText += `\nИтого: ${window.cart.items.reduce((sum, item) => sum + parseInt(item.price), 0)} ₽`;
-        orderText += "\n\nОжидаю информацию о доставке.";
-        
-        const telegramLink = "https://t.me/NewshopNm";
-        const encodedText = encodeURIComponent(orderText);
-        const fullLink = `${telegramLink}?text=${encodedText}`;
-        
-        window.open(fullLink, '_blank');
-    };
-    
-    // Инициализируем бейдж
-    updateCartBadge();
+    });
 });
 
-// Обработка клика вне карусели
-document.addEventListener('click', function(event) {
-    const carousel = document.getElementById('colorCarousel');
-    if (carousel && carousel.style.display === 'flex') {
-        if (!event.target.closest('.carousel-container') && 
-            !event.target.closest('.close-carousel')) {
-            closeColorCarousel();
-        }
+// Закрытие карусели по ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeColorSelector();
     }
 });
 </script>
