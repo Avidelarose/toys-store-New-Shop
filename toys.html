@@ -3,112 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧸 Магазин игрушек Avidelarose</title>
+    <title>🧸 Магазин игрушек</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
             min-height: 100vh;
             transition: background 0.8s ease;
         }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.98);
+            background: white;
             border-radius: 25px;
             padding: 30px;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.25);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        
         header {
             text-align: center;
-            padding: 35px;
+            padding: 30px;
             background: linear-gradient(90deg, #4f46e5, #7e22ce);
             color: white;
             border-radius: 20px;
-            margin-bottom: 35px;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 30px;
         }
-        
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-        }
-        
-        h1 {
-            font-size: 3em;
-            margin-bottom: 15px;
-            background: linear-gradient(45deg, #fff, #bbdefb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(33, 150, 243, 0.2);
-        }
-        
-        .shop-name {
-            font-size: 1.2em;
-            opacity: 0.9;
-            margin-top: 10px;
-            color: #e0e7ff;
-        }
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
         
         /* СЕТКА ТОВАРОВ */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 35px;
+            gap: 30px;
         }
         
         .product-card {
             background: white;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(33, 150, 243, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #4f46e5, #7e22ce);
-            border-radius: 20px 20px 0 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border: 2px solid #e5e7eb;
         }
         
         .product-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 25px 60px rgba(33, 150, 243, 0.2);
+            transform: translateY(-10px);
         }
         
         /* ВИЗУАЛИЗАТОР ВЫБОРА ЦВЕТА */
         .color-selector {
-            margin: 25px 0;
+            margin: 20px 0;
             text-align: center;
-            padding: 15px;
-            background: linear-gradient(to right, #f8fafc, #f1f5f9);
-            border-radius: 15px;
-            border: 2px solid #e2e8f0;
         }
         
         .color-circle {
@@ -140,12 +86,6 @@
             border-color: #7e22ce;
             transform: scale(1.2);
             box-shadow: 0 0 25px rgba(126, 34, 206, 0.5);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 25px rgba(126, 34, 206, 0.5); }
-            50% { box-shadow: 0 0 35px rgba(126, 34, 206, 0.8); }
         }
         
         .color-label {
@@ -153,67 +93,51 @@
             margin-top: 8px;
             color: #4b5563;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         
         /* ГЛАВНОЕ ИЗОБРАЖЕНИЕ */
         .main-image {
             width: 100%;
-            height: 280px;
+            height: 250px;
             object-fit: contain;
             border-radius: 15px;
             margin: 20px 0;
-            background: linear-gradient(to bottom, #f8fafc, #ffffff);
-            padding: 20px;
+            background: #f9fafb;
+            padding: 15px;
             border: 2px solid #e5e7eb;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             transition: all 0.5s ease;
         }
         
         .product-title {
-            font-size: 1.6em;
-            margin: 20px 0 10px;
+            font-size: 1.5em;
+            margin: 15px 0 10px;
             color: #1f2937;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         
         .product-price {
-            font-size: 2.2em;
+            font-size: 2em;
             color: #7e22ce;
             font-weight: bold;
             margin: 15px 0;
-            background: linear-gradient(45deg, #7e22ce, #4f46e5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 10px;
-            background-color: #f5f3ff;
         }
         
         .product-description {
             color: #6b7280;
-            line-height: 1.7;
-            margin: 20px 0;
-            font-size: 1em;
-            background: linear-gradient(to right, #f9fafb, #f3f4f6);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #7e22ce;
+            line-height: 1.6;
+            margin: 15px 0;
+            font-size: 0.95em;
         }
         
         .buy-button {
             width: 100%;
-            padding: 18px;
+            padding: 16px;
             background: linear-gradient(90deg, #4f46e5, #7e22ce);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -221,107 +145,34 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .buy-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.7s;
         }
         
         .buy-button:hover {
             background: linear-gradient(90deg, #7e22ce, #4f46e5);
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(79, 70, 229, 0.4);
         }
         
-        .buy-button:hover::before {
-            left: 100%;
-        }
-        
-        /* КОРЗИНА */
-        .cart-icon {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #4f46e5, #7e22ce);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            cursor: pointer;
-            box-shadow: 0 15px 40px rgba(79, 70, 229, 0.5);
-            z-index: 1000;
-            transition: all 0.3s;
-            animation: cartFloat 3s ease-in-out infinite;
-            border: 3px solid white;
-        }
-        
-        @keyframes cartFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-        
-        .cart-icon:hover {
-            transform: scale(1.15) rotate(15deg);
-            box-shadow: 0 20px 50px rgba(79, 70, 229, 0.7);
-        }
-        
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: linear-gradient(45deg, #ff6b6b, #ff4757);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: bold;
-            display: none;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-            border: 2px solid white;
-            animation: badgePulse 2s infinite;
-        }
-        
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .status-message {
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            background: #f0f9ff;
+            border-radius: 10px;
+            border: 2px solid #0ea5e9;
+            color: #0369a1;
         }
         
         /* АДАПТИВНОСТЬ */
         @media (max-width: 768px) {
             .products-grid {
                 grid-template-columns: 1fr;
-                gap: 25px;
             }
             
             h1 {
-                font-size: 2.2em;
-            }
-            
-            .cart-icon {
-                bottom: 25px;
-                right: 25px;
-                width: 65px;
-                height: 65px;
-                font-size: 26px;
+                font-size: 2em;
             }
             
             .color-circle {
@@ -329,59 +180,37 @@
                 height: 45px;
             }
         }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-            }
-            
-            header {
-                padding: 25px;
-            }
-            
-            .main-image {
-                height: 220px;
-            }
-            
-            .color-circle {
-                width: 40px;
-                height: 40px;
-                margin: 6px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <a href="index.html" style="color: white; text-decoration: none; font-size: 18px; position: absolute; left: 30px; top: 30px;">← На главную</a>
             <h1>🧸 Магазин игрушек</h1>
-            <div class="shop-name">by Avidelarose</div>
-            <p style="margin-top: 15px; opacity: 0.8;">Выбирайте цвет с помощью фото-превью!</p>
+            <p>Теперь с правильными расширениями файлов!</p>
         </header>
         
         <div class="products-grid">
-            <!-- ТОВАР 1: ДРАКОН -->
+            <!-- ТОВАР 1: ДРАКОН (PNG) -->
             <div class="product-card" data-product="dragon">
-                <h2 class="product-title"><span>🐉</span> Дракон светящийся</h2>
+                <h2 class="product-title">🐉 Дракон светящийся</h2>
                 
                 <div class="color-selector">
-                    <div class="color-circle active" onclick="selectColor(this, 'dragon', 'white')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/dragons/white.jpg" alt="Белый дракон">
+                    <div class="color-circle active" onclick="selectColor(this, 'dragon', 'white', 'png')">
+                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/dragons/white.png" 
+                             alt="Белый дракон" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&h=200&fit=crop'">
                     </div>
                     <div class="color-label">Белый</div>
                 </div>
                 
                 <img class="main-image" id="dragon-image"
-                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/dragons/white.jpg" 
-                     alt="Дракон">
+                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/dragons/white.png" 
+                     alt="Дракон"
+                     onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop'">
                 
                 <div class="product-price">450 ₽</div>
                 <div class="product-description">
-                    <strong>✨ Светящийся в темноте дракон</strong><br>
-                    Размер: 30 см с подвижными элементами.<br>
+                    Светящийся в темноте дракон. 30 см, подвижные элементы.
                     Идеально для новогоднего настроения и детских игр.
-                    Можно использовать как ёлочную игрушку!
                 </div>
                 
                 <button class="buy-button" onclick="addToCart('Дракон светящийся', 450, 'Белый')">
@@ -389,27 +218,27 @@
                 </button>
             </div>
             
-            <!-- ТОВАР 2: КАКАШИ -->
+            <!-- ТОВАР 2: КАКАШИ (PNG) -->
             <div class="product-card" data-product="kakashi">
-                <h2 class="product-title"><span>🎭</span> Фигурка Какаши</h2>
+                <h2 class="product-title">🎭 Фигурка Какаши</h2>
                 
                 <div class="color-selector">
-                    <div class="color-circle active" onclick="selectColor(this, 'kakashi', 'blue')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/kakashi/blue.jpg" alt="Синий Какаши">
+                    <div class="color-circle active" onclick="selectColor(this, 'kakashi', 'blue', 'png')">
+                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/kakashi/blue.png" 
+                             alt="Синий Какаши" onerror="this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=200&fit=crop'">
                     </div>
                     <div class="color-label">Синий</div>
                 </div>
                 
                 <img class="main-image" id="kakashi-image"
-                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/kakashi/blue.jpg" 
-                     alt="Какаши">
+                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/kakashi/blue.png" 
+                     alt="Какаши"
+                     onerror="this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop'">
                 
                 <div class="product-price">3 900 ₽</div>
                 <div class="product-description">
-                    <strong>🇯🇵 Коллекционная фигурка из Японии</strong><br>
-                    Масштаб: 1/6 (10 см)<br>
-                    Детализированная роспись, в комплекте молния для руки.<br>
-                    Ограниченная серия!
+                    Коллекционная фигурка Какаши из Наруто.
+                    Привезена из Японии, детализированная роспись.
                 </div>
                 
                 <button class="buy-button" onclick="addToCart('Фигурка Какаши', 3900, 'Синий')">
@@ -417,38 +246,38 @@
                 </button>
             </div>
             
-            <!-- ТОВАР 3: LABUBU -->
+            <!-- ТОВАР 3: LABUBU (JPEG) -->
             <div class="product-card" data-product="labubu">
-                <h2 class="product-title"><span>🧸</span> Лабубу коллекционная</h2>
+                <h2 class="product-title">🧸 Лабубу коллекционная</h2>
                 
                 <div class="color-selector">
-                    <div class="color-circle active" onclick="selectColor(this, 'labubu', 'grey')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/grey.jpg" alt="Серый Лабубу">
+                    <div class="color-circle active" onclick="selectColor(this, 'labubu', 'grey', 'jpeg')">
+                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/grey.jpeg" 
+                             alt="Серый Лабубу" onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop'">
                     </div>
-                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'purple')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/purple.jpg" alt="Фиолетовый Лабубу">
+                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'purple', 'jpeg')">
+                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/purple.jpeg" 
+                             alt="Фиолетовый Лабубу" onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop'">
                     </div>
-                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'red')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/red.jpg" alt="Красный Лабубу">
+                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'red', 'jpeg')">
+                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/red.jpeg" 
+                             alt="Красный Лабубу" onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop'">
                     </div>
-                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'white')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/white.jpg" alt="Белый Лабубу">
-                    </div>
-                    <div class="color-label" style="display: block; margin-top: 15px;">
-                        Выберите цвет: <span id="labubu-current-color">Серый</span>
+                    <div class="color-circle" onclick="selectColor(this, 'labubu', 'white', 'jpeg')">
+                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/white.jpeg" 
+                             alt="Белый Лабубу" onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop'">
                     </div>
                 </div>
                 
                 <img class="main-image" id="labubu-image"
-                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/grey.jpg" 
-                     alt="Лабубу">
+                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/labubu/grey.jpeg" 
+                     alt="Лабубу"
+                     onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop'">
                 
                 <div class="product-price">2 500 ₽</div>
                 <div class="product-description">
-                    <strong>🌟 Популярная коллекционная фигурка</strong><br>
-                    Доступно 4 цвета на выбор.<br>
-                    Высокое качество исполнения.<br>
-                    Отличный подарок для коллекционеров!
+                    Популярная коллекционная фигурка Лабубу.
+                    4 цвета на выбор. Ограниченная серия.
                 </div>
                 
                 <button class="buy-button" onclick="addToCart('Лабубу коллекционная', 2500, 'Серый')">
@@ -456,27 +285,27 @@
                 </button>
             </div>
             
-            <!-- ТОВАР 4: ПИСТОЛЕТ -->
+            <!-- ТОВАР 4: ПИСТОЛЕТ (PNG) -->
             <div class="product-card" data-product="pistol">
-                <h2 class="product-title"><span>🔫</span> Пистолет с пульками</h2>
+                <h2 class="product-title">🔫 Пистолет с пульками</h2>
                 
                 <div class="color-selector">
-                    <div class="color-circle active" onclick="selectColor(this, 'pistol', 'white')">
-                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/pistol/white.jpg" alt="Белый пистолет">
+                    <div class="color-circle active" onclick="selectColor(this, 'pistol', 'white', 'png')">
+                        <img src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/pistol/white.png" 
+                             alt="Белый пистолет" onerror="this.src='https://images.unsplash.com/photo-1595263181606-4d9f8b5c832a?w=200&h=200&fit=crop'">
                     </div>
                     <div class="color-label">Белый</div>
                 </div>
                 
                 <img class="main-image" id="pistol-image"
-                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/pistol/white.jpg" 
-                     alt="Пистолет">
+                     src="https://raw.githubusercontent.com/Avidelarose/toys-images/main/pistol/white.png" 
+                     alt="Пистолет"
+                     onerror="this.src='https://images.unsplash.com/photo-1595263181606-4d9f8b5c832a?w=400&h=300&fit=crop'">
                 
                 <div class="product-price">1 600 ₽</div>
                 <div class="product-description">
-                    <strong>🎯 Пистолет с автоматическим выбросом гильз</strong><br>
-                    В комплекте: 2 магазина, безопасные пульки.<br>
-                    Реалистичные звуковые эффекты.<br>
-                    Работает в автоматическом режиме!
+                    Пистолет с автоматическим выбросом гильз.
+                    В комплекте 2 магазина и безопасные пульки.
                 </div>
                 
                 <button class="buy-button" onclick="addToCart('Пистолет с пульками', 1600, 'Белый')">
@@ -485,47 +314,26 @@
             </div>
         </div>
         
-        <div style="text-align: center; margin-top: 50px; padding: 30px; background: linear-gradient(to right, #f8fafc, #f1f5f9); border-radius: 20px; border: 2px solid #e2e8f0;">
-            <h3 style="color: #4f46e5; margin-bottom: 20px;">🚚 Условия доставки</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div>
-                    <div style="font-size: 2em; margin-bottom: 10px;">📦</div>
-                    <h4 style="color: #333; margin-bottom: 10px;">Быстрая отправка</h4>
-                    <p style="color: #666;">Отгружаем в день заказа</p>
-                </div>
-                <div>
-                    <div style="font-size: 2em; margin-bottom: 10px;">🛡️</div>
-                    <h4 style="color: #333; margin-bottom: 10px;">Гарантия качества</h4>
-                    <p style="color: #666;">Проверяем каждый товар</p>
-                </div>
-                <div>
-                    <div style="font-size: 2em; margin-bottom: 10px;">💬</div>
-                    <h4 style="color: #333; margin-bottom: 10px;">Поддержка</h4>
-                    <p style="color: #666;">Telegram: @NewshopNm</p>
-                </div>
-            </div>
+        <div class="status-message" id="status-message">
+            ⏳ Проверяю загрузку фото...
         </div>
     </div>
     
-    <!-- ИКОНКА КОРЗИНЫ -->
-    <div class="cart-icon" onclick="showCart()">
-        🛒
-        <div class="cart-badge" id="cart-badge">0</div>
-    </div>
-    
     <script>
-        // ВАЖНО: ВСЕ USERNAME = Avidelarose
-        const GITHUB_USERNAME = 'Avidelarose';  // ← ВОТ ТУТ ИСПРАВЛЕНО!
-        const REPO_NAME = 'toys-images';
-        const BRANCH = 'main';
+        // КОНФИГУРАЦИЯ С РАЗНЫМИ РАСШИРЕНИЯМИ
+        const username = 'Avidelarose';
+        const repo = 'toys-images';
         
-        // БАЗОВЫЙ URL ДЛЯ ФОТО - ВОТ ОН С Avidelarose!
-        const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/${BRANCH}`;
+        // У каждого товара своё расширение
+        const productExtensions = {
+            'dragon': 'png',
+            'kakashi': 'png', 
+            'labubu': 'jpeg',  // Лабубу - JPEG!
+            'pistol': 'png'
+        };
         
-        console.log('🔗 Базовая ссылка для фото:', BASE_URL); // Проверка в консоли
-        
-        // МАПИНГ ЦВЕТОВ
-        const COLOR_NAMES = {
+        // Названия цветов
+        const colorNames = {
             'white': 'Белый',
             'blue': 'Синий',
             'grey': 'Серый',
@@ -533,8 +341,8 @@
             'red': 'Красный'
         };
         
-        // МАПИНГ ЦВЕТОВ ДЛЯ ФОНА
-        const BACKGROUND_COLORS = {
+        // Фоны для цветов
+        const backgroundColors = {
             'white': 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
             'blue': 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
             'grey': 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
@@ -545,8 +353,8 @@
         // КОРЗИНА
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         
-        // ФУНКЦИЯ ВЫБОРА ЦВЕТА
-        function selectColor(element, product, color) {
+        // ФУНКЦИЯ ВЫБОРА ЦВЕТА (теперь с расширением)
+        function selectColor(element, product, color, extension) {
             const card = element.closest('.product-card');
             
             // Убираем активный класс
@@ -557,41 +365,37 @@
             // Добавляем активный класс
             element.classList.add('active');
             
-            // Обновляем главное изображение
+            // Обновляем главное фото
             const mainImage = document.getElementById(`${product}-image`);
-            if (mainImage) {
-                mainImage.style.opacity = '0.5';
-                mainImage.style.transform = 'scale(0.95)';
+            const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/main`;
+            
+            // Используем правильное расширение
+            let imageUrl = `${baseUrl}/${product}/${color}.${extension}`;
+            
+            // Анимация смены
+            mainImage.style.opacity = '0.5';
+            mainImage.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                mainImage.src = imageUrl;
+                mainImage.style.opacity = '1';
+                mainImage.style.transform = 'scale(1)';
                 
-                setTimeout(() => {
-                    mainImage.src = `${BASE_URL}/${product}/${color}.jpg`;
-                    mainImage.style.opacity = '1';
-                    mainImage.style.transform = 'scale(1)';
-                }, 200);
-            }
-            
-            // Обновляем кнопку
-            const button = card.querySelector('.buy-button');
-            const price = button.getAttribute('onclick').match(/(\d+)/)[0];
-            const productName = button.getAttribute('onclick').match(/'(.*?)'/)[1];
-            const colorName = COLOR_NAMES[color];
-            button.setAttribute('onclick', `addToCart('${productName}', ${price}, '${colorName}')`);
-            button.innerHTML = `🛒 Добавить в корзину (${colorName})`;
-            
-            // Обновляем текст цвета для Labubu
-            if (product === 'labubu') {
-                document.getElementById('labubu-current-color').textContent = colorName;
-            }
-            
-            // Меняем фон
-            changeBackgroundColor(color);
-        }
-        
-        // СМЕНА ФОНА
-        function changeBackgroundColor(color) {
-            if (BACKGROUND_COLORS[color]) {
-                document.body.style.background = BACKGROUND_COLORS[color];
-            }
+                // Обновляем кнопку
+                const button = card.querySelector('.buy-button');
+                const price = button.getAttribute('onclick').match(/(\d+)/)[0];
+                const productName = button.getAttribute('onclick').match(/'(.*?)'/)[1];
+                const colorName = colorNames[color];
+                
+                button.setAttribute('onclick', `addToCart('${productName}', ${price}, '${colorName}')`);
+                button.innerHTML = `🛒 Добавить в корзину (${colorName})`;
+                
+                // Меняем фон страницы
+                if (backgroundColors[color]) {
+                    document.body.style.background = backgroundColors[color];
+                }
+                
+            }, 200);
         }
         
         // ДОБАВЛЕНИЕ В КОРЗИНУ
@@ -599,241 +403,89 @@
             const item = {
                 id: Date.now(),
                 name: `${name} (${color})`,
-                price: parseInt(price),
+                price: price,
                 color: color,
                 quantity: 1,
-                date: new Date().toLocaleString('ru-RU'),
-                image: `${BASE_URL}/${
-                    name.toLowerCase().includes('дракон') ? 'dragons' : 
-                    name.toLowerCase().includes('какаши') ? 'kakashi' :
-                    name.toLowerCase().includes('лабубу') ? 'labubu' : 'pistol'
-                }/${
-                    color === 'Белый' ? 'white' :
-                    color === 'Синий' ? 'blue' :
-                    color === 'Серый' ? 'grey' :
-                    color === 'Фиолетовый' ? 'purple' : 'red'
-                }.jpg`
+                date: new Date().toLocaleString('ru-RU')
             };
             
             cart.push(item);
             localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartBadge();
-            showNotification(`✅ "${name} (${color})" добавлен в корзину!`);
-        }
-        
-        // ОБНОВЛЕНИЕ БЕЙДЖА
-        function updateCartBadge() {
-            const badge = document.getElementById('cart-badge');
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            badge.textContent = totalItems;
-            badge.style.display = totalItems > 0 ? 'flex' : 'none';
-        }
-        
-        // ПОКАЗ КОРЗИНЫ
-        function showCart() {
-            if (cart.length === 0) {
-                showNotification('🛒 Корзина пуста! Добавьте товары.');
-                return;
-            }
             
-            // Модальное окно
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: white;
-                width: 90%;
-                max-width: 600px;
-                max-height: 80vh;
-                border-radius: 20px;
-                padding: 30px;
-                z-index: 10001;
-                box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-                overflow-y: auto;
-            `;
-            
-            let total = 0;
-            let html = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                    <h2 style="color: #4f46e5; margin: 0;">🛒 Ваша корзина</h2>
-                    <button onclick="this.parentElement.parentElement.remove();" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">×</button>
-                </div>
-            `;
-            
-            cart.forEach((item, i) => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                html += `
-                    <div style="background: #f9fafb; padding: 20px; border-radius: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px;">
-                        <img src="${item.image}" style="width: 60px; height: 60px; border-radius: 10px; object-fit: cover;">
-                        <div style="flex-grow: 1;">
-                            <div style="font-weight: bold; color: #333;">${item.name}</div>
-                            <div style="color: #666; font-size: 14px;">Цвет: ${item.color}</div>
-                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
-                                <button onclick="updateQuantity(${i}, ${item.quantity - 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">-</button>
-                                <span style="font-weight: bold;">${item.quantity} шт</span>
-                                <button onclick="updateQuantity(${i}, ${item.quantity + 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">+</button>
-                                <span style="margin-left: auto; color: #7e22ce; font-weight: bold;">${itemTotal} ₽</span>
-                            </div>
-                        </div>
-                        <button onclick="removeFromCart(${i})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 20px;">×</button>
-                    </div>
-                `;
-            });
-            
-            const discount = total > 3000 ? Math.floor(total * 0.1) : 0;
-            const finalTotal = total - discount;
-            
-            html += `
-                <div style="border-top: 2px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">
-                    <div style="display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold; color: #1f2937;">
-                        <span>Итого:</span>
-                        <span>${finalTotal} ₽</span>
-                    </div>
-                    ${discount > 0 ? `
-                        <div style="background: #d1fae5; color: #065f46; padding: 10px; border-radius: 10px; margin-top: 15px; text-align: center;">
-                            🎉 Вы получаете скидку 10%! Итого: ${finalTotal} ₽
-                        </div>
-                    ` : total > 2000 ? `
-                        <div style="background: #fef3c7; color: #92400e; padding: 10px; border-radius: 10px; margin-top: 15px; text-align: center;">
-                            🎯 До скидки 10% осталось: ${3000 - total} ₽
-                        </div>
-                    ` : ''}
-                    <div style="display: flex; gap: 15px; margin-top: 25px;">
-                        <button onclick="clearCart()" style="flex: 1; padding: 15px; background: #f3f4f6; color: #6b7280; border: none; border-radius: 10px; cursor: pointer; font-weight: bold;">
-                            🗑️ Очистить
-                        </button>
-                        <button onclick="checkout()" style="flex: 2; padding: 15px; background: linear-gradient(90deg, #4f46e5, #7e22ce); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">
-                            💬 Оформить заказ
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            modal.innerHTML = html;
-            
-            // Оверлей
-            const overlay = document.createElement('div');
-            overlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 10000;
-            `;
-            
-            overlay.onclick = () => {
-                modal.remove();
-                overlay.remove();
-            };
-            
-            document.body.appendChild(overlay);
-            document.body.appendChild(modal);
-        }
-        
-        // УДАЛЕНИЕ ТОВАРА
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartBadge();
-            showCart();
-        }
-        
-        // ИЗМЕНЕНИЕ КОЛИЧЕСТВА
-        function updateQuantity(index, newQuantity) {
-            if (newQuantity < 1) {
-                removeFromCart(index);
-                return;
-            }
-            cart[index].quantity = newQuantity;
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartBadge();
-            showCart();
-        }
-        
-        // ОЧИСТКА КОРЗИНЫ
-        function clearCart() {
-            if (confirm('Очистить корзину?')) {
-                cart = [];
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartBadge();
-                document.querySelectorAll('[style*="position: fixed"]').forEach(el => el.remove());
-                showNotification('🗑️ Корзина очищена!');
-            }
-        }
-        
-        // ОФОРМЛЕНИЕ ЗАКАЗА
-        function checkout() {
-            let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const discount = total > 3000 ? Math.floor(total * 0.1) : 0;
-            const finalTotal = total - discount;
-            
-            let orderText = `🏪 ЗАКАЗ ИГРУШЕК\n\n`;
-            orderText += `Покупатель: Avidelarose Shop\n`;
-            orderText += `Дата: ${new Date().toLocaleString('ru-RU')}\n\n`;
-            orderText += `ТОВАРЫ:\n`;
-            
-            cart.forEach((item, i) => {
-                orderText += `${i+1}. ${item.name}\n`;
-                orderText += `   Цена: ${item.price} ₽ × ${item.quantity} = ${item.price * item.quantity} ₽\n\n`;
-            });
-            
-            orderText += `\n──────────────\n`;
-            orderText += `Итого товаров: ${total} ₽\n`;
-            if (discount > 0) {
-                orderText += `Скидка 10%: -${discount} ₽\n`;
-            }
-            orderText += `ИТОГО К ОПЛАТЕ: ${finalTotal} ₽\n\n`;
-            orderText += `Telegram для связи: @NewshopNm\n`;
-            orderText += `Готов предоставить адрес для доставки.`;
-            
-            // Копируем в буфер
-            navigator.clipboard.writeText(orderText).then(() => {
-                document.querySelectorAll('[style*="position: fixed"]').forEach(el => el.remove());
-                showNotification('📋 Текст заказа скопирован! Открываю Telegram...');
-                setTimeout(() => window.open('https://t.me/NewshopNm', '_blank'), 1000);
-            }).catch(() => {
-                alert('Скопируйте вручную:\n\n' + orderText);
-                window.open('https://t.me/NewshopNm', '_blank');
-            });
-        }
-        
-        // УВЕДОМЛЕНИЕ
-        function showNotification(text) {
-            document.querySelectorAll('.notification').forEach(n => n.remove());
-            
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = text;
-            notification.style.cssText = `
-                position: fixed;
-                top: 30px;
-                right: 30px;
-                background: linear-gradient(90deg, #10b981, #059669);
-                color: white;
-                padding: 18px 25px;
-                border-radius: 12px;
-                z-index: 10002;
-                box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
-                animation: slideIn 0.3s ease;
-                max-width: 350px;
-                font-weight: 500;
-                border-left: 5px solid #047857;
-            `;
-            
-            document.body.appendChild(notification);
+            // Уведомление
+            const status = document.getElementById('status-message');
+            status.innerHTML = `✅ "${name} (${color})" добавлен в корзину!`;
+            status.style.background = '#d1fae5';
+            status.style.color = '#065f46';
+            status.style.borderColor = '#10b981';
             
             setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
+                status.innerHTML = 'Выберите цвет и добавьте товары в корзину';
+                status.style.background = '#f0f9ff';
+                status.style.color = '#0369a1';
+                status.style.borderColor = '#0ea5e9';
             }, 3000);
         }
         
-        // АВТОСМЕНА ЦВЕТОВ
+        // ПРОВЕРКА ЗАГРУЗКИ ФОТО
+        async function checkImageLoad() {
+            const status = document.getElementById('status-message');
+            const products = ['dragon', 'kakashi', 'labubu', 'pistol'];
+            
+            let loadedCount = 0;
+            
+            for (const product of products) {
+                const extension = productExtensions[product];
+                const color = product === 'labubu' ? 'grey' : 
+                             product === 'kakashi' ? 'blue' : 'white';
+                
+                const imageUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/${product}/${color}.${extension}`;
+                const imgElement = document.getElementById(`${product}-image`);
+                
+                try {
+                    const response = await fetch(imageUrl, { method: 'HEAD' });
+                    if (response.ok) {
+                        loadedCount++;
+                        console.log(`✅ ${product}: загружено (${extension})`);
+                    } else {
+                        console.log(`❌ ${product}: не найдено`);
+                        // Если фото не найдено, оставляем fallback из onerror
+                    }
+                } catch (error) {
+                    console.log(`⚠️ ${product}: ошибка загрузки`);
+                }
+            }
+            
+            if (loadedCount === 4) {
+                status.innerHTML = '✅ Все фото загружены с GitHub!';
+                status.style.background = '#d1fae5';
+                status.style.color = '#065f46';
+            } else if (loadedCount > 0) {
+                status.innerHTML = `⚠️ Загружено ${loadedCount}/4 фото. Остальные - демо-изображения.`;
+                status.style.background = '#fef3c7';
+                status.style.color = '#92400e';
+            } else {
+                status.innerHTML = '❌ Фото не загружены. Используются демо-изображения.';
+                status.style.background = '#fee2e2';
+                status.style.color = '#991b1b';
+            }
+        }
+        
+        // ИНИЦИАЛИЗАЦИЯ
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🛒 Магазин загружен');
+            console.log('👤 Username:', username);
+            console.log('📁 Репозиторий:', repo);
+            console.log('📸 Расширения:', productExtensions);
+            
+            // Проверяем загрузку фото
+            setTimeout(checkImageLoad, 1000);
+            
+            // Автоповорот цветов для Лабубу
+            autoRotateLabubuColors();
+        });
+        
+        // АВТОПОВОРОТ ЦВЕТОВ ДЛЯ LABUBU
         function autoRotateLabubuColors() {
             const labubuColors = ['grey', 'purple', 'red', 'white'];
             let currentIndex = 0;
@@ -846,62 +498,15 @@
                 const nextColor = labubuColors[currentIndex];
                 
                 circles.forEach(circle => {
-                    if (circle.getAttribute('onclick').includes(`'${nextColor}'`)) {
-                        selectColor(circle, 'labubu', nextColor);
+                    const onclickText = circle.getAttribute('onclick');
+                    if (onclickText && onclickText.includes(`'${nextColor}'`)) {
+                        circle.click();
                     }
                 });
                 
                 currentIndex = (currentIndex + 1) % labubuColors.length;
-            }, 4000);
+            }, 5000); // Меняем цвет каждые 5 секунд
         }
-        
-        // ИНИЦИАЛИЗАЦИЯ
-        document.addEventListener('DOMContentLoaded', () => {
-            cart = JSON.parse(localStorage.getItem('cart')) || [];
-            updateCartBadge();
-            autoRotateLabubuColors();
-            
-            // CSS для анимаций
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100px); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes slideOut {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(100px); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-        });
-        
-        // Глобальные функции
-        window.removeFromCart = removeFromCart;
-        window.updateQuantity = updateQuantity;
-        window.clearCart = clearCart;
-        window.checkout = checkout;
     </script>
-document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-        });
-    }
-    
-    // Закрытие меню при клике на ссылку
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-        });
-    });
-});
-</script>
-
-    
 </body>
-</html>  
+</html>
