@@ -105,3 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
     window.newYearTheme = new NewYearThemeSwitcher();
     window.newYearTheme.loadPreference();
 });
+
+
+// В файле управления
+const today = new Date();
+const month = today.getMonth() + 1; // 1-12
+const day = today.getDate();
+
+// С 1 декабря по 15 января
+if ((month === 12 && day >= 1) || (month === 1 && day <= 15)) {
+    enableNewYearTheme();
+}
