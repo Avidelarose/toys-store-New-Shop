@@ -953,40 +953,40 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Скрыть модальное окно корзины
+             // Скрыть модальное окно корзины - ИСПРАВЛЕННАЯ ВЕРСИЯ
         function hideCartModal() {
             const modal = document.getElementById('cart-modal');
-            const overlay = document.querySelector('#cart-modal + div');
+            const overlay = document.querySelector('body > div[style*="background: rgba(0,0,0,0.5)"]');
             
             if (modal) {
                 modal.style.animation = 'slideDown 0.3s ease';
-                setTimeout(() => modal.remove(), 300);
+                modal.style.opacity = '0';
+                modal.style.transform = 'translate(-50%, -45%)';
+                
+                setTimeout(() => {
+                    if (modal.parentNode) {
+                        modal.parentNode.removeChild(modal);
+                    }
+                    
+                    // ВАЖНО: ВОССТАНАВЛИВАЕМ ПРОКРУТКУ
+                    document.body.style.overflow = 'auto';
+                    document.documentElement.style.overflow = 'auto';
+                    document.body.style.position = '';
+                    document.documentElement.style.position = '';
+                }, 300);
             }
             
             if (overlay) {
                 overlay.style.animation = 'fadeOut 0.3s ease';
-                setTimeout(() => overlay.remove(), 300);
-            }
-            
-            document.body.style.overflow = '';
-            
-            if (!document.querySelector('#cart-close-styles')) {
-                const style = document.createElement('style');
-                style.id = 'cart-close-styles';
-                style.textContent = `
-                    @keyframes slideDown {
-                        from { transform: translate(-50%, -50%); opacity: 1; }
-                        to { transform: translate(-50%, -40%); opacity: 0; }
+                overlay.style.opacity = '0';
+                
+                setTimeout(() => {
+                    if (overlay.parentNode) {
+                        overlay.parentNode.removeChild(overlay);
                     }
-                    @keyframes fadeOut {
-                        from { opacity: 1; }
-                        to { opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
+                }, 300);
             }
         }
-
         // Обновить содержимое корзины
         function updateCartContent() {
             const content = document.getElementById('cart-content');
