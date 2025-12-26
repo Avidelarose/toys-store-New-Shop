@@ -750,34 +750,149 @@
 <script>
 // ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ
 const productPhotos = {
-    'dragon': [
-        'toys-images/dragons/white.jpg',
-        'toys-images/dragons/blue.jpg',
-        'toys-images/dragons/red.jpg'
-    ],
-    'kakashi': [
-        'toys-images/kakashi/blue.jpg'
-    ],
-    'pistol': [
-        'toys-images/pistol/white.jpg',
-        'toys-images/pistol/black.jpg'
-    ],
-    'labubu': [
-        'toys-images/labubu/grey.jpg',
-        'toys-images/labubu/purple.jpg',
-        'toys-images/labubu/red.jpg',
-        'toys-images/labubu/white.jpg'
-    ],
-    'house': [
-        'toys-images/house/christmas.jpg',
-        'toys-images/house/christmas2.jpg'
-    ],
-    'uno': [
-        'toys-images/uno/game.jpg',
-        'toys-images/uno/cards.jpg'
-    ]
+    'dragon': {
+        name: 'Дракон',
+        photos: [
+            {url: 'toys-images/dragons/white.jpg', alt: 'Белый дракон'},
+            {url: 'toys-images/dragons/blue.jpg', alt: 'Синий дракон'},
+            {url: 'toys-images/dragons/red.jpg', alt: 'Красный дракон'}
+        ]
+    },
+    'kakashi': {
+        name: 'Какаши',
+        photos: [
+            {url: 'toys-images/kakashi/blue.jpg', alt: 'Фигурка Какаши'}
+        ]
+    },
+    'pistol': {
+        name: 'Пистолет',
+        photos: [
+            {url: 'toys-images/pistol/white.jpg', alt: 'Белый пистолет'},
+            {url: 'toys-images/pistol/black.jpg', alt: 'Черный пистолет'}
+        ]
+    },
+    'labubu': {
+        name: 'Лабубу',
+        photos: [
+            {url: 'toys-images/labubu/grey.jpg', alt: 'Серый Лабубу'},
+            {url: 'toys-images/labubu/purple.jpg', alt: 'Фиолетовый Лабубу'},
+            {url: 'toys-images/labubu/red.jpg', alt: 'Красный Лабубу'},
+            {url: 'toys-images/labubu/white.jpg', alt: 'Белый Лабубу'}
+        ]
+    },
+    'house': {
+        name: 'Новогодний домик',
+        photos: [
+            {url: 'toys-images/house/christmas.jpg', alt: 'Новогодний домик'},
+            {url: 'toys-images/house/christmas2.jpg', alt: 'Новогодний домик с подсветкой'}
+        ]
+    },
+    'uno': {
+        name: 'UNO',
+        photos: [
+            {url: 'toys-images/uno/game.jpg', alt: 'Настольная игра UNO'},
+            {url: 'toys-images/uno/cards.jpg', alt: 'Карты UNO крупным планом'}
+        ]
+    }
 };
 
+// ИНИЦИАЛИЗАЦИЯ ГАЛЕРЕЙ ПРИ ЗАГРУЗКЕ
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализируем все галереи
+    Object.keys(productPhotos).forEach(productId => {
+        initGallery(productId);
+    });
+});
+
+// ИНИЦИАЛИЗАЦИЯ ГАЛЕРЕИ ТОВАРА
+function initGallery(productId) {
+    const product = productPhotos[productId];
+    if (!product || !product.photos || product.photos.length === 0) {
+        console.warn(`Нет фото для товара: ${productId}`);
+        return;
+    }
+    
+    const photos = product.photos;
+    
+    // Создаем точки для навигации
+    if (photos.length > 1) {
+        const controlsContainer = document.getElementById(`${productId}-controls`);
+        if (controlsContainer) {
+            controlsContainer.innerHTML = '';
+            
+            photos.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
+                dot.onclick = (e) => {
+                    e.stopPropagation();
+                    goToPhoto(productId, index);
+                };
+                controlsContainer.appendChild(dot);
+            });
+            
+            // Обновляем счетчик
+            const counter = controlsContainer.parentElement.querySelector('.photo-counter');
+            if (counter) {
+                counter.textContent = `1/${photos.length}`;
+            }
+        }
+    }
+    
+    // Загружаем первую фотографию
+    const gallery = document.querySelector(`[onclick*="openPhotoModal('${productId}'"]`);
+    if (gallery) {
+        const firstImg = gallery.querySelector('img');
+        if (firstImg && photos[0]) {
+            firstImg.src = photos[0].url;
+            firstImg.alt = photos[0].alt;
+            
+            // Добавляем обработчик ошибок
+            firstImg.onerror = function() {
+                console.error(`Не удалось загрузить фото: ${photos[0].url}`);
+                this.src = 'https://via.placeholder.com/400x300/cccccc/666666?text=Фото+не+загружено';
+                this.alt = 'Фото не загружено';
+            };
+        }
+        
+        // Предзагружаем остальные фото
+        photos.forEach((photo, index) => {
+            if (index > 0) {
+                const img = new Image();
+                img.src = photo.url;
+                img.onerror = function() {
+                    console.error(`Не удалось загрузить фото: ${photo.url}`);
+                };
+            }
+        });
+    }
+}
+
+// ДОПОЛНИТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ДЕБАГГИНГА
+function checkImageUrls() {
+    console.log('Проверка доступности изображений:');
+    
+    Object.keys(productPhotos).forEach(productId => {
+        const product = productPhotos[productId];
+        console.log(`\nТовар: ${product.name} (${productId})`);
+        
+        product.photos.forEach((photo, index) => {
+            console.log(`  Фото ${index + 1}: ${photo.url}`);
+            
+            // Проверяем доступность изображения
+            const img = new Image();
+            img.onload = function() {
+                console.log(`    ✓ Доступно`);
+            };
+            img.onerror = function() {
+                console.log(`    ✗ Не доступно`);
+            };
+            img.src = photo.url;
+        });
+    });
+}
+
+// Запустите эту функцию в консоли браузера для проверки
+// checkImageUrls();
 // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
 let currentProduct = null;
 let currentPhotoIndex = 0;
