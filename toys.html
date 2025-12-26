@@ -22,6 +22,10 @@
             flex-direction: column;
         }
 
+        body.modal-open {
+            overflow: hidden;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -243,88 +247,6 @@
             transform: scale(1.05);
         }
 
-        .gallery-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            padding: 0 15px;
-            z-index: 2;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .product-gallery:hover .gallery-nav {
-            opacity: 1;
-        }
-
-        .gallery-btn {
-            background: rgba(0,0,0,0.7);
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .gallery-btn:hover {
-            background: rgba(0,0,0,0.9);
-            transform: scale(1.1);
-        }
-
-        .gallery-controls {
-            position: absolute;
-            bottom: 15px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            z-index: 2;
-        }
-
-        .gallery-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-dot.active {
-            background: white;
-            transform: scale(1.2);
-        }
-
-        .gallery-dot:hover {
-            background: white;
-            transform: scale(1.3);
-        }
-
-        .photo-counter {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-            z-index: 2;
-            backdrop-filter: blur(5px);
-        }
-
         .product-info {
             padding: 20px;
         }
@@ -413,103 +335,82 @@
             transform: scale(1.2) rotate(10deg);
         }
 
-        /* Улучшенное модальное окно */
-        .modal-overlay {
+        /* МОДАЛЬНОЕ ОКНО ПРОСМОТРА ТОВАРА */
+        .product-modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
-            align-items: center;
-            justify-content: center;
             animation: fadeIn 0.3s ease;
-            backdrop-filter: blur(10px);
-            padding: 20px;
             overflow-y: auto;
         }
 
-        .modal-overlay.active {
+        .product-modal.active {
             display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            width: 900px;
+        .product-modal-content {
             background: white;
             border-radius: 20px;
-            overflow: hidden;
+            max-width: 1000px;
+            width: 90%;
+            max-height: 90vh;
             display: flex;
             flex-direction: column;
-            animation: scaleIn 0.3s ease;
+            animation: slideUp 0.3s ease;
+            position: relative;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
 
-        @keyframes scaleIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-header {
-            padding: 25px 30px;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        .product-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.7);
             color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .modal-title {
-            font-size: 28px;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            background: rgba(255,255,255,0.2);
             border: none;
-            color: white;
-            font-size: 32px;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
         }
 
-        .modal-close:hover {
-            background: rgba(255,255,255,0.3);
+        .product-modal-close:hover {
+            background: rgba(0,0,0,0.9);
             transform: rotate(90deg) scale(1.1);
         }
 
-        .modal-body {
+        .product-modal-body {
             display: flex;
-            flex: 1;
+            flex-direction: column;
             overflow: hidden;
-            max-height: 70vh;
         }
 
-        .modal-gallery {
-            flex: 1;
+        .product-modal-gallery {
+            position: relative;
+            height: 50vh;
+            min-height: 400px;
             background: #f8f9fa;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 30px;
-            min-height: 400px;
-            position: relative;
         }
 
-        .modal-image-container {
+        .modal-image-wrapper {
             width: 100%;
             height: 100%;
             display: flex;
@@ -518,87 +419,131 @@
             position: relative;
         }
 
-        .modal-product-image {
+        .modal-main-image {
             max-width: 100%;
-            max-height: 400px;
+            max-height: 100%;
             object-fit: contain;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: opacity 0.3s ease;
         }
 
-        .modal-gallery-nav {
+        .modal-nav-btn {
             position: absolute;
             top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
             transform: translateY(-50%);
-            z-index: 2;
-        }
-
-        .modal-gallery-btn {
             background: rgba(0,0,0,0.7);
             color: white;
             border: none;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            font-size: 20px;
             cursor: pointer;
-            font-size: 24px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 5;
         }
 
-        .modal-gallery-btn:hover {
+        .modal-nav-btn:hover {
             background: rgba(0,0,0,0.9);
-            transform: scale(1.1);
+            transform: translateY(-50%) scale(1.1);
         }
 
-        .modal-info-section {
-            flex: 1;
+        .modal-nav-prev {
+            left: 20px;
+        }
+
+        .modal-nav-next {
+            right: 20px;
+        }
+
+        .modal-gallery-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 5;
+        }
+
+        .modal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-dot.active {
+            background: #6a11cb;
+            transform: scale(1.2);
+        }
+
+        .product-modal-info {
             padding: 30px;
+            max-height: 40vh;
             overflow-y: auto;
-            max-width: 400px;
             background: white;
         }
 
-        .modal-description {
+        .modal-product-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .modal-product-description {
             font-size: 16px;
             line-height: 1.8;
             color: #555;
             margin-bottom: 25px;
         }
 
-        .modal-details {
-            margin-bottom: 30px;
+        .modal-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .modal-detail-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
 
         .modal-detail-label {
+            font-size: 14px;
             color: #7f8c8d;
-            font-weight: 500;
+            margin-bottom: 5px;
         }
 
         .modal-detail-value {
-            color: #2c3e50;
+            font-size: 16px;
             font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .modal-price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
         }
 
         .modal-price {
             font-size: 32px;
             font-weight: bold;
             color: #e74c3c;
-            margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -609,68 +554,24 @@
             font-size: 24px;
         }
 
-        .modal-add-to-cart {
-            width: 100%;
-            padding: 18px;
+        .modal-add-to-cart-btn {
+            padding: 15px 30px;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
+            gap: 10px;
             transition: all 0.3s ease;
         }
 
-        .modal-add-to-cart:hover {
+        .modal-add-to-cart-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(37, 117, 252, 0.4);
-        }
-
-        .modal-gallery-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .modal-gallery-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .modal-gallery-dot.active {
-            background: #6a11cb;
-            transform: scale(1.2);
-        }
-
-        .loading-spinner {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(106, 17, 203, 0.3);
-            border-radius: 50%;
-            border-top-color: #6a11cb;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         footer {
@@ -726,16 +627,6 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-
         /* Адаптивность */
         @media (max-width: 768px) {
             .menu-toggle {
@@ -775,37 +666,44 @@
                 grid-template-columns: 1fr;
             }
 
-            .modal-content {
-                flex-direction: column;
-                max-height: 90vh;
+            .product-modal-content {
                 width: 95%;
+                max-height: 95vh;
             }
 
-            .modal-body {
-                flex-direction: column;
-                max-height: none;
-            }
-
-            .modal-info-section {
-                max-width: 100%;
-                max-height: 40vh;
-            }
-
-            .modal-gallery {
+            .product-modal-gallery {
+                height: 40vh;
                 min-height: 300px;
             }
 
-            .modal-product-image {
-                max-height: 300px;
+            .modal-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .product-modal-info {
+                max-height: 50vh;
+            }
+
+            .modal-details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-price-section {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .modal-add-to-cart-btn {
+                width: 100%;
+                justify-content: center;
             }
 
             .footer-links {
                 flex-direction: column;
                 gap: 15px;
-            }
-
-            .gallery-nav {
-                opacity: 1;
             }
         }
 
@@ -826,77 +724,18 @@
                 margin: 0 10px;
             }
 
-            .modal-header {
+            .product-modal-gallery {
+                padding: 15px;
+                min-height: 250px;
+            }
+
+            .product-modal-info {
                 padding: 20px;
             }
 
-            .modal-title {
+            .modal-product-title {
                 font-size: 24px;
             }
-        }
-
-        /* Стили для placeholder */
-        .placeholder-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .placeholder-icon {
-            font-size: 60px;
-            color: #6a11cb;
-            margin-bottom: 15px;
-            opacity: 0.7;
-        }
-
-        .placeholder-text {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .placeholder-subtext {
-            color: #999;
-            font-size: 12px;
-        }
-
-        /* Кнопка быстрого просмотра */
-        .quick-view-btn {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            background: rgba(106, 17, 203, 0.9);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            z-index: 3;
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        .product-card:hover .quick-view-btn {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .quick-view-btn:hover {
-            background: rgba(106, 17, 203, 1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
         }
     </style>
 </head>
@@ -952,9 +791,6 @@
                     <div class="product-gallery" onclick="openProductModal('dragon')">
                         <img id="dragon-img" src="" alt="Дракон светящийся в темноте">
                     </div>
-                    <button class="quick-view-btn" onclick="openProductModal('dragon')">
-                        <i class="fas fa-eye"></i> Быстрый просмотр
-                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Дракон светящийся в темноте</h3>
                         <p class="product-description">Великолепный светящийся дракон с подвижными крыльями. Светится в темноте! Безопасен для детей от 5 лет.</p>
@@ -970,9 +806,6 @@
                     <div class="product-gallery" onclick="openProductModal('kakashi')">
                         <img id="kakashi-img" src="" alt="Фигурка Какаши">
                     </div>
-                    <button class="quick-view-btn" onclick="openProductModal('kakashi')">
-                        <i class="fas fa-eye"></i> Быстрый просмотр
-                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Фигурка Какаши Хатаке</h3>
                         <p class="product-description">Детализированная коллекционная фигурка из аниме Наруто. Высота: 18 см, материал: высококачественный ПВХ.</p>
@@ -988,9 +821,6 @@
                     <div class="product-gallery" onclick="openProductModal('pistol')">
                         <img id="pistol-img" src="" alt="Пистолет с пульками">
                     </div>
-                    <button class="quick-view-btn" onclick="openProductModal('pistol')">
-                        <i class="fas fa-eye"></i> Быстрый просмотр
-                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Пистолет с мягкими пульками</h3>
                         <p class="product-description">Безопасный пистолет для детей. В комплекте: пистолет, 20 мягких пулек, мишень. Для детей от 6 лет.</p>
@@ -1006,9 +836,6 @@
                     <div class="product-gallery" onclick="openProductModal('labubu')">
                         <img id="labubu-img" src="" alt="Фигурка Лабубу">
                     </div>
-                    <button class="quick-view-btn" onclick="openProductModal('labubu')">
-                        <i class="fas fa-eye"></i> Быстрый просмотр
-                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Коллекционная фигурка Лабубу</h3>
                         <p class="product-description">Милая фигурка Лабубу разных цветов. Высота: 10 см. Идеально для коллекции или подарка.</p>
@@ -1024,9 +851,6 @@
                     <div class="product-gallery" onclick="openProductModal('house')">
                         <img id="house-img" src="" alt="Новогодний домик">
                     </div>
-                    <button class="quick-view-btn" onclick="openProductModal('house')">
-                        <i class="fas fa-eye"></i> Быстрый просмотр
-                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Волшебный новогодний домик</h3>
                         <p class="product-description">Светящийся новогодний домик с подсветкой и зимним декором. Создает праздничное настроение! Работает от батареек.</p>
@@ -1042,9 +866,6 @@
                     <div class="product-gallery" onclick="openProductModal('uno')">
                         <img id="uno-img" src="" alt="Игра UNO">
                     </div>
-                    <button class="quick-view-btn" onclick="openProductModal('uno')">
-                        <i class="fas fa-eye"></i> Быстрый просмотр
-                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Настольная игра UNO</h3>
                         <p class="product-description">Классическая карточная игра для всей семьи. От 2 до 10 игроков. Отличный подарок для детей и взрослых.</p>
@@ -1056,88 +877,44 @@
                 </div>
             </div>
         </section>
-
-        <!-- О нас -->
-        <section id="about" style="margin-top: 80px; padding: 40px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
-            <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50; font-size: 32px;">
-                <i class="fas fa-heart" style="color: #e74c3c;"></i> О нашем магазине
-            </h2>
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <p style="font-size: 18px; line-height: 1.8; color: #555; margin-bottom: 20px;">
-                    Мы - команда энтузиастов, которые верят, что каждая игрушка должна приносить радость и развивать воображение. 
-                    Уже более 5 лет мы подбираем самые качественные, безопасные и интересные игрушки для детей всех возрастов.
-                </p>
-                <div style="display: flex; justify-content: center; gap: 30px; margin-top: 40px; flex-wrap: wrap;">
-                    <div style="text-align: center;">
-                        <i class="fas fa-shield-alt" style="font-size: 40px; color: #4CAF50;"></i>
-                        <h3 style="margin: 10px 0; color: #2c3e50;">Безопасность</h3>
-                        <p style="color: #7f8c8d;">Все товаги сертифицированы</p>
-                    </div>
-                    <div style="text-align: center;">
-                        <i class="fas fa-shipping-fast" style="font-size: 40px; color: #2196F3;"></i>
-                        <h3 style="margin: 10px 0; color: #2c3e50;">Быстрая доставка</h3>
-                        <p style="color: #7f8c8d;">Доставка по всей России</p>
-                    </div>
-                    <div style="text-align: center;">
-                        <i class="fas fa-headset" style="font-size: 40px; color: #FF9800;"></i>
-                        <h3 style="margin: 10px 0; color: #2c3e50;">Поддержка</h3>
-                        <p style="color: #7f8c8d;">Помощь 24/7</p>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
 
-    <!-- Модальное окно товара -->
-    <div id="productModal" class="modal-overlay" onclick="closeProductModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <div class="modal-title" id="modalProductTitle"></div>
-                <button class="modal-close" onclick="closeProductModal()" aria-label="Закрыть">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-gallery">
-                    <div class="modal-image-container">
-                        <img id="modalProductImage" class="modal-product-image" src="" alt="Фото товара">
-                    </div>
-                    <div class="modal-gallery-nav">
-                        <button class="modal-gallery-btn" onclick="changeModalProductPhoto(-1)" aria-label="Предыдущее фото">
+    <!-- Модальное окно просмотра товара -->
+    <div id="productModal" class="product-modal" onclick="closeProductModal(event)">
+        <div class="product-modal-content" onclick="event.stopPropagation()">
+            <button class="product-modal-close" onclick="closeProductModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="product-modal-body">
+                <div class="product-modal-gallery">
+                    <div class="modal-image-wrapper">
+                        <img id="modalProductImage" class="modal-main-image" src="" alt="Фото товара">
+                        
+                        <button class="modal-nav-btn modal-nav-prev" onclick="changeModalPhoto(-1, event)">
                             <i class="fas fa-chevron-left"></i>
                         </button>
-                        <button class="modal-gallery-btn" onclick="changeModalProductPhoto(1)" aria-label="Следующее фото">
+                        
+                        <button class="modal-nav-btn modal-nav-next" onclick="changeModalPhoto(1, event)">
                             <i class="fas fa-chevron-right"></i>
                         </button>
+                        
+                        <div class="modal-gallery-dots" id="modalGalleryDots"></div>
                     </div>
-                    <div class="modal-gallery-controls" id="modalGalleryDots"></div>
                 </div>
-                <div class="modal-info-section">
-                    <div class="modal-description" id="modalProductDescription"></div>
-                    <div class="modal-details">
-                        <div class="modal-detail-item">
-                            <span class="modal-detail-label">Артикул:</span>
-                            <span class="modal-detail-value" id="modalProductCode"></span>
-                        </div>
-                        <div class="modal-detail-item">
-                            <span class="modal-detail-label">Возраст:</span>
-                            <span class="modal-detail-value" id="modalProductAge"></span>
-                        </div>
-                        <div class="modal-detail-item">
-                            <span class="modal-detail-label">Материал:</span>
-                            <span class="modal-detail-value" id="modalProductMaterial"></span>
-                        </div>
-                        <div class="modal-detail-item">
-                            <span class="modal-detail-label">Размер:</span>
-                            <span class="modal-detail-value" id="modalProductSize"></span>
-                        </div>
-                        <div class="modal-detail-item">
-                            <span class="modal-detail-label">В наличии:</span>
-                            <span class="modal-detail-value" id="modalProductStock"></span>
-                        </div>
+                
+                <div class="product-modal-info">
+                    <h2 class="modal-product-title" id="modalProductTitle"></h2>
+                    <p class="modal-product-description" id="modalProductDescription"></p>
+                    
+                    <div class="modal-details-grid" id="modalDetailsGrid"></div>
+                    
+                    <div class="modal-price-section">
+                        <div class="modal-price" id="modalProductPrice"></div>
+                        <button class="modal-add-to-cart-btn" id="modalAddToCartBtn">
+                            <i class="fas fa-cart-plus"></i> Добавить в корзину
+                        </button>
                     </div>
-                    <div class="modal-price" id="modalProductPrice"></div>
-                    <button class="modal-add-to-cart" id="modalAddToCartBtn">
-                        <i class="fas fa-cart-plus"></i> Добавить в корзину
-                    </button>
                 </div>
             </div>
         </div>
@@ -1170,14 +947,14 @@ const productData = {
         price: '1299',
         description: 'Великолепный светящийся дракон с подвижными крыльями и реалистичными звуковыми эффектами. Игрушка полностью безопасна для детей, изготовлена из высококачественного пластика без острых краев. В темноте дракон светится нежным зеленым свечением, что создает волшебную атмосферу в детской комнате. Крылья подвижные, позволяют принимать различные позы. Работает от 3-х батареек АА (в комплект не входят).',
         details: {
-            артикул: 'DRG-2024',
-            возраст: '5+ лет',
-            материал: 'Пластик, электронные компоненты',
-            размер: '25 × 18 × 12 см',
-            наличие: 'Есть в наличии',
-            цвет: 'Белый с зеленой подсветкой',
-            вес: '450 г',
-            особенности: 'Светится в темноте, звуковые эффекты'
+            'Артикул': 'DRG-2024',
+            'Возраст': '5+ лет',
+            'Материал': 'Пластик, электронные компоненты',
+            'Размер': '25 × 18 × 12 см',
+            'В наличии': 'Да',
+            'Цвет': 'Белый с зеленой подсветкой',
+            'Вес': '450 г',
+            'Особенности': 'Светится в темноте, звуковые эффекты'
         },
         photos: [
             {url: 'toys-images/dragons/white.png', alt: 'Белый светящийся дракон'},
@@ -1190,14 +967,14 @@ const productData = {
         price: '899',
         description: 'Детализированная коллекционная фигурка легендарного персонажа из аниме "Наруто" - Какаши Хатаке. Выполнена с высокой точностью: проработаны все детали костюма, включая маску, шрам на глазу и знак деревни. Фигурка имеет 12 точек артикуляции, что позволяет воссоздавать любые позы из сериала. В комплекте идут сменные руки и оружие. Отличный подарок для фанатов Наруто и коллекционеров.',
         details: {
-            артикул: 'KKSH-001',
-            возраст: '14+ лет',
-            материал: 'ПВХ, ABS пластик',
-            размер: '18 × 8 × 6 см',
-            наличие: 'Есть в наличии',
-            цвет: 'Серебристый, синий, черный',
-            вес: '320 г',
-            особенности: '12 точек артикуляции, сменные аксессуары'
+            'Артикул': 'KKSH-001',
+            'Возраст': '14+ лет',
+            'Материал': 'ПВХ, ABS пластик',
+            'Размер': '18 × 8 × 6 см',
+            'В наличии': 'Да',
+            'Цвет': 'Серебристый, синий, черный',
+            'Вес': '320 г',
+            'Особенности': '12 точек артикуляции, сменные аксессуары'
         },
         photos: [
             {url: 'toys-images/kakahi/blu.png', alt: 'Фигурка Какаши'},
@@ -1210,14 +987,14 @@ const productData = {
         price: '599',
         description: 'Безопасный пистолет для детей с мягкими пульками. Идеально подходит для активных игр на свежем воздухе. Пульки изготовлены из мягкого поролона, совершенно безопасны при попадании. Пистолет имеет реалистичный дизайн, но выполнен в ярких цветах для привлечения внимания детей. В комплекте: пистолет, 20 мягких пулек, мишень. Развивает координацию движений и меткость.',
         details: {
-            артикул: 'PST-2024',
-            возраст: '6+ лет',
-            материал: 'Пластик, поролон',
-            размер: '22 × 15 × 5 см',
-            наличие: 'Есть в наличии',
-            цвет: 'Желтый, оранжевый',
-            вес: '280 г',
-            особенности: '20 пулек в комплекте, безопасные материалы'
+            'Артикул': 'PST-2024',
+            'Возраст': '6+ лет',
+            'Материал': 'Пластик, поролон',
+            'Размер': '22 × 15 × 5 см',
+            'В наличии': 'Да',
+            'Цвет': 'Желтый, оранжевый',
+            'Вес': '280 г',
+            'Особенности': '20 пулек в комплекте, безопасные материалы'
         },
         photos: [
             {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет с пульками'},
@@ -1230,14 +1007,14 @@ const productData = {
         price: '1499',
         description: 'Очаровательная коллекционная фигурка Лабубу от популярной серии. Каждая фигурка уникальна и имеет свои характерные черты. Выполнена из высококачественного винила с детальной росписью. Отличный подарок для коллекционеров фигурок и поклонников современной поп-культуры. Фигурка упакована в фирменную подарочную коробку.',
         details: {
-            артикул: 'LBB-001',
-            возраст: '12+ лет',
-            материал: 'Винил, акриловая краска',
-            размер: '10 × 8 × 8 см',
-            наличие: 'Есть в наличии',
-            цвет: 'Разные цвета',
-            вес: '180 г',
-            особенности: 'Коллекционная, подарочная упаковка'
+            'Артикул': 'LBB-001',
+            'Возраст': '12+ лет',
+            'Материал': 'Винил, акриловая краска',
+            'Размер': '10 × 8 × 8 см',
+            'В наличии': 'Да',
+            'Цвет': 'Разные цвета',
+            'Вес': '180 г',
+            'Особенности': 'Коллекционная, подарочная упаковка'
         },
         photos: [
             {url: 'toys-images/labubu/grey.jpg', alt: 'Серый Лабубу'},
@@ -1251,14 +1028,14 @@ const productData = {
         price: '1799',
         description: 'Сказочный новогодний домик с подсветкой и зимним декором. Идеально создает праздничное настроение! Домик имеет реалистичную архитектуру с детализированными элементами: снег на крыше, светящиеся окна, дым из трубы. Внутри домика находится миниатюрная новогодняя сцена. Работает от 2-х батареек АА. Отличное украшение для новогоднего стола или интерьера.',
         details: {
-            артикул: 'HSE-2024',
-            возраст: '3+ лет',
-            материал: 'Пластик, светодиоды',
-            размер: '20 × 15 × 18 см',
-            наличие: 'Есть в наличии',
-            цвет: 'Белый, голубой, золотой',
-            вес: '520 г',
-            особенности: 'Светящиеся окна, новогодний декор'
+            'Артикул': 'HSE-2024',
+            'Возраст': '3+ лет',
+            'Материал': 'Пластик, светодиоды',
+            'Размер': '20 × 15 × 18 см',
+            'В наличии': 'Да',
+            'Цвет': 'Белый, голубой, золотой',
+            'Вес': '520 г',
+            'Особенности': 'Светящиеся окна, новогодний декор'
         },
         photos: [
             {url: 'https://via.placeholder.com/800x600/FF5722/FFFFFF?text=Новогодний+домик', alt: 'Новогодний домик с подсветкой'}
@@ -1269,14 +1046,14 @@ const productData = {
         price: '399',
         description: 'Классическая карточная игра для всей семьи. Правила просты и понятны даже детям: нужно быстрее всех избавиться от своих карт, выполняя специальные действия. Игра развивает логическое мышление, внимание и скорость реакции. В комплекте: 112 карт, правила игры на русском языке. Отличный подарок для семейного досуга и вечеринок с друзьями.',
         details: {
-            артикул: 'UNO-001',
-            возраст: '7+ лет',
-            материал: 'Картон',
-            размер: '9.5 × 6 × 2.5 см',
-            наличие: 'Есть в наличии',
-            цвет: 'Разноцветный',
-            вес: '150 г',
-            особенности: '2-10 игроков, правила на русском'
+            'Артикул': 'UNO-001',
+            'Возраст': '7+ лет',
+            'Материал': 'Картон',
+            'Размер': '9.5 × 6 × 2.5 см',
+            'В наличии': 'Да',
+            'Цвет': 'Разноцветный',
+            'Вес': '150 г',
+            'Особенности': '2-10 игроков, правила на русском'
         },
         photos: [
             {url: 'https://via.placeholder.com/800x600/3F51B5/FFFFFF?text=Игра+UNO+коробка', alt: 'Коробка игры UNO'},
@@ -1285,7 +1062,7 @@ const productData = {
     }
 };
 
-// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ДЛЯ МОДАЛЬНОГО ОКНА
 let currentModalProduct = null;
 let currentModalPhotoIndex = 0;
 
@@ -1344,7 +1121,7 @@ let shoppingCart = {
     }
 };
 
-// ИНИЦИАЛИЗАЦИЯ ИЗОБРАЖЕНИЙ ПРИ ЗАГРУЗКЕ
+// ЗАГРУЗКА ИЗОБРАЖЕНИЙ ТОВАРОВ
 function loadProductImages() {
     const products = ['dragon', 'kakashi', 'pistol', 'labubu', 'house', 'uno'];
     
@@ -1402,11 +1179,11 @@ function getPlaceholderUrl(productId, index) {
 
 // МОДАЛЬНОЕ ОКНО ТОВАРА
 function openProductModal(productId) {
-    console.log('Opening modal for:', productId);
+    console.log('Открытие модального окна для товара:', productId);
     
     const product = productData[productId];
     if (!product) {
-        console.error('Product not found:', productId);
+        console.error('Товар не найден:', productId);
         return;
     }
     
@@ -1418,17 +1195,24 @@ function openProductModal(productId) {
     document.getElementById('modalProductDescription').textContent = product.description;
     document.getElementById('modalProductPrice').textContent = product.price;
     
-    // Заполняем детали
-    const details = product.details;
-    document.getElementById('modalProductCode').textContent = details.артикул;
-    document.getElementById('modalProductAge').textContent = details.возраст;
-    document.getElementById('modalProductMaterial').textContent = details.материал;
-    document.getElementById('modalProductSize').textContent = details.размер;
-    document.getElementById('modalProductStock').textContent = details.наличие;
+    // Заполняем детали товара
+    const detailsGrid = document.getElementById('modalDetailsGrid');
+    detailsGrid.innerHTML = '';
+    
+    for (const [key, value] of Object.entries(product.details)) {
+        const detailItem = document.createElement('div');
+        detailItem.className = 'modal-detail-item';
+        detailItem.innerHTML = `
+            <div class="modal-detail-label">${key}:</div>
+            <div class="modal-detail-value">${value}</div>
+        `;
+        detailsGrid.appendChild(detailItem);
+    }
     
     // Настраиваем кнопку добавления в корзину
     const addToCartBtn = document.getElementById('modalAddToCartBtn');
-    addToCartBtn.onclick = () => {
+    addToCartBtn.onclick = (e) => {
+        e.stopPropagation();
         addToCart(productId, product.name, product.price);
         closeProductModal();
     };
@@ -1442,9 +1226,12 @@ function openProductModal(productId) {
     // Показываем модальное окно
     const modal = document.getElementById('productModal');
     modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
     
-    console.log('Modal opened successfully');
+    // Добавляем обработчик колесика мыши
+    modal.addEventListener('wheel', handleMouseWheel, { passive: false });
+    
+    console.log('Модальное окно успешно открыто');
 }
 
 function loadModalProductPhoto(productId, index) {
@@ -1454,7 +1241,20 @@ function loadModalProductPhoto(productId, index) {
     const modalImg = document.getElementById('modalProductImage');
     const photo = product.photos[index];
     
-    modalImg.src = photo.url;
+    // Показываем placeholder пока загружается изображение
+    modalImg.src = getPlaceholderUrl(productId, index);
+    
+    // Загружаем реальное изображение
+    const realImg = new Image();
+    realImg.onload = () => {
+        modalImg.src = photo.url;
+    };
+    realImg.onerror = () => {
+        // Оставляем placeholder если изображение не загрузилось
+        console.log('Не удалось загрузить изображение:', photo.url);
+    };
+    realImg.src = photo.url;
+    
     modalImg.alt = photo.alt;
     
     // Обновляем активную точку
@@ -1468,7 +1268,7 @@ function createModalGalleryDots(total) {
     
     for (let i = 0; i < total; i++) {
         const dot = document.createElement('span');
-        dot.className = `modal-gallery-dot ${i === 0 ? 'active' : ''}`;
+        dot.className = `modal-dot ${i === 0 ? 'active' : ''}`;
         dot.onclick = (e) => {
             e.stopPropagation();
             loadModalProductPhoto(currentModalProduct, i);
@@ -1478,13 +1278,14 @@ function createModalGalleryDots(total) {
 }
 
 function updateModalGalleryDots(activeIndex) {
-    const dots = document.querySelectorAll('.modal-gallery-dot');
+    const dots = document.querySelectorAll('.modal-dot');
     dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === activeIndex);
     });
 }
 
-function changeModalProductPhoto(direction) {
+function changeModalPhoto(direction, event) {
+    if (event) event.stopPropagation();
     if (!currentModalProduct) return;
     
     const product = productData[currentModalProduct];
@@ -1496,18 +1297,53 @@ function changeModalProductPhoto(direction) {
     loadModalProductPhoto(currentModalProduct, newIndex);
 }
 
+// Обработчик колесика мыши для листания фото
+function handleMouseWheel(event) {
+    if (!currentModalProduct) return;
+    
+    const product = productData[currentModalProduct];
+    if (!product || product.photos.length <= 1) return;
+    
+    event.preventDefault();
+    
+    if (event.deltaY > 0) {
+        // Прокрутка вниз - следующее фото
+        changeModalPhoto(1);
+    } else if (event.deltaY < 0) {
+        // Прокрутка вверх - предыдущее фото
+        changeModalPhoto(-1);
+    }
+}
+
 function closeProductModal(event) {
     if (event) {
         event.stopPropagation();
+        // Закрываем только если кликнули на overlay (темный фон)
+        if (event.target.id === 'productModal' || event.target.classList.contains('product-modal-close') || 
+            event.target.closest('.product-modal-close')) {
+            // Продолжаем закрытие
+        } else {
+            return; // Не закрываем если кликнули на содержимое модалки
+        }
     }
     
     const modal = document.getElementById('productModal');
     modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    document.body.classList.remove('modal-open');
+    
+    // Удаляем обработчик колесика мыши
+    modal.removeEventListener('wheel', handleMouseWheel);
     
     currentModalProduct = null;
     currentModalPhotoIndex = 0;
 }
+
+// Закрытие по клавише ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeProductModal();
+    }
+});
 
 // КОРЗИНА - ОСНОВНЫЕ ФУНКЦИИ
 function addToCart(productId, productName, productPrice) {
@@ -1635,15 +1471,6 @@ function showCart() {
     // Закрытие по клику вне модального окна
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) overlay.remove();
-    });
-    
-    // Закрытие по ESC
-    const closeOnEsc = (e) => {
-        if (e.key === 'Escape') overlay.remove();
-    };
-    document.addEventListener('keydown', closeOnEsc);
-    overlay.addEventListener('remove', () => {
-        document.removeEventListener('keydown', closeOnEsc);
     });
 }
 
@@ -1837,11 +1664,6 @@ document.addEventListener('DOMContentLoaded', function() {
         cartIcon.addEventListener('click', showCart);
     }
     
-    // Глобальные обработчики
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeProductModal();
-    });
-    
     // Плавная прокрутка для ссылок
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -1869,7 +1691,7 @@ window.checkout = checkout;
 window.clearCart = clearCart;
 window.openProductModal = openProductModal;
 window.closeProductModal = closeProductModal;
-window.changeModalProductPhoto = changeModalProductPhoto;
+window.changeModalPhoto = changeModalPhoto;
 window.addToCart = addToCart;
 window.showCart = showCart;
 </script>
