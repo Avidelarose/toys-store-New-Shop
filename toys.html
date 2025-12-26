@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин игрушек</title>
+    <title>Магазин игрушек - Детские игрушки и игры</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -17,12 +17,16 @@
             background-color: #f8f9fa;
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            flex: 1;
         }
 
         header {
@@ -54,6 +58,12 @@
 
         .logo i {
             color: #ffd700;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .nav-menu {
@@ -70,11 +80,28 @@
             padding: 8px 15px;
             border-radius: 5px;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .nav-menu a:hover {
             background-color: rgba(255,255,255,0.15);
             transform: translateY(-2px);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-menu a:hover::after {
+            width: 80%;
         }
 
         .cart-icon {
@@ -89,7 +116,7 @@
 
         .cart-icon:hover {
             background-color: rgba(255,255,255,0.2);
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(10deg);
         }
 
         #cart-badge {
@@ -99,14 +126,21 @@
             background-color: #ff4757;
             color: white;
             font-size: 12px;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             display: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         .menu-toggle {
@@ -117,6 +151,11 @@
             font-size: 24px;
             cursor: pointer;
             padding: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: rotate(90deg);
         }
 
         .hero {
@@ -127,12 +166,14 @@
             border-radius: 15px;
             margin: 30px 0;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: slideUp 0.8s ease-out;
         }
 
         .hero h1 {
             font-size: 42px;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease-out 0.3s both;
         }
 
         .hero p {
@@ -140,6 +181,7 @@
             max-width: 800px;
             margin: 0 auto 30px;
             opacity: 0.9;
+            animation: fadeIn 1s ease-out 0.6s both;
         }
 
         .products-grid {
@@ -147,6 +189,7 @@
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 40px;
+            animation: fadeIn 1s ease-out 0.9s both;
         }
 
         .product-card {
@@ -154,13 +197,30 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
+            animation: slideUp 0.5s ease-out;
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
         }
 
         .product-gallery {
@@ -168,7 +228,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
 
         .gallery-nav {
@@ -179,10 +239,17 @@
             justify-content: space-between;
             transform: translateY(-50%);
             padding: 0 10px;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-gallery:hover .gallery-nav {
+            opacity: 1;
         }
 
         .gallery-btn {
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
             color: white;
             border: none;
             width: 40px;
@@ -194,10 +261,11 @@
             justify-content: center;
             font-size: 18px;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .gallery-btn:hover {
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             transform: scale(1.1);
         }
 
@@ -209,6 +277,7 @@
             display: flex;
             justify-content: center;
             gap: 8px;
+            z-index: 2;
         }
 
         .gallery-dot {
@@ -225,16 +294,23 @@
             transform: scale(1.2);
         }
 
+        .gallery-dot:hover {
+            background: white;
+            transform: scale(1.3);
+        }
+
         .photo-counter {
             position: absolute;
             bottom: 15px;
             right: 15px;
             background: rgba(0,0,0,0.7);
             color: white;
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 15px;
             font-size: 12px;
             font-weight: bold;
+            z-index: 2;
+            backdrop-filter: blur(5px);
         }
 
         .product-info {
@@ -260,11 +336,19 @@
             font-weight: bold;
             color: #e74c3c;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .product-price::before {
+            content: '₽';
+            font-size: 18px;
         }
 
         .add-to-cart {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
             border: none;
@@ -277,11 +361,31 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .add-to-cart:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .add-to-cart:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(37, 117, 252, 0.4);
         }
 
         .add-to-cart:active {
@@ -290,6 +394,11 @@
 
         .add-to-cart i {
             font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .add-to-cart:hover i {
+            transform: scale(1.2) rotate(10deg);
         }
 
         /* Модальное окно для фотографий */
@@ -300,17 +409,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             z-index: 2000;
             align-items: center;
             justify-content: center;
             animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
             position: relative;
             max-width: 90%;
             max-height: 90%;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         #modalImage {
@@ -320,6 +436,7 @@
             border-radius: 10px;
             background: white;
             padding: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .modal-info {
@@ -331,23 +448,33 @@
             color: white;
             font-size: 18px;
             padding: 10px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
         }
 
         .modal-close {
             position: absolute;
-            top: -40px;
+            top: -50px;
             right: 0;
-            background: none;
+            background: rgba(255,255,255,0.1);
             border: none;
             color: white;
             font-size: 30px;
             cursor: pointer;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg) scale(1.1);
         }
 
         .modal-nav {
@@ -358,18 +485,23 @@
             justify-content: space-between;
             padding: 0 20px;
             transform: translateY(-50%);
+            z-index: 1;
         }
 
         .modal-nav-btn {
             background: rgba(255,255,255,0.2);
             color: white;
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 24px;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-nav-btn:hover {
@@ -377,13 +509,32 @@
             transform: scale(1.1);
         }
 
+        .loading-spinner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #2575fc;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
         footer {
             background: #2c3e50;
             color: white;
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             margin-top: 60px;
             border-radius: 15px 15px 0 0;
+            animation: fadeIn 1s ease-out 1.2s both;
         }
 
         .footer-content {
@@ -402,11 +553,21 @@
         .footer-links a {
             color: #bdc3c7;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .footer-links a:hover {
             color: white;
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            margin-top: 20px;
+            color: #95a5a6;
+            font-size: 14px;
         }
 
         @keyframes fadeIn {
@@ -414,12 +575,11 @@
             to { opacity: 1; }
         }
 
-        @keyframes slideIn {
-            from { transform: translateY(-20px); opacity: 0; }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* Анимации для уведомлений */
         @keyframes slideInRight {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -428,11 +588,6 @@
         @keyframes slideOutRight {
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(100%); opacity: 0; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         /* Адаптивность */
@@ -446,13 +601,15 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                background: #6a11cb;
+                background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
                 flex-direction: column;
                 padding: 20px;
                 transform: translateY(-100%);
                 opacity: 0;
-                transition: all 0.3s ease;
+                transition: all 0.4s ease;
                 z-index: 999;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                border-radius: 0 0 15px 15px;
             }
 
             .nav-menu.active {
@@ -476,6 +633,71 @@
                 flex-direction: column;
                 gap: 15px;
             }
+
+            .gallery-nav {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 15px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .product-card {
+                margin: 0 10px;
+            }
+        }
+
+        /* Стили для placeholder */
+        .placeholder-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .placeholder-icon {
+            font-size: 60px;
+            color: #6a11cb;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .placeholder-text {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .placeholder-subtext {
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* Анимации загрузки */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
     </style>
 </head>
@@ -485,23 +707,23 @@
         <div class="header-container">
             <div class="logo">
                 <i class="fas fa-dragon"></i>
-                <span>Магазин Игрушек</span>
+                <span>MagicToys</span>
             </div>
             
-            <button class="menu-toggle">
+            <button class="menu-toggle" aria-label="Меню" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
             
-            <ul class="nav-menu">
-                <li><a href="#home">Главная</a></li>
-                <li><a href="#products">Товары</a></li>
-                <li><a href="#about">О нас</a></li>
-                <li><a href="#contact">Контакты</a></li>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="#products"><i class="fas fa-gifts"></i> Товары</a></li>
+                <li><a href="#about"><i class="fas fa-info-circle"></i> О нас</a></li>
+                <li><a href="#contact"><i class="fas fa-phone"></i> Контакты</a></li>
             </ul>
             
-            <div class="cart-icon" id="cart-icon">
+            <div class="cart-icon" id="cart-icon" aria-label="Корзина">
                 <i class="fas fa-shopping-cart"></i>
-                <span id="cart-badge">0</span>
+                <span id="cart-badge" aria-live="polite">0</span>
             </div>
         </div>
     </header>
@@ -510,13 +732,20 @@
     <div class="container">
         <!-- Герой-секция -->
         <section class="hero" id="home">
-            <h1>Добро пожаловать в мир удивительных игрушек!</h1>
-            <p>Мы предлагаем уникальные и качественные игрушки для детей и коллекционеров. От классических до современных - у нас есть всё!</p>
+            <h1>Мир волшебных игрушек для детей и взрослых!</h1>
+            <p>Откройте для себя уникальную коллекцию качественных игрушек, которые подарят радость и незабываемые эмоции. От классики до современных хитов - всё для счастливого детства!</p>
+            <div style="margin-top: 30px;">
+                <button class="add-to-cart" onclick="document.querySelector('#products').scrollIntoView({behavior: 'smooth'})" style="width: auto; padding: 12px 30px;">
+                    <i class="fas fa-arrow-down"></i> Смотреть товары
+                </button>
+            </div>
         </section>
 
         <!-- Секция товаров -->
         <section id="products">
-            <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50; font-size: 32px;">Наши Товары</h2>
+            <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50; font-size: 32px;">
+                <i class="fas fa-star" style="color: #ffd700;"></i> Популярные товары
+            </h2>
             
             <div class="products-grid">
                 <!-- Дракон -->
@@ -524,8 +753,8 @@
                     <div class="product-gallery"></div>
                     <div class="product-info">
                         <h3 class="product-title">Дракон светящийся в темноте</h3>
-                        <p class="product-description">Великолепный светящийся дракон с подвижными крыльями. Идеально подходит для детей от 5 лет.</p>
-                        <div class="product-price">1 299 ₽</div>
+                        <p class="product-description">Великолепный светящийся дракон с подвижными крыльями. Светится в темноте! Безопасен для детей от 5 лет.</p>
+                        <div class="product-price">1 299</div>
                         <button class="add-to-cart" onclick="addToCart('dragon', 'Дракон светящийся в темноте', '1299')">
                             <i class="fas fa-cart-plus"></i> В корзину
                         </button>
@@ -536,9 +765,9 @@
                 <div class="product-card" data-product="kakashi">
                     <div class="product-gallery"></div>
                     <div class="product-info">
-                        <h3 class="product-title">Фигурка Какаши</h3>
-                        <p class="product-description">Детализированная фигурка Какаши Хатаке из Наруто. Высота: 15 см, материал: ПВХ.</p>
-                        <div class="product-price">899 ₽</div>
+                        <h3 class="product-title">Фигурка Какаши Хатаке</h3>
+                        <p class="product-description">Детализированная коллекционная фигурка из аниме Наруто. Высота: 18 см, материал: высококачественный ПВХ.</p>
+                        <div class="product-price">899</div>
                         <button class="add-to-cart" onclick="addToCart('kakashi', 'Фигурка Какаши', '899')">
                             <i class="fas fa-cart-plus"></i> В корзину
                         </button>
@@ -549,9 +778,9 @@
                 <div class="product-card" data-product="pistol">
                     <div class="product-gallery"></div>
                     <div class="product-info">
-                        <h3 class="product-title">Пистолет с пульками</h3>
-                        <p class="product-description">Безопасный пистолет с мягкими пульками. Комплект: пистолет + 20 пулек.</p>
-                        <div class="product-price">599 ₽</div>
+                        <h3 class="product-title">Пистолет с мягкими пульками</h3>
+                        <p class="product-description">Безопасный пистолет для детей. В комплекте: пистолет, 20 мягких пулек, мишень. Для детей от 6 лет.</p>
+                        <div class="product-price">599</div>
                         <button class="add-to-cart" onclick="addToCart('pistol', 'Пистолет с пульками', '599')">
                             <i class="fas fa-cart-plus"></i> В корзину
                         </button>
@@ -562,9 +791,9 @@
                 <div class="product-card" data-product="labubu">
                     <div class="product-gallery"></div>
                     <div class="product-info">
-                        <h3 class="product-title">Фигурка Лабубу</h3>
-                        <p class="product-description">Коллекционная фигурка Лабубу. Доступно несколько цветов на выбор.</p>
-                        <div class="product-price">1 499 ₽</div>
+                        <h3 class="product-title">Коллекционная фигурка Лабубу</h3>
+                        <p class="product-description">Милая фигурка Лабубу разных цветов. Высота: 10 см. Идеально для коллекции или подарка.</p>
+                        <div class="product-price">1 499</div>
                         <button class="add-to-cart" onclick="addToCart('labubu', 'Фигурка Лабубу', '1499')">
                             <i class="fas fa-cart-plus"></i> В корзину
                         </button>
@@ -575,9 +804,9 @@
                 <div class="product-card" data-product="house">
                     <div class="product-gallery"></div>
                     <div class="product-info">
-                        <h3 class="product-title">Новогодний домик</h3>
-                        <p class="product-description">Волшебный новогодний домик с подсветкой. Создает праздничное настроение!</p>
-                        <div class="product-price">1 799 ₽</div>
+                        <h3 class="product-title">Волшебный новогодний домик</h3>
+                        <p class="product-description">Светящийся новогодний домик с подсветкой и зимним декором. Создает праздничное настроение! Работает от батареек.</p>
+                        <div class="product-price">1 799</div>
                         <button class="add-to-cart" onclick="addToCart('house', 'Новогодний домик', '1799')">
                             <i class="fas fa-cart-plus"></i> В корзину
                         </button>
@@ -588,12 +817,42 @@
                 <div class="product-card" data-product="uno">
                     <div class="product-gallery"></div>
                     <div class="product-info">
-                        <h3 class="product-title">Игра UNO</h3>
-                        <p class="product-description">Классическая карточная игра для всей семьи. От 2 до 10 игроков.</p>
-                        <div class="product-price">399 ₽</div>
+                        <h3 class="product-title">Настольная игра UNO</h3>
+                        <p class="product-description">Классическая карточная игра для всей семьи. От 2 до 10 игроков. Отличный подарок для детей и взрослых.</p>
+                        <div class="product-price">399</div>
                         <button class="add-to-cart" onclick="addToCart('uno', 'Игра UNO', '399')">
                             <i class="fas fa-cart-plus"></i> В корзину
                         </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- О нас -->
+        <section id="about" style="margin-top: 80px; padding: 40px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50; font-size: 32px;">
+                <i class="fas fa-heart" style="color: #e74c3c;"></i> О нашем магазине
+            </h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 18px; line-height: 1.8; color: #555; margin-bottom: 20px;">
+                    Мы - команда энтузиастов, которые верят, что каждая игрушка должна приносить радость и развивать воображение. 
+                    Уже более 5 лет мы подбираем самые качественные, безопасные и интересные игрушки для детей всех возрастов.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 30px; margin-top: 40px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-shield-alt" style="font-size: 40px; color: #4CAF50;"></i>
+                        <h3 style="margin: 10px 0; color: #2c3e50;">Безопасность</h3>
+                        <p style="color: #7f8c8d;">Все товаги сертифицированы</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-shipping-fast" style="font-size: 40px; color: #2196F3;"></i>
+                        <h3 style="margin: 10px 0; color: #2c3e50;">Быстрая доставка</h3>
+                        <p style="color: #7f8c8d;">Доставка по всей России</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-headset" style="font-size: 40px; color: #FF9800;"></i>
+                        <h3 style="margin: 10px 0; color: #2c3e50;">Поддержка</h3>
+                        <p style="color: #7f8c8d;">Помощь 24/7</p>
                     </div>
                 </div>
             </div>
@@ -602,17 +861,18 @@
 
     <!-- Модальное окно для фотографий -->
     <div id="photoModal" class="modal">
+        <div class="loading-spinner" id="modalSpinner"></div>
         <div class="modal-content">
-            <button class="modal-close" onclick="closePhotoModal()">×</button>
+            <button class="modal-close" onclick="closePhotoModal()" aria-label="Закрыть">×</button>
             <div class="modal-nav">
-                <button class="modal-nav-btn" onclick="changeModalPhoto(-1)">
+                <button class="modal-nav-btn" onclick="changeModalPhoto(-1)" aria-label="Предыдущее фото">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <button class="modal-nav-btn" onclick="changeModalPhoto(1)">
+                <button class="modal-nav-btn" onclick="changeModalPhoto(1)" aria-label="Следующее фото">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
-            <img id="modalImage" src="" alt="Фото товара">
+            <img id="modalImage" src="" alt="Фото товара" onload="hideModalSpinner()">
             <div class="modal-info" id="modalInfo"></div>
         </div>
     </div>
@@ -620,44 +880,49 @@
     <!-- Подвал -->
     <footer id="contact">
         <div class="footer-content">
-            <h3>Магазин Игрушек</h3>
-            <p>© 2024 Все права защищены. Сделано с ❤️ для любителей игрушек</p>
+            <h3 style="font-size: 28px; margin-bottom: 20px;">MagicToys</h3>
+            <p style="font-size: 16px; opacity: 0.9; max-width: 600px; margin: 0 auto 30px;">
+                Сделаем детство вашего ребенка волшебным! Мы всегда на связи и готовы помочь с выбором идеальной игрушки.
+            </p>
             <div class="footer-links">
-                <a href="#"><i class="fab fa-telegram"></i> Telegram</a>
-                <a href="#"><i class="fab fa-vk"></i> ВКонтакте</a>
-                <a href="#"><i class="fas fa-phone"></i> +7 (999) 123-45-67</a>
-                <a href="#"><i class="fas fa-envelope"></i> info@toyshop.ru</a>
+                <a href="https://t.me/NewshopNm" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="tel:+79991234567"><i class="fas fa-phone"></i> +7 (999) 123-45-67</a>
+                <a href="mailto:info@magictoys.ru"><i class="fas fa-envelope"></i> info@magictoys.ru</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Москва, ул. Игрушечная, 15</a>
+            </div>
+            <div class="copyright">
+                © 2024 MagicToys. Все права защищены. Сделано с ❤️ для любителей игрушек
             </div>
         </div>
     </footer>
 
 <script>
-// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ
+// ДАННЫЕ ТОВАРОВ С ПРАВИЛЬНЫМИ ПУТЯМИ
 const productPhotos = {
     'dragon': {
         name: 'Дракон светящийся в темноте',
         photos: [
-            {url: 'toys-images/dragons/white.png', alt: 'Белый дракон'},
-            {url: 'https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Дракон+2', alt: 'Дракон вид 2'},
-            {url: 'https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Дракон+3', alt: 'Дракон вид 3'}
+            {url: 'toys-images/dragons/white.png', alt: 'Белый светящийся дракон'},
+            {url: 'https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Дракон+вид+2', alt: 'Дракон сбоку'},
+            {url: 'https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Дракон+вид+3', alt: 'Дракон с подсветкой'}
         ]
     },
     'kakashi': {
-        name: 'Фигурка Какаши',
+        name: 'Фигурка Какаши Хатаке',
         photos: [
-            {url: 'toys-images/kakashi/blu.png', alt: 'Фигурка Какаши'},
-            {url: 'https://via.placeholder.com/400x300/2196F3/FFFFFF?text=Какаши+2', alt: 'Какаши вид 2'}
+            {url: 'toys-images/kakahi/blu.png', alt: 'Фигурка Какаши'},
+            {url: 'https://via.placeholder.com/400x300/2196F3/FFFFFF?text=Какаши+вид+2', alt: 'Какаши вид сбоку'}
         ]
     },
     'pistol': {
-        name: 'Пистолет с пульками',
+        name: 'Пистолет с мягкими пульками',
         photos: [
-            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет'},
-            {url: 'https://via.placeholder.com/400x300/FFC107/000000?text=Пистолет+2', alt: 'Пистолет вид 2'}
+            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет с пульками'},
+            {url: 'https://via.placeholder.com/400x300/FFC107/000000?text=Пистолет+вид+2', alt: 'Комплект пулек'}
         ]
     },
     'labubu': {
-        name: 'Фигурка Лабубу',
+        name: 'Коллекционная фигурка Лабубу',
         photos: [
             {url: 'toys-images/labubu/grey.jpg', alt: 'Серый Лабубу'},
             {url: 'toys-images/labubu/purple.jpg', alt: 'Фиолетовый Лабубу'},
@@ -666,15 +931,15 @@ const productPhotos = {
         ]
     },
     'house': {
-        name: 'Новогодний домик',
+        name: 'Волшебный новогодний домик',
         photos: [
-            {url: 'https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Новогодний+домик', alt: 'Новогодний домик'}
+            {url: 'https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Новогодний+домик', alt: 'Новогодний домик с подсветкой'}
         ]
     },
     'uno': {
-        name: 'Игра UNO',
+        name: 'Настольная игра UNO',
         photos: [
-            {url: 'https://via.placeholder.com/400x300/3F51B5/FFFFFF?text=Игра+UNO', alt: 'Игра UNO'}
+            {url: 'https://via.placeholder.com/400x300/3F51B5/FFFFFF?text=Игра+UNO+коробка', alt: 'Коробка игры UNO'}
         ]
     }
 };
@@ -685,46 +950,60 @@ let currentModalIndex = 0;
 
 // КОРЗИНА
 let shoppingCart = {
-    items: [],
+    items: JSON.parse(localStorage.getItem('cart')) || [],
+    
     addItem: function(item) {
         const existing = this.items.find(i => i.id === item.id && i.title === item.title);
         if (existing) {
             existing.quantity += 1;
         } else {
-            this.items.push({...item});
+            this.items.push({...item, quantity: 1});
         }
+        this.save();
         updateCart();
-        showNotification(`Добавлено: ${item.title}`, 'success');
+        showNotification(`✅ Добавлено: ${item.title}`, 'success');
     },
+    
+    removeItem: function(index) {
+        if (index >= 0 && index < this.items.length) {
+            this.items.splice(index, 1);
+            this.save();
+            return true;
+        }
+        return false;
+    },
+    
+    updateQuantity: function(index, newQuantity) {
+        if (index >= 0 && index < this.items.length) {
+            if (newQuantity < 1) {
+                return this.removeItem(index);
+            }
+            this.items[index].quantity = newQuantity;
+            this.save();
+            return true;
+        }
+        return false;
+    },
+    
+    clear: function() {
+        this.items = [];
+        this.save();
+    },
+    
     getTotal: function() {
         return this.items.reduce((sum, item) => sum + (parseInt(item.price) * item.quantity), 0);
+    },
+    
+    getCount: function() {
+        return this.items.reduce((sum, item) => sum + item.quantity, 0);
+    },
+    
+    save: function() {
+        localStorage.setItem('cart', JSON.stringify(this.items));
     }
 };
 
-// ФУНКЦИЯ ДЛЯ СОЗДАНИЯ PLACEHOLDER-ИЗОБРАЖЕНИЙ
-function getPlaceholderUrl(productId, index) {
-    const colors = {
-        'dragon': '#4CAF50',
-        'kakashi': '#2196F3',
-        'pistol': '#FFC107',
-        'labubu': '#9C27B0',
-        'house': '#FF5722',
-        'uno': '#3F51B5'
-    };
-    const names = {
-        'dragon': 'Дракон',
-        'kakashi': 'Какаши',
-        'pistol': 'Пистолет',
-        'labubu': 'Лабубу',
-        'house': 'Новогодний домик',
-        'uno': 'UNO Игра'
-    };
-    const color = colors[productId] || '#2196F3';
-    const name = names[productId] || 'Товар';
-    return `https://via.placeholder.com/400x300/${color.substring(1)}/FFFFFF?text=${encodeURIComponent(name)}+${index + 1}`;
-}
-
-// ОСНОВНАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ГАЛЕРЕИ
+// ФУНКЦИИ ГАЛЕРЕИ
 function initGallery(productId) {
     const product = productPhotos[productId];
     const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
@@ -733,13 +1012,12 @@ function initGallery(productId) {
     
     galleryElement.innerHTML = '';
     
-    // Если фото нет - создаем заглушку
+    // Если нет фото - создаем placeholder
     if (!product || !product.photos || product.photos.length === 0) {
-        createFallbackGallery(productId);
+        createPlaceholderGallery(productId);
         return;
     }
 
-    // Создаем контейнер для изображений
     const imagesContainer = document.createElement('div');
     imagesContainer.style.cssText = `
         width: 100%;
@@ -747,11 +1025,12 @@ function initGallery(productId) {
         position: relative;
     `;
 
-    // Создаем изображения
+    // Создаем изображения с проверкой загрузки
     product.photos.forEach((photo, index) => {
         const img = document.createElement('img');
         img.id = `${productId}-image-${index}`;
-        img.alt = photo.alt || `Фото ${product.name}`;
+        img.alt = photo.alt;
+        img.loading = "lazy";
         img.style.cssText = `
             width: 100%;
             height: 100%;
@@ -764,19 +1043,22 @@ function initGallery(productId) {
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            transition: opacity 0.3s ease;
         `;
 
-        // Устанавливаем placeholder сначала
+        // Сначала ставим placeholder
         img.src = getPlaceholderUrl(productId, index);
         
         // Пробуем загрузить реальное изображение
         const realImg = new Image();
-        realImg.onload = function() {
+        realImg.onload = () => {
             img.src = photo.url;
+            img.style.opacity = '1';
         };
-        realImg.onerror = function() {
-            console.log(`Изображение не найдено: ${photo.url}. Используем placeholder.`);
+        realImg.onerror = () => {
+            console.log(`Изображение не найдено: ${photo.url}`);
             // Оставляем placeholder
+            img.style.opacity = '0.8';
         };
         realImg.src = photo.url;
 
@@ -785,67 +1067,123 @@ function initGallery(productId) {
 
     galleryElement.appendChild(imagesContainer);
 
-    // Добавляем навигацию если фото больше 1
+    // Навигация
     if (product.photos.length > 1) {
-        // Кнопки навигации
-        const navDiv = document.createElement('div');
-        navDiv.className = 'gallery-nav';
-        
-        const prevBtn = document.createElement('button');
-        prevBtn.className = 'gallery-btn prev-btn';
-        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-        prevBtn.onclick = (e) => {
-            e.stopPropagation();
-            changePhoto(productId, -1);
-        };
-        
-        const nextBtn = document.createElement('button');
-        nextBtn.className = 'gallery-btn next-btn';
-        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-        nextBtn.onclick = (e) => {
-            e.stopPropagation();
-            changePhoto(productId, 1);
-        };
-        
-        navDiv.appendChild(prevBtn);
-        navDiv.appendChild(nextBtn);
-        galleryElement.appendChild(navDiv);
-
-        // Точки навигации
-        const controlsDiv = document.createElement('div');
-        controlsDiv.className = 'gallery-controls';
-        
-        product.photos.forEach((_, index) => {
-            const dot = document.createElement('span');
-            dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
-            dot.onclick = (e) => {
-                e.stopPropagation();
-                goToPhoto(productId, index);
-            };
-            controlsDiv.appendChild(dot);
-        });
-        
-        galleryElement.appendChild(controlsDiv);
+        addGalleryNavigation(galleryElement, productId, product.photos.length);
     }
 
-    // Счетчик
-    const counter = document.createElement('div');
-    counter.className = 'photo-counter';
-    counter.textContent = product.photos.length > 0 ? `1/${product.photos.length}` : '0/0';
-    galleryElement.appendChild(counter);
+    addGalleryCounter(galleryElement, 1, product.photos.length);
 
-    // Обработчик клика для открытия модального окна
+    // Клик для открытия модального окна
     galleryElement.onclick = () => {
-        if (product && product.photos && product.photos.length > 0) {
+        if (product.photos.length > 0) {
             openPhotoModal(productId, 0);
         }
     };
 }
 
-// ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ ГАЛЕРЕЕЙ
+function createPlaceholderGallery(productId) {
+    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
+    if (!gallery) return;
+    
+    const product = productPhotos[productId];
+    const color = getProductColor(productId);
+    
+    gallery.innerHTML = `
+        <div class="placeholder-container">
+            <i class="fas fa-image placeholder-icon"></i>
+            <div class="placeholder-text">Фото скоро появится</div>
+            <div class="placeholder-subtext">${product?.name || 'Товар'}</div>
+        </div>
+    `;
+}
+
+function getPlaceholderUrl(productId, index) {
+    const colors = {
+        'dragon': '#4CAF50',
+        'kakashi': '#2196F3',
+        'pistol': '#FFC107',
+        'labubu': '#9C27B0',
+        'house': '#FF5722',
+        'uno': '#3F51B5'
+    };
+    
+    const names = {
+        'dragon': 'Дракон',
+        'kakashi': 'Какаши',
+        'pistol': 'Пистолет',
+        'labubu': 'Лабубу',
+        'house': 'Домик',
+        'uno': 'UNO'
+    };
+    
+    const color = colors[productId] || '#2196F3';
+    const name = names[productId] || 'Товар';
+    const hexColor = color.startsWith('#') ? color.substring(1) : '2196F3';
+    
+    return `https://via.placeholder.com/400x300/${hexColor}/FFFFFF?text=${encodeURIComponent(name)}+${index + 1}`;
+}
+
+function getProductColor(productId) {
+    const colors = {
+        'dragon': '#4CAF50',
+        'kakashi': '#2196F3',
+        'pistol': '#FFC107',
+        'labubu': '#9C27B0',
+        'house': '#FF5722',
+        'uno': '#3F51B5'
+    };
+    return colors[productId] || '#2196F3';
+}
+
+function addGalleryNavigation(galleryElement, productId, totalPhotos) {
+    const navDiv = document.createElement('div');
+    navDiv.className = 'gallery-nav';
+    
+    const prevBtn = createGalleryButton('prev-btn', '<i class="fas fa-chevron-left"></i>', () => changePhoto(productId, -1));
+    const nextBtn = createGalleryButton('next-btn', '<i class="fas fa-chevron-right"></i>', () => changePhoto(productId, 1));
+    
+    navDiv.appendChild(prevBtn);
+    navDiv.appendChild(nextBtn);
+    galleryElement.appendChild(navDiv);
+
+    const controlsDiv = document.createElement('div');
+    controlsDiv.className = 'gallery-controls';
+    
+    for (let i = 0; i < totalPhotos; i++) {
+        const dot = document.createElement('span');
+        dot.className = `gallery-dot ${i === 0 ? 'active' : ''}`;
+        dot.onclick = (e) => {
+            e.stopPropagation();
+            goToPhoto(productId, i);
+        };
+        controlsDiv.appendChild(dot);
+    }
+    
+    galleryElement.appendChild(controlsDiv);
+}
+
+function createGalleryButton(className, html, onClick) {
+    const button = document.createElement('button');
+    button.className = `gallery-btn ${className}`;
+    button.innerHTML = html;
+    button.onclick = (e) => {
+        e.stopPropagation();
+        onClick();
+    };
+    return button;
+}
+
+function addGalleryCounter(galleryElement, current, total) {
+    const counter = document.createElement('div');
+    counter.className = 'photo-counter';
+    counter.textContent = `${current}/${total}`;
+    galleryElement.appendChild(counter);
+}
+
 function changePhoto(productId, direction) {
     const product = productPhotos[productId];
-    if (!product || !product.photos || product.photos.length <= 1) return;
+    if (!product || product.photos.length <= 1) return;
     
     const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
     if (!gallery) return;
@@ -865,7 +1203,7 @@ function changePhoto(productId, direction) {
 
 function goToPhoto(productId, index) {
     const product = productPhotos[productId];
-    if (!product || !product.photos || index < 0 || index >= product.photos.length) return;
+    if (!product || index < 0 || index >= product.photos.length) return;
     
     const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
     if (!gallery) return;
@@ -894,21 +1232,7 @@ function goToPhoto(productId, index) {
     }
 }
 
-function createFallbackGallery(productId) {
-    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
-    if (!gallery) return;
-    
-    gallery.innerHTML = `
-        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f5f7fa,#c3cfe2);border-radius:10px;cursor:default;">
-            <div style="text-align:center;padding:20px;">
-                <i class="fas fa-image" style="font-size:50px;color:#2196f3;margin-bottom:10px;"></i>
-                <div style="color:#666;font-size:16px;">Фото скоро будет</div>
-            </div>
-        </div>
-    `;
-}
-
-// ФУНКЦИИ ДЛЯ МОДАЛЬНОГО ОКНА
+// МОДАЛЬНОЕ ОКНО
 function openPhotoModal(productId, index) {
     const product = productPhotos[productId];
     if (!product || !product.photos || product.photos.length === 0) return;
@@ -916,16 +1240,29 @@ function openPhotoModal(productId, index) {
     const photos = product.photos;
     if (index < 0 || index >= photos.length) index = 0;
     
+    const modal = document.getElementById('photoModal');
     const modalImg = document.getElementById('modalImage');
     const modalInfo = document.getElementById('modalInfo');
-    const modal = document.getElementById('photoModal');
+    const spinner = document.getElementById('modalSpinner');
     
-    // Устанавливаем изображение
+    // Показываем спиннер
+    if (spinner) spinner.style.display = 'block';
+    modalImg.style.opacity = '0';
+    
+    // Загружаем изображение
+    modalImg.onload = function() {
+        if (spinner) spinner.style.display = 'none';
+        modalImg.style.opacity = '1';
+    };
+    
+    modalImg.onerror = function() {
+        if (spinner) spinner.style.display = 'none';
+        this.src = getPlaceholderUrl(productId, index);
+        this.style.opacity = '1';
+    };
+    
     modalImg.src = photos[index].url;
     modalImg.alt = photos[index].alt;
-    modalImg.onerror = function() {
-        this.src = getPlaceholderUrl(productId, index);
-    };
     
     modalInfo.textContent = `${product.name} (${index + 1}/${photos.length})`;
     
@@ -938,10 +1275,14 @@ function openPhotoModal(productId, index) {
 
 function closePhotoModal() {
     const modal = document.getElementById('photoModal');
+    const spinner = document.getElementById('modalSpinner');
+    
     if (modal) {
         modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        if (spinner) spinner.style.display = 'none';
     }
+    
+    document.body.style.overflow = 'auto';
 }
 
 function changeModalPhoto(direction) {
@@ -954,13 +1295,17 @@ function changeModalPhoto(direction) {
     openPhotoModal(currentModalProduct, currentModalIndex);
 }
 
-// ФУНКЦИИ КОРЗИНЫ
+function hideModalSpinner() {
+    const spinner = document.getElementById('modalSpinner');
+    if (spinner) spinner.style.display = 'none';
+}
+
+// КОРЗИНА
 function addToCart(productId, productName, productPrice) {
     const item = { 
         id: productId, 
         title: productName, 
-        price: productPrice, 
-        quantity: 1 
+        price: productPrice
     };
     shoppingCart.addItem(item);
 }
@@ -968,41 +1313,15 @@ function addToCart(productId, productName, productPrice) {
 function updateCart() {
     const badge = document.getElementById('cart-badge');
     if (badge) {
-        const total = shoppingCart.items.reduce((sum, item) => sum + item.quantity, 0);
+        const total = shoppingCart.getCount();
         badge.textContent = total;
         badge.style.display = total > 0 ? 'flex' : 'none';
     }
 }
 
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? '#4CAF50' : '#2196f3'};
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-        max-width: 300px;
-        font-weight: bold;
-    `;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-}
-
 function showCart() {
-    if (!shoppingCart || shoppingCart.items.length === 0) {
-        showNotification('Корзина пуста', 'info');
+    if (shoppingCart.items.length === 0) {
+        showNotification('🛒 Корзина пуста', 'info');
         return;
     }
     
@@ -1019,38 +1338,50 @@ function showCart() {
         justify-content: center;
         align-items: center;
         animation: fadeIn 0.3s ease;
+        backdrop-filter: blur(5px);
     `;
     
     const modal = document.createElement('div');
     modal.style.cssText = `
         background: white;
-        border-radius: 15px;
-        padding: 25px;
+        border-radius: 20px;
+        padding: 30px;
         width: 90%;
         max-width: 500px;
         max-height: 80vh;
         overflow-y: auto;
         animation: slideUp 0.3s ease;
         position: relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     `;
     
     let itemsHTML = '';
     shoppingCart.items.forEach((item, index) => {
         const itemTotal = parseInt(item.price) * item.quantity;
         itemsHTML += `
-            <div style="border-bottom: 1px solid #eee; padding: 15px 0;">
-                <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div style="border-bottom: 1px solid #eee; padding: 20px 0; animation: slideUp 0.3s ease ${index * 0.1}s both;">
+                <div style="display: flex; justify-content: space-between; align-items: start; gap: 15px;">
                     <div style="flex: 1;">
-                        <strong>${item.title}</strong>
-                        <div style="color: #666; font-size: 14px; margin-top: 5px;">
-                            ${item.price} ₽ × ${item.quantity} = ${itemTotal} ₽
+                        <strong style="font-size: 16px; color: #2c3e50;">${item.title}</strong>
+                        <div style="color: #666; font-size: 14px; margin-top: 8px;">
+                            ${item.price} ₽ × ${item.quantity} = <strong>${itemTotal} ₽</strong>
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <button onclick="updateQuantity(${index}, ${item.quantity - 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">-</button>
-                        <span style="font-weight: bold;">${item.quantity}</span>
-                        <button onclick="updateQuantity(${index}, ${item.quantity + 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">+</button>
-                        <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #f44336; cursor: pointer; font-size: 20px; margin-left: 10px;">×</button>
+                        <button onclick="updateQuantity(${index}, ${item.quantity - 1})" 
+                                style="width: 32px; height: 32px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer; font-size: 16px; transition: all 0.3s ease;">
+                            -
+                        </button>
+                        <span style="font-weight: bold; min-width: 30px; text-align: center;">${item.quantity}</span>
+                        <button onclick="updateQuantity(${index}, ${item.quantity + 1})" 
+                                style="width: 32px; height: 32px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer; font-size: 16px; transition: all 0.3s ease;">
+                            +
+                        </button>
+                        <button onclick="removeFromCart(${index})" 
+                                style="background: none; border: none; color: #ff4757; cursor: pointer; font-size: 24px; margin-left: 10px; transition: transform 0.3s ease;"
+                                title="Удалить">
+                            ×
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1060,24 +1391,30 @@ function showCart() {
     const total = shoppingCart.getTotal();
     
     modal.innerHTML = `
-        <h2 style="margin-top: 0; color: #2196f3; display: flex; align-items: center; gap: 10px;">
+        <h2 style="margin-top: 0; color: #6a11cb; display: flex; align-items: center; gap: 10px; font-size: 24px;">
             <i class="fas fa-shopping-cart"></i> Ваша корзина
-            <button onclick="this.closest('div').parentElement.remove();" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #666; font-size: 24px; cursor: pointer;">×</button>
+            <button onclick="this.closest('div').parentElement.remove();" 
+                    style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: #666; font-size: 28px; cursor: pointer; transition: all 0.3s ease;"
+                    title="Закрыть">
+                ×
+            </button>
         </h2>
-        <div style="max-height: 300px; overflow-y: auto; margin: 20px 0;">
-            ${itemsHTML}
+        <div style="max-height: 300px; overflow-y: auto; margin: 25px 0; padding-right: 10px;">
+            ${itemsHTML || '<div style="text-align: center; padding: 40px; color: #999;">Корзина пуста</div>'}
         </div>
-        <div style="border-top: 2px solid #2196f3; margin-top: 20px; padding-top: 20px;">
-            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 18px;">
+        <div style="border-top: 2px solid #6a11cb; margin-top: 20px; padding-top: 20px;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 20px;">
                 <span>Итого:</span>
                 <span>${total} ₽</span>
             </div>
         </div>
-        <div style="margin-top: 25px; display: flex; gap: 15px;">
-            <button onclick="checkout()" style="flex: 2; padding: 12px; background: linear-gradient(90deg, #4CAF50, #2e7d32); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+        <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+            <button onclick="checkout()" 
+                    style="flex: 2; min-width: 200px; padding: 15px; background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease;">
                 <i class="fab fa-telegram"></i> Оформить в Telegram
             </button>
-            <button onclick="clearCart()" style="flex: 1; padding: 12px; background: #f5f5f5; color: #666; border: none; border-radius: 8px; cursor: pointer;">
+            <button onclick="clearCart()" 
+                    style="flex: 1; min-width: 100px; padding: 15px; background: #f5f5f5; color: #666; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; transition: all 0.3s ease;">
                 Очистить
             </button>
         </div>
@@ -1090,52 +1427,55 @@ function showCart() {
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) overlay.remove();
     });
+    
+    // Закрытие по ESC
+    const closeOnEsc = (e) => {
+        if (e.key === 'Escape') overlay.remove();
+    };
+    document.addEventListener('keydown', closeOnEsc);
+    overlay.addEventListener('remove', () => {
+        document.removeEventListener('keydown', closeOnEsc);
+    });
 }
 
 function updateQuantity(index, newQuantity) {
-    if (shoppingCart && shoppingCart.items[index]) {
-        if (newQuantity < 1) {
-            removeFromCart(index);
-        } else {
-            shoppingCart.items[index].quantity = newQuantity;
-            updateCart();
-            showCart();
-        }
+    if (shoppingCart.updateQuantity(index, newQuantity)) {
+        updateCart();
+        showCart();
     }
 }
 
 function removeFromCart(index) {
-    if (shoppingCart && shoppingCart.items[index]) {
-        shoppingCart.items.splice(index, 1);
+    if (shoppingCart.removeItem(index)) {
         updateCart();
-        showNotification('Товар удален из корзины', 'info');
+        showNotification('🗑️ Товар удален из корзины', 'info');
         showCart();
     }
 }
 
 function clearCart() {
-    shoppingCart.items = [];
+    shoppingCart.clear();
     updateCart();
     document.querySelector('[style*="background: rgba(0,0,0,0.5)"]')?.remove();
-    showNotification('Корзина очищена', 'info');
+    showNotification('🧹 Корзина очищена', 'info');
 }
 
 function checkout() {
-    if (!shoppingCart || shoppingCart.items.length === 0) return;
+    if (shoppingCart.items.length === 0) return;
     
-    let orderText = "Здравствуйте! Хочу приобрести:\n\n";
+    let orderText = "🎁 Здравствуйте! Хочу приобрести:\n\n";
     
     shoppingCart.items.forEach((item, index) => {
         const itemTotal = parseInt(item.price) * item.quantity;
         orderText += `${index + 1}. ${item.title}\n`;
-        orderText += `   Количество: ${item.quantity} шт.\n`;
-        orderText += `   Цена: ${item.price} ₽ × ${item.quantity} = ${itemTotal} ₽\n\n`;
+        orderText += `   📦 Количество: ${item.quantity} шт.\n`;
+        orderText += `   💰 Цена: ${item.price} ₽ × ${item.quantity} = ${itemTotal} ₽\n\n`;
     });
     
     const total = shoppingCart.getTotal();
-    orderText += `Итого: ${total} ₽\n\n`;
+    orderText += `💰 Итого: ${total} ₽\n\n`;
     orderText += "---\n";
-    orderText += "Ожидаю информацию о доставке и оплате.";
+    orderText += "📞 Ожидаю информацию о доставке и оплате.";
     
     const telegramLink = "https://t.me/NewshopNm";
     const encodedText = encodeURIComponent(orderText);
@@ -1145,54 +1485,200 @@ function checkout() {
     clearCart();
 }
 
-// ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Инициализация страницы игрушек...');
+// УВЕДОМЛЕНИЯ
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196f3'};
+        color: white;
+        padding: 15px 25px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        z-index: 10001;
+        animation: slideInRight 0.3s ease;
+        max-width: 350px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+    `;
     
-    // Инициализируем все галереи
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+    
+    // Закрытие по клику
+    notification.onclick = () => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    };
+}
+
+// МОБИЛЬНОЕ МЕНЮ
+class MobileMenu {
+    constructor() {
+        this.menuToggle = document.querySelector('.menu-toggle');
+        this.navMenu = document.querySelector('.nav-menu');
+        this.init();
+    }
+    
+    init() {
+        if (!this.menuToggle || !this.navMenu) return;
+        
+        this.setupEventListeners();
+        this.setupAccessibility();
+    }
+    
+    setupEventListeners() {
+        this.menuToggle.addEventListener('click', () => this.toggleMenu());
+        
+        this.navMenu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                this.closeMenu();
+            }
+        });
+        
+        document.addEventListener('click', this.handleOutsideClick.bind(this));
+        document.addEventListener('keydown', this.handleEscapeKey.bind(this));
+        
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && this.navMenu.classList.contains('active')) {
+                this.closeMenu();
+            }
+        });
+    }
+    
+    setupAccessibility() {
+        this.menuToggle.setAttribute('aria-label', 'Открыть меню');
+        this.menuToggle.setAttribute('aria-expanded', 'false');
+        this.menuToggle.setAttribute('aria-controls', 'nav-menu');
+        this.navMenu.setAttribute('id', 'nav-menu');
+    }
+    
+    toggleMenu() {
+        if (this.navMenu.classList.contains('active')) {
+            this.closeMenu();
+        } else {
+            this.openMenu();
+        }
+    }
+    
+    openMenu() {
+        this.navMenu.classList.add('active');
+        this.menuToggle.setAttribute('aria-expanded', 'true');
+        this.menuToggle.querySelector('i').className = 'fas fa-times';
+        document.body.style.overflow = 'hidden';
+        
+        const firstLink = this.navMenu.querySelector('a');
+        if (firstLink) firstLink.focus();
+    }
+    
+    closeMenu() {
+        this.navMenu.classList.remove('active');
+        this.menuToggle.setAttribute('aria-expanded', 'false');
+        this.menuToggle.querySelector('i').className = 'fas fa-bars';
+        document.body.style.overflow = '';
+        this.menuToggle.focus();
+    }
+    
+    handleOutsideClick(e) {
+        if (this.navMenu.classList.contains('active') && 
+            !this.navMenu.contains(e.target) && 
+            !this.menuToggle.contains(e.target)) {
+            this.closeMenu();
+        }
+    }
+    
+    handleEscapeKey(e) {
+        if (e.key === 'Escape' && this.navMenu.classList.contains('active')) {
+            this.closeMenu();
+        }
+    }
+}
+
+// ГЛАВНАЯ ИНИЦИАЛИЗАЦИЯ
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Магазин игрушек загружается...');
+    
+    // Инициализация галерей
     Object.keys(productPhotos).forEach(productId => {
         initGallery(productId);
     });
     
-    // Иконка корзины
+    // Инициализация корзины
+    updateCart();
+    
+    // Инициализация меню
+    new MobileMenu();
+    
+    // Настройка корзины
     const cartIcon = document.getElementById('cart-icon');
     if (cartIcon) {
         cartIcon.addEventListener('click', showCart);
     }
     
-    // Закрытие модального окна по ESC и клику
+    // Глобальные обработчики
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closePhotoModal();
     });
     
-    // Закрытие модального окна по клику на фон
-    const modal = document.getElementById('photoModal');
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === this) closePhotoModal();
+    // Плавная прокрутка для ссылок
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
-    }
+    });
     
-    // Инициализация меню
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
+    // Анимация при скролле
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
     
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
         });
-        
-        // Закрытие меню при клике на ссылку
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navMenu.classList.remove('active');
-            });
-        });
-    }
+    }, observerOptions);
+    
+    // Наблюдаем за карточками товаров
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+    
+    console.log('✅ Магазин готов к работе!');
 });
 
-// Глобальные функции для кнопок
+// Глобальные функции
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
 window.checkout = checkout;
@@ -1201,6 +1687,7 @@ window.openPhotoModal = openPhotoModal;
 window.closePhotoModal = closePhotoModal;
 window.changeModalPhoto = changeModalPhoto;
 window.addToCart = addToCart;
+window.showCart = showCart;
 </script>
     
     <script src="newyear.js"></script>
