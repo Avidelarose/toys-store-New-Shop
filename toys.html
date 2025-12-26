@@ -1,23 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин игрушек</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: #ffd700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background-color: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        #cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff4757;
+            color: white;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(rgba(106, 17, 203, 0.9), rgba(37, 117, 252, 0.9));
+            color: white;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .product-gallery {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background: #f8f9fa;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 10px;
+        }
+
+        .gallery-btn {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-btn:hover {
+            background: rgba(0,0,0,0.8);
+            transform: scale(1.1);
+        }
+
+        .gallery-controls {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .gallery-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .photo-counter {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .product-description {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+
+        .add-to-cart:active {
+            transform: translateY(0);
+        }
+
+        .add-to-cart i {
+            font-size: 18px;
+        }
+
+        /* Модальное окно для фотографий */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        #modalImage {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 10px;
+            background: white;
+            padding: 10px;
+        }
+
+        .modal-info {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+        }
+
+        .modal-nav-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-nav-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Анимации для уведомлений */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: #6a11cb;
+                flex-direction: column;
+                padding: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-dragon"></i>
+                <span>Магазин Игрушек</span>
+            </div>
+            
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#products">Товары</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            
+            <div class="cart-icon" id="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-badge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <!-- Герой-секция -->
+        <section class="hero" id="home">
+            <h1>Добро пожаловать в мир удивительных игрушек!</h1>
+            <p>Мы предлагаем уникальные и качественные игрушки для детей и коллекционеров. От классических до современных - у нас есть всё!</p>
+        </section>
+
+        <!-- Секция товаров -->
+        <section id="products">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50; font-size: 32px;">Наши Товары</h2>
+            
+            <div class="products-grid">
+                <!-- Дракон -->
+                <div class="product-card" data-product="dragon">
+                    <div class="product-gallery"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Дракон светящийся в темноте</h3>
+                        <p class="product-description">Великолепный светящийся дракон с подвижными крыльями. Идеально подходит для детей от 5 лет.</p>
+                        <div class="product-price">1 299 ₽</div>
+                        <button class="add-to-cart" onclick="addToCart('dragon', 'Дракон светящийся в темноте', '1299')">
+                            <i class="fas fa-cart-plus"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Какаши -->
+                <div class="product-card" data-product="kakashi">
+                    <div class="product-gallery"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Фигурка Какаши</h3>
+                        <p class="product-description">Детализированная фигурка Какаши Хатаке из Наруто. Высота: 15 см, материал: ПВХ.</p>
+                        <div class="product-price">899 ₽</div>
+                        <button class="add-to-cart" onclick="addToCart('kakashi', 'Фигурка Какаши', '899')">
+                            <i class="fas fa-cart-plus"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Пистолет -->
+                <div class="product-card" data-product="pistol">
+                    <div class="product-gallery"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Пистолет с пульками</h3>
+                        <p class="product-description">Безопасный пистолет с мягкими пульками. Комплект: пистолет + 20 пулек.</p>
+                        <div class="product-price">599 ₽</div>
+                        <button class="add-to-cart" onclick="addToCart('pistol', 'Пистолет с пульками', '599')">
+                            <i class="fas fa-cart-plus"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Лабубу -->
+                <div class="product-card" data-product="labubu">
+                    <div class="product-gallery"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Фигурка Лабубу</h3>
+                        <p class="product-description">Коллекционная фигурка Лабубу. Доступно несколько цветов на выбор.</p>
+                        <div class="product-price">1 499 ₽</div>
+                        <button class="add-to-cart" onclick="addToCart('labubu', 'Фигурка Лабубу', '1499')">
+                            <i class="fas fa-cart-plus"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Домик -->
+                <div class="product-card" data-product="house">
+                    <div class="product-gallery"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Новогодний домик</h3>
+                        <p class="product-description">Волшебный новогодний домик с подсветкой. Создает праздничное настроение!</p>
+                        <div class="product-price">1 799 ₽</div>
+                        <button class="add-to-cart" onclick="addToCart('house', 'Новогодний домик', '1799')">
+                            <i class="fas fa-cart-plus"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+
+                <!-- UNO -->
+                <div class="product-card" data-product="uno">
+                    <div class="product-gallery"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Игра UNO</h3>
+                        <p class="product-description">Классическая карточная игра для всей семьи. От 2 до 10 игроков.</p>
+                        <div class="product-price">399 ₽</div>
+                        <button class="add-to-cart" onclick="addToCart('uno', 'Игра UNO', '399')">
+                            <i class="fas fa-cart-plus"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Модальное окно для фотографий -->
+    <div id="photoModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePhotoModal()">×</button>
+            <div class="modal-nav">
+                <button class="modal-nav-btn" onclick="changeModalPhoto(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="modal-nav-btn" onclick="changeModalPhoto(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <img id="modalImage" src="" alt="Фото товара">
+            <div class="modal-info" id="modalInfo"></div>
+        </div>
+    </div>
+
+    <!-- Подвал -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h3>Магазин Игрушек</h3>
+            <p>© 2024 Все права защищены. Сделано с ❤️ для любителей игрушек</p>
+            <div class="footer-links">
+                <a href="#"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="#"><i class="fab fa-vk"></i> ВКонтакте</a>
+                <a href="#"><i class="fas fa-phone"></i> +7 (999) 123-45-67</a>
+                <a href="#"><i class="fas fa-envelope"></i> info@toyshop.ru</a>
+            </div>
+        </div>
+    </footer>
+
 <script>
-// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ - ИСПРАВЛЕННЫЕ ПУТИ
+// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ
 const productPhotos = {
     'dragon': {
         name: 'Дракон светящийся в темноте',
         photos: [
-            {url: 'toys-images/dragons/white.png', alt: 'Белый дракон'}
+            {url: 'toys-images/dragons/white.png', alt: 'Белый дракон'},
+            {url: 'https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Дракон+2', alt: 'Дракон вид 2'},
+            {url: 'https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Дракон+3', alt: 'Дракон вид 3'}
         ]
     },
     'kakashi': {
         name: 'Фигурка Какаши',
         photos: [
-            {url: 'toys-images/kakashi/blu.png', alt: 'Фигурка Какаши'}
+            {url: 'toys-images/kakashi/blu.png', alt: 'Фигурка Какаши'},
+            {url: 'https://via.placeholder.com/400x300/2196F3/FFFFFF?text=Какаши+2', alt: 'Какаши вид 2'}
         ]
     },
     'pistol': {
         name: 'Пистолет с пульками',
         photos: [
-            
-            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет'}
+            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет'},
+            {url: 'https://via.placeholder.com/400x300/FFC107/000000?text=Пистолет+2', alt: 'Пистолет вид 2'}
         ]
     },
     'labubu': {
@@ -31,15 +667,19 @@ const productPhotos = {
     },
     'house': {
         name: 'Новогодний домик',
-        photos: []
+        photos: [
+            {url: 'https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Новогодний+домик', alt: 'Новогодний домик'}
+        ]
     },
     'uno': {
         name: 'Игра UNO',
-        photos: []
+        photos: [
+            {url: 'https://via.placeholder.com/400x300/3F51B5/FFFFFF?text=Игра+UNO', alt: 'Игра UNO'}
+        ]
     }
 };
 
-// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ДЛЯ МОДАЛЬНОГО ОКНА
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
 let currentModalProduct = null;
 let currentModalIndex = 0;
 
@@ -51,7 +691,7 @@ let shoppingCart = {
         if (existing) {
             existing.quantity += 1;
         } else {
-            this.items.push(item);
+            this.items.push({...item});
         }
         updateCart();
         showNotification(`Добавлено: ${item.title}`, 'success');
@@ -81,39 +721,34 @@ function getPlaceholderUrl(productId, index) {
     };
     const color = colors[productId] || '#2196F3';
     const name = names[productId] || 'Товар';
-    return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="${color}"/><text x="200" y="150" font-family="Arial" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">${name}</text></svg>`;
+    return `https://via.placeholder.com/400x300/${color.substring(1)}/FFFFFF?text=${encodeURIComponent(name)}+${index + 1}`;
 }
 
 // ОСНОВНАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ГАЛЕРЕИ
 function initGallery(productId) {
     const product = productPhotos[productId];
-    if (!product) {
-        createFallbackGallery(productId);
-        return;
-    }
-
-    const photos = product.photos || [];
     const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
     
     if (!galleryElement) return;
-
-    // Очищаем галерею
+    
     galleryElement.innerHTML = '';
     
     // Если фото нет - создаем заглушку
-    if (photos.length === 0) {
+    if (!product || !product.photos || product.photos.length === 0) {
         createFallbackGallery(productId);
         return;
     }
 
     // Создаем контейнер для изображений
     const imagesContainer = document.createElement('div');
-    imagesContainer.style.width = '100%';
-    imagesContainer.style.height = '100%';
-    imagesContainer.style.position = 'relative';
+    imagesContainer.style.cssText = `
+        width: 100%;
+        height: 100%;
+        position: relative;
+    `;
 
     // Создаем изображения
-    photos.forEach((photo, index) => {
+    product.photos.forEach((photo, index) => {
         const img = document.createElement('img');
         img.id = `${productId}-image-${index}`;
         img.alt = photo.alt || `Фото ${product.name}`;
@@ -128,9 +763,10 @@ function initGallery(productId) {
             background: white;
             padding: 10px;
             border-radius: 5px;
+            cursor: pointer;
         `;
 
-        // Сначала устанавливаем placeholder
+        // Устанавливаем placeholder сначала
         img.src = getPlaceholderUrl(productId, index);
         
         // Пробуем загрузить реальное изображение
@@ -139,7 +775,8 @@ function initGallery(productId) {
             img.src = photo.url;
         };
         realImg.onerror = function() {
-            console.error(`Ошибка загрузки: ${photo.url}`);
+            console.log(`Изображение не найдено: ${photo.url}. Используем placeholder.`);
+            // Оставляем placeholder
         };
         realImg.src = photo.url;
 
@@ -149,7 +786,7 @@ function initGallery(productId) {
     galleryElement.appendChild(imagesContainer);
 
     // Добавляем навигацию если фото больше 1
-    if (photos.length > 1) {
+    if (product.photos.length > 1) {
         // Кнопки навигации
         const navDiv = document.createElement('div');
         navDiv.className = 'gallery-nav';
@@ -178,7 +815,7 @@ function initGallery(productId) {
         const controlsDiv = document.createElement('div');
         controlsDiv.className = 'gallery-controls';
         
-        photos.forEach((_, index) => {
+        product.photos.forEach((_, index) => {
             const dot = document.createElement('span');
             dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
             dot.onclick = (e) => {
@@ -189,22 +826,20 @@ function initGallery(productId) {
         });
         
         galleryElement.appendChild(controlsDiv);
-
-        // Счетчик
-        const counter = document.createElement('div');
-        counter.className = 'photo-counter';
-        counter.textContent = `1/${photos.length}`;
-        galleryElement.appendChild(counter);
-    } else {
-        // Простой счетчик для одного фото
-        const counter = document.createElement('div');
-        counter.className = 'photo-counter';
-        counter.textContent = '1/1';
-        galleryElement.appendChild(counter);
     }
 
+    // Счетчик
+    const counter = document.createElement('div');
+    counter.className = 'photo-counter';
+    counter.textContent = product.photos.length > 0 ? `1/${product.photos.length}` : '0/0';
+    galleryElement.appendChild(counter);
+
     // Обработчик клика для открытия модального окна
-    galleryElement.onclick = () => openPhotoModal(productId, 0);
+    galleryElement.onclick = () => {
+        if (product && product.photos && product.photos.length > 0) {
+            openPhotoModal(productId, 0);
+        }
+    };
 }
 
 // ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ ГАЛЕРЕЕЙ
@@ -264,10 +899,10 @@ function createFallbackGallery(productId) {
     if (!gallery) return;
     
     gallery.innerHTML = `
-        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f5f7fa,#c3cfe2);border-radius:10px;">
-            <div style="text-align:center;">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f5f7fa,#c3cfe2);border-radius:10px;cursor:default;">
+            <div style="text-align:center;padding:20px;">
                 <i class="fas fa-image" style="font-size:50px;color:#2196f3;margin-bottom:10px;"></i>
-                <div style="color:#666;">Фото скоро будет</div>
+                <div style="color:#666;font-size:16px;">Фото скоро будет</div>
             </div>
         </div>
     `;
@@ -302,8 +937,11 @@ function openPhotoModal(productId, index) {
 }
 
 function closePhotoModal() {
-    document.getElementById('photoModal').style.display = 'none';
-    document.body.style.overflow = 'auto';
+    const modal = document.getElementById('photoModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 }
 
 function changeModalPhoto(direction) {
@@ -348,7 +986,7 @@ function showNotification(message, type = 'info') {
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         z-index: 10000;
-        animation: slideIn 0.3s ease;
+        animation: slideInRight 0.3s ease;
         max-width: 300px;
         font-weight: bold;
     `;
@@ -357,7 +995,7 @@ function showNotification(message, type = 'info') {
     document.body.appendChild(notification);
     
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
+        notification.style.animation = 'slideOutRight 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
@@ -517,35 +1155,52 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Иконка корзины
-    document.getElementById('cart-icon').addEventListener('click', showCart);
+    const cartIcon = document.getElementById('cart-icon');
+    if (cartIcon) {
+        cartIcon.addEventListener('click', showCart);
+    }
     
-    // Закрытие модального окна по ESC
+    // Закрытие модального окна по ESC и клику
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closePhotoModal();
     });
+    
+    // Закрытие модального окна по клику на фон
+    const modal = document.getElementById('photoModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) closePhotoModal();
+        });
+    }
+    
+    // Инициализация меню
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Закрытие меню при клике на ссылку
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+            });
+        });
+    }
 });
 
-// Добавляем стили для анимаций
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(100%); opacity: 0; }
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    @keyframes slideUp {
-        from { transform: translateY(30px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-`;
-document.head.appendChild(style);
+// Глобальные функции для кнопок
+window.updateQuantity = updateQuantity;
+window.removeFromCart = removeFromCart;
+window.checkout = checkout;
+window.clearCart = clearCart;
+window.openPhotoModal = openPhotoModal;
+window.closePhotoModal = closePhotoModal;
+window.changeModalPhoto = changeModalPhoto;
+window.addToCart = addToCart;
 </script>
     
     <script src="newyear.js"></script>
