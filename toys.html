@@ -668,35 +668,29 @@
     </div>
 
 <script>
-// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ - ИСПРАВЛЕННЫЕ ПУТИ НА ОСНОВЕ ВАШИХ ФАЙЛОВ
+// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ - ИСПРАВЛЕННЫЕ ПУТИ
 const productPhotos = {
     'dragon': {
         name: 'Дракон светящийся в темноте',
         photos: [
-            {url: 'toys-images/dragons/white.png', alt: 'Белый дракон'},
-            // Если есть другие файлы дракона, добавьте их сюда
-            // {url: 'toys-images/dragons/blue.png', alt: 'Синий дракон'},
-            // {url: 'toys-images/dragons/red.png', alt: 'Красный дракон'}
+            {url: 'toys-images/dragons/white.png', alt: 'Белый дракон'}
         ]
     },
     'kakashi': {
         name: 'Фигурка Какаши',
         photos: [
-            // Файл называется blu.png (без 'e') - это важно!
-            {url: 'toys-images/kakashi/blu.png', alt: 'Фигурка Какаши'}
+            {url: 'toys-images/kakashi/blu.png', alt: 'Фигурка Какаши'} // Важно: blu без "e"
         ]
     },
     'pistol': {
         name: 'Пистолет с пульками',
         photos: [
-            // Файл называется yellow.png (желтый пистолет)
-            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет'}
+            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет'} // Желтый пистолет
         ]
     },
     'labubu': {
         name: 'Фигурка Лабубу',
         photos: [
-            // Все файлы .jpg (не .jpeg!)
             {url: 'toys-images/labubu/grey.jpg', alt: 'Серый Лабубу'},
             {url: 'toys-images/labubu/purple.jpg', alt: 'Фиолетовый Лабубу'},
             {url: 'toys-images/labubu/red.jpg', alt: 'Красный Лабубу'},
@@ -706,210 +700,292 @@ const productPhotos = {
     'house': {
         name: 'Новогодний домик',
         photos: [
-            // Укажите правильное имя файла для домика
-            {url: 'toys-images/house/newyear.png', alt: 'Новогодний домик'}
+            // УКАЖИТЕ ТОЧНОЕ ИМЯ ФАЙЛА! Если файла нет, удалите эту строку.
+            // {url: 'toys-images/house/newyear.png', alt: 'Новогодний домик'}
         ]
     },
     'uno': {
         name: 'Игра UNO',
         photos: [
-            // Укажите правильное имя файла для UNO
-            {url: 'toys-images/uno/uno.png', alt: 'Настольная игра UNO'}
+            // УКАЖИТЕ ТОЧНОЕ ИМЯ ФАЙЛА! Если файла нет, удалите эту строку.
+            // {url: 'toys-images/uno/uno.png', alt: 'Настольная игра UNO'}
         ]
     }
 };
 
-// ДОПОЛНИТЕЛЬНО: Автоматическая проверка файлов при загрузке
-async function verifyAllFiles() {
-    console.log('🔍 Проверка существования файлов...');
-    console.log('====================================');
-    
-    const results = [];
-    
-    for (const [productId, product] of Object.entries(productPhotos)) {
-        console.log(`\n📦 ${product.name}:`);
-        
-        for (const [index, photo] of product.photos.entries()) {
-            const img = new Image();
-            
-            const isLoaded = await new Promise((resolve) => {
-                img.onload = () => resolve(true);
-                img.onerror = () => resolve(false);
-                img.src = photo.url;
-            });
-            
-            if (isLoaded) {
-                console.log(`   ✅ ${photo.url} - OK`);
-                results.push({productId, index, success: true, url: photo.url});
-            } else {
-                console.log(`   ❌ ${photo.url} - ФАЙЛ НЕ НАЙДЕН!`);
-                console.log(`      Проверьте: существует ли файл "${photo.url}"?`);
-                results.push({productId, index, success: false, url: photo.url});
-            }
-        }
-    }
-    
-    // Показываем сводку
-    const totalFiles = results.length;
-    const successfulFiles = results.filter(r => r.success).length;
-    
-    console.log('\n📊 СВОДКА:');
-    console.log(`   Всего файлов: ${totalFiles}`);
-    console.log(`   Успешно загружено: ${successfulFiles}`);
-    console.log(`   Ошибок: ${totalFiles - successfulFiles}`);
-    
-    return results;
-}
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ДЛЯ МОДАЛЬНОГО ОКНА
+let currentModalProduct = null;
+let currentModalIndex = 0;
 
-// Функция для поиска альтернативных имен файлов (если текущие не работают)
-function findAlternativeImage(productId, currentUrl) {
-    const alternatives = {
-        'dragon': [
-            'toys-images/dragons/white.png',
-            'toys-images/dragons/dragon-white.png',
-            'toys-images/dragons/white-dragon.png'
-        ],
-        'kakashi': [
-            'toys-images/kakashi/blu.png',
-            'toys-images/kakashi/blue.png', // На случай если файл переименуют
-            'toys-images/kakashi/kakashi.png'
-        ],
-        'pistol': [
-            'toys-images/pistol/yellow.png',
-            'toys-images/pistol/white.png',
-            'toys-images/pistol/pistol-yellow.png'
-        ],
-        'labubu': [
-            'toys-images/labubu/grey.jpg',
-            'toys-images/labubu/gray.jpg',
-            'toys-images/labubu/purple.jpg',
-            'toys-images/labubu/red.jpg',
-            'toys-images/labubu/white.jpg'
-        ],
-        'house': [
-            'toys-images/house/newyear.png',
-            'toys-images/house/christmas.png',
-            'toys-images/house/house.png'
-        ],
-        'uno': [
-            'toys-images/uno/uno.png',
-            'toys-images/uno/game.png',
-            'toys-images/uno/uno-game.png'
-        ]
+// ФУНКЦИЯ ДЛЯ СОЗДАНИЯ PLACEHOLDER-ИЗОБРАЖЕНИЙ
+function getPlaceholderUrl(productId, index) {
+    const colors = {
+        'dragon': '#4CAF50',
+        'kakashi': '#2196F3',
+        'pistol': '#FFC107',
+        'labubu': '#9C27B0',
+        'house': '#FF5722',
+        'uno': '#3F51B5'
     };
-    
-    return alternatives[productId] || [currentUrl];
+    const names = {
+        'dragon': 'Дракон',
+        'kakashi': 'Какаши',
+        'pistol': 'Пистолет',
+        'labubu': 'Лабубу',
+        'house': 'Новогодний домик',
+        'uno': 'UNO Игра'
+    };
+    const color = colors[productId] || '#2196F3';
+    const name = names[productId] || 'Товар';
+    // Используем простой цветной блок, так как через placeholder.com могут быть проблемы с доступом
+    return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="${color}"/><text x="200" y="150" font-family="Arial" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">${name}</text></svg>`;
 }
 
-// Улучшенная функция инициализации с автоматическим поиском файлов
-async function initGalleryWithAutoFind(productId) {
+// ОСНОВНАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ГАЛЕРЕИ
+function initGallery(productId) {
     const product = productPhotos[productId];
-    if (!product || !product.photos || product.photos.length === 0) {
-        console.warn(`Нет фото для товара: ${productId}`);
+    if (!product) {
+        console.error(`Нет данных для товара: ${productId}`);
         createFallbackGallery(productId);
         return;
     }
-    
+
+    const photos = product.photos || [];
     const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
-    if (!galleryElement) return;
     
+    if (!galleryElement) {
+        console.error(`Не найден элемент галереи для: ${productId}`);
+        return;
+    }
+
     // Очищаем галерею
     galleryElement.innerHTML = '';
     
+    // Если фото нет - создаем заглушку
+    if (photos.length === 0) {
+        createFallbackGallery(productId);
+        return;
+    }
+
     // Создаем контейнер для изображений
     const imagesContainer = document.createElement('div');
     imagesContainer.style.width = '100%';
     imagesContainer.style.height = '100%';
     imagesContainer.style.position = 'relative';
-    
-    // Для каждого фото пытаемся найти работающий файл
-    for (let i = 0; i < product.photos.length; i++) {
-        const originalPhoto = product.photos[i];
+
+    // Создаем изображения
+    photos.forEach((photo, index) => {
         const img = document.createElement('img');
-        img.id = `${productId}-image-${i}`;
-        img.alt = originalPhoto.alt;
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'contain';
-        img.style.position = 'absolute';
-        img.style.top = '0';
-        img.style.left = '0';
-        img.style.display = i === 0 ? 'block' : 'none';
-        img.style.background = 'white';
-        img.style.padding = '10px';
-        img.style.borderRadius = '5px';
+        img.id = `${productId}-image-${index}`;
+        img.alt = photo.alt || `Фото ${product.name}`;
+        img.style.cssText = `
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: ${index === 0 ? 'block' : 'none'};
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+        `;
+
+        // Сначала устанавливаем placeholder
+        img.src = getPlaceholderUrl(productId, index);
         
-        // Функция для попытки загрузки с разных путей
-        const tryLoadImage = async (url) => {
-            return new Promise((resolve) => {
-                const testImg = new Image();
-                testImg.onload = () => resolve({success: true, url});
-                testImg.onerror = () => resolve({success: false, url});
-                testImg.src = url;
-            });
+        // Пробуем загрузить реальное изображение
+        const realImg = new Image();
+        realImg.onload = function() {
+            img.src = photo.url;
+            console.log(`✅ Загружено: ${photo.url}`);
+        };
+        realImg.onerror = function() {
+            console.error(`❌ Ошибка загрузки: ${photo.url}`);
+            // Оставляем placeholder
+        };
+        realImg.src = photo.url;
+
+        imagesContainer.appendChild(img);
+    });
+
+    galleryElement.appendChild(imagesContainer);
+
+    // Добавляем навигацию если фото больше 1
+    if (photos.length > 1) {
+        // Кнопки навигации
+        const navDiv = document.createElement('div');
+        navDiv.className = 'gallery-nav';
+        
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'gallery-btn prev-btn';
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        prevBtn.onclick = (e) => {
+            e.stopPropagation();
+            changePhoto(productId, -1);
         };
         
-        // Пробуем загрузить оригинальный файл
-        let loadResult = await tryLoadImage(originalPhoto.url);
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'gallery-btn next-btn';
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.onclick = (e) => {
+            e.stopPropagation();
+            changePhoto(productId, 1);
+        };
         
-        // Если не получилось, пробуем альтернативные пути
-        if (!loadResult.success) {
-            const alternativeUrls = findAlternativeImage(productId, originalPhoto.url);
-            
-            for (const altUrl of alternativeUrls) {
-                if (altUrl !== originalPhoto.url) {
-                    loadResult = await tryLoadImage(altUrl);
-                    if (loadResult.success) {
-                        console.log(`🔄 ${productId}: Используем альтернативу ${altUrl} вместо ${originalPhoto.url}`);
-                        break;
-                    }
-                }
-            }
-        }
+        navDiv.appendChild(prevBtn);
+        navDiv.appendChild(nextBtn);
+        galleryElement.appendChild(navDiv);
+
+        // Точки навигации
+        const controlsDiv = document.createElement('div');
+        controlsDiv.className = 'gallery-controls';
         
-        // Устанавливаем src (рабочий URL или placeholder)
-        if (loadResult.success) {
-            img.src = loadResult.url;
-        } else {
-            console.log(`⚠️ ${productId}: Не удалось найти файл, используем placeholder`);
-            img.src = getPlaceholderUrl(productId, i);
-            img.alt = 'Фото временно недоступно';
-            img.style.background = '#f5f5f5';
-            img.style.padding = '20px';
-        }
+        photos.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
+            dot.onclick = (e) => {
+                e.stopPropagation();
+                goToPhoto(productId, index);
+            };
+            controlsDiv.appendChild(dot);
+        });
         
-        imagesContainer.appendChild(img);
+        galleryElement.appendChild(controlsDiv);
+
+        // Счетчик
+        const counter = document.createElement('div');
+        counter.className = 'photo-counter';
+        counter.textContent = `1/${photos.length}`;
+        galleryElement.appendChild(counter);
+    } else {
+        // Простой счетчик для одного фото
+        const counter = document.createElement('div');
+        counter.className = 'photo-counter';
+        counter.textContent = '1/1';
+        galleryElement.appendChild(counter);
+    }
+
+    // Обработчик клика для открытия модального окна
+    galleryElement.onclick = () => openPhotoModal(productId, 0);
+}
+
+// ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ ГАЛЕРЕЕЙ
+function changePhoto(productId, direction) {
+    const product = productPhotos[productId];
+    if (!product || !product.photos || product.photos.length <= 1) return;
+    
+    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
+    if (!gallery) return;
+    
+    const currentImg = gallery.querySelector('img[style*="display: block"]');
+    if (!currentImg) return;
+    
+    const match = currentImg.id.match(/\d+$/);
+    if (!match) return;
+    
+    let currentIndex = parseInt(match[0]);
+    const total = product.photos.length;
+    let newIndex = (currentIndex + direction + total) % total;
+    
+    goToPhoto(productId, newIndex);
+}
+
+function goToPhoto(productId, index) {
+    const product = productPhotos[productId];
+    if (!product || !product.photos || index < 0 || index >= product.photos.length) return;
+    
+    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
+    if (!gallery) return;
+    
+    // Скрываем все изображения
+    gallery.querySelectorAll('img').forEach(img => {
+        img.style.display = 'none';
+    });
+    
+    // Показываем выбранное
+    const targetImg = document.getElementById(`${productId}-image-${index}`);
+    if (targetImg) {
+        targetImg.style.display = 'block';
     }
     
-    galleryElement.appendChild(imagesContainer);
+    // Обновляем точки
+    const dots = gallery.querySelectorAll('.gallery-dot');
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
     
-    // Добавляем остальные элементы (кнопки, точки и т.д.)
-    // ... остальной код инициализации галереи ...
+    // Обновляем счетчик
+    const counter = gallery.querySelector('.photo-counter');
+    if (counter) {
+        counter.textContent = `${index + 1}/${product.photos.length}`;
+    }
+}
+
+function createFallbackGallery(productId) {
+    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
+    if (!gallery) return;
     
-    // Добавляем обработчик клика
-    galleryElement.onclick = function() {
-        openPhotoModal(productId, 0);
+    gallery.innerHTML = `
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f5f7fa,#c3cfe2);border-radius:10px;">
+            <div style="text-align:center;">
+                <i class="fas fa-image" style="font-size:50px;color:#2196f3;margin-bottom:10px;"></i>
+                <div style="color:#666;">Фото скоро будет</div>
+            </div>
+        </div>
+    `;
+}
+
+// ФУНКЦИИ ДЛЯ МОДАЛЬНОГО ОКНА
+function openPhotoModal(productId, index) {
+    const product = productPhotos[productId];
+    if (!product || !product.photos || product.photos.length === 0) return;
+    
+    const photos = product.photos;
+    if (index < 0 || index >= photos.length) index = 0;
+    
+    const modalImg = document.getElementById('modalImage');
+    const modalInfo = document.getElementById('modalInfo');
+    const modal = document.getElementById('photoModal');
+    
+    // Устанавливаем изображение
+    modalImg.src = photos[index].url;
+    modalImg.alt = photos[index].alt;
+    modalImg.onerror = function() {
+        this.src = getPlaceholderUrl(productId, index);
     };
+    
+    modalInfo.textContent = `${product.name} (${index + 1}/${photos.length})`;
+    
+    currentModalProduct = productId;
+    currentModalIndex = index;
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closePhotoModal() {
+    document.getElementById('photoModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function changeModalPhoto(direction) {
+    if (!currentModalProduct) return;
+    
+    const photos = productPhotos[currentModalProduct].photos;
+    if (!photos || photos.length === 0) return;
+    
+    currentModalIndex = (currentModalIndex + direction + photos.length) % photos.length;
+    openPhotoModal(currentModalProduct, currentModalIndex);
 }
 
 // ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🛒 Инициализация магазина игрушек...');
-    
-    // Запускаем проверку файлов (можно отключить в продакшене)
-    verifyAllFiles().then(results => {
-        const errors = results.filter(r => !r.success);
-        if (errors.length > 0) {
-            console.warn('⚠️ Обнаружены проблемы с файлами:');
-            errors.forEach(error => {
-                console.warn(`   - ${error.productId}: ${error.url}`);
-            });
-        }
-    });
+    console.log('🚀 Инициализация страницы игрушек...');
     
     // Инициализируем все галереи
     Object.keys(productPhotos).forEach(productId => {
-        initGalleryWithAutoFind(productId);
+        initGallery(productId);
     });
     
     // Инициализация корзины
@@ -917,93 +993,54 @@ document.addEventListener('DOMContentLoaded', function() {
         window.shoppingCart = {
             items: [],
             addItem: function(item) {
-                const existingIndex = this.items.findIndex(i => 
-                    i.id === item.id && i.title === item.title
-                );
-                
-                if (existingIndex >= 0) {
-                    this.items[existingIndex].quantity += 1;
+                const existing = this.items.find(i => i.id === item.id && i.title === item.title);
+                if (existing) {
+                    existing.quantity += 1;
                 } else {
                     this.items.push(item);
                 }
-                
                 updateCart();
-                showNotification(`Добавлено: ${item.title}`, 'success');
+                showNotification(`Добавлено: ${item.title}`);
             },
             getTotal: function() {
-                return this.items.reduce((sum, item) => {
-                    return sum + (parseInt(item.price) * item.quantity);
-                }, 0);
+                return this.items.reduce((sum, item) => sum + (parseInt(item.price) * item.quantity), 0);
             }
         };
     }
     
-    // Назначаем обработчик для иконки корзины
+    // Иконка корзины
     document.getElementById('cart-icon').addEventListener('click', showCart);
+    
+    // Закрытие модального окна по ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closePhotoModal();
+    });
 });
 
-// КОМАНДЫ ДЛЯ КОНСОЛИ БРАУЗЕРА
-console.log(`
-🎯 КОМАНДЫ ДЛЯ ОТЛАДКИ:
-
-1. verifyAllFiles() - проверить все файлы изображений
-2. findCorrectImage('kakashi') - найти файл для Какаши
-3. testFile('toys-images/kakashi/blu.png') - проверить конкретный файл
-4. showCurrentPaths() - показать текущие пути
-
-📁 ТЕКУЩАЯ СТРУКТУРА ФАЙЛОВ:
-• dragons/white.png
-• kakashi/blu.png (важно: blu без "e")
-• pistol/yellow.png (желтый пистолет)
-• labubu/grey.jpg
-• labubu/purple.jpg
-• labubu/red.jpg
-• labubu/white.jpg
-• house/[нужно указать имя]
-• uno/[нужно указать имя]
-`);
-
-// Вспомогательные функции для отладки
-function testFile(url) {
-    const img = new Image();
-    console.log(`Тестируем: ${url}`);
-    img.onload = () => console.log(`✅ Файл существует: ${url}`);
-    img.onerror = () => console.log(`❌ Файл не найден: ${url}`);
-    img.src = url;
+// Функции корзины (оставьте ваши существующие функции без изменений)
+function addToCart(productId, productName, productPrice) {
+    const item = { id: productId, title: productName, price: productPrice, quantity: 1 };
+    window.shoppingCart.addItem(item);
 }
 
-function showCurrentPaths() {
-    Object.entries(productPhotos).forEach(([id, product]) => {
-        console.log(`\n${product.name}:`);
-        product.photos.forEach(p => console.log(`  ${p.url}`));
-    });
-}
-    
-    // Инициализируем корзину
-    if (!window.shoppingCart) {
-        window.shoppingCart = {
-            items: [],
-            addItem: function(item) {
-                const existingIndex = this.items.findIndex(i => 
-                    i.id === item.id && i.title === item.title
-                );
-                
-                if (existingIndex >= 0) {
-                    this.items[existingIndex].quantity += 1;
-                } else {
-                    this.items.push(item);
-                }
-                
-                updateCart();
-                showNotification(`Добавлено: ${item.title}`, 'success');
-            },
-            getTotal: function() {
-                return this.items.reduce((sum, item) => {
-                    return sum + (parseInt(item.price) * item.quantity);
-                }, 0);
-            }
-        };
+function updateCart() {
+    const badge = document.getElementById('cart-badge');
+    if (badge && window.shoppingCart) {
+        const total = window.shoppingCart.items.reduce((sum, item) => sum + item.quantity, 0);
+        badge.textContent = total;
+        badge.style.display = total > 0 ? 'flex' : 'none';
     }
+}
+
+function showNotification(message) {
+    // Ваш существующий код для уведомлений
+    alert(message); // Временная заглушка
+}
+
+function showCart() {
+    // Ваш существующий код для отображения корзины
+    alert('Функция корзины'); // Временная заглушка
+}
     
     // Назначаем обработчик для иконки корзины
     document.getElementById('cart-icon').addEventListener('click', showCart);
