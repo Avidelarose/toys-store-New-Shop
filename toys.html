@@ -668,144 +668,150 @@
     </div>
 
 <script>
-// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ - ВЕРСИЯ ДЛЯ ОТЛАДКИ
+// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ - ИСПРАВЛЕННЫЕ ПУТИ НА ОСНОВЕ ВАШИХ ФАЙЛОВ
 const productPhotos = {
     'dragon': {
         name: 'Дракон светящийся в темноте',
         photos: [
             {url: 'toys-images/dragons/white.png', alt: 'Белый дракон'},
-            {url: 'toys-images/dragons/blue.png', alt: 'Синий дракон'},
-            {url: 'toys-images/dragons/red.png', alt: 'Красный дракон'}
+            // Если есть другие файлы дракона, добавьте их сюда
+            // {url: 'toys-images/dragons/blue.png', alt: 'Синий дракон'},
+            // {url: 'toys-images/dragons/red.png', alt: 'Красный дракон'}
         ]
     },
     'kakashi': {
         name: 'Фигурка Какаши',
         photos: [
+            // Файл называется blu.png (без 'e') - это важно!
             {url: 'toys-images/kakashi/blu.png', alt: 'Фигурка Какаши'}
         ]
     },
     'pistol': {
         name: 'Пистолет с пульками',
         photos: [
-            {url: 'toys-images/pistol/white.png', alt: 'Белый пистолет'}
+            // Файл называется yellow.png (желтый пистолет)
+            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет'}
         ]
     },
     'labubu': {
         name: 'Фигурка Лабубу',
         photos: [
-            {url: 'toys-images/labubu/grey.jpeg', alt: 'Серый Лабубу'},
-            {url: 'toys-images/labubu/purple.jpeg', alt: 'Фиолетовый Лабубу'},
-            {url: 'toys-images/labubu/red.jpeg', alt: 'Красный Лабубу'},
-            {url: 'toys-images/labubu/white.jpeg', alt: 'Белый Лабубу'}
+            // Все файлы .jpg (не .jpeg!)
+            {url: 'toys-images/labubu/grey.jpg', alt: 'Серый Лабубу'},
+            {url: 'toys-images/labubu/purple.jpg', alt: 'Фиолетовый Лабубу'},
+            {url: 'toys-images/labubu/red.jpg', alt: 'Красный Лабубу'},
+            {url: 'toys-images/labubu/white.jpg', alt: 'Белый Лабубу'}
         ]
     },
     'house': {
         name: 'Новогодний домик',
         photos: [
+            // Укажите правильное имя файла для домика
             {url: 'toys-images/house/newyear.png', alt: 'Новогодний домик'}
         ]
     },
     'uno': {
         name: 'Игра UNO',
         photos: [
+            // Укажите правильное имя файла для UNO
             {url: 'toys-images/uno/uno.png', alt: 'Настольная игра UNO'}
         ]
     }
 };
 
-// УЛУЧШЕННАЯ ФУНКЦИЯ ДЛЯ ОТЛАДКИ
-function debugImageLoading() {
-    console.log('🔍 ОТЛАДКА ЗАГРУЗКИ ИЗОБРАЖЕНИЙ');
-    console.log('================================');
+// ДОПОЛНИТЕЛЬНО: Автоматическая проверка файлов при загрузке
+async function verifyAllFiles() {
+    console.log('🔍 Проверка существования файлов...');
+    console.log('====================================');
     
-    Object.keys(productPhotos).forEach(productId => {
-        const product = productPhotos[productId];
-        console.log(`\n📦 Товар: ${product.name} (${productId})`);
+    const results = [];
+    
+    for (const [productId, product] of Object.entries(productPhotos)) {
+        console.log(`\n📦 ${product.name}:`);
         
-        product.photos.forEach((photo, index) => {
-            console.log(`   📸 Фото ${index + 1}: ${photo.url}`);
+        for (const [index, photo] of product.photos.entries()) {
+            const img = new Image();
             
-            // Создаем тестовое изображение для проверки
-            const testImg = new Image();
+            const isLoaded = await new Promise((resolve) => {
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = photo.url;
+            });
             
-            testImg.onload = function() {
-                console.log(`      ✅ ЗАГРУЖЕНО УСПЕШНО`);
-                console.log(`         Размер: ${this.naturalWidth}×${this.naturalHeight}px`);
-            };
-            
-            testImg.onerror = function() {
-                console.log(`      ❌ ОШИБКА ЗАГРУЗКИ`);
-                console.log(`         Проверьте следующие моменты:`);
-                console.log(`         1. Существует ли файл: ${photo.url}`);
-                console.log(`         2. Правильное ли расширение (.png/.jpeg/.jpg)?`);
-                console.log(`         3. Нет ли опечаток в имени файла?`);
-                console.log(`         4. Размещен ли файл в правильной папке?`);
-                
-                // Предлагаем возможные альтернативные имена
-                suggestAlternativeNames(photo.url);
-            };
-            
-            // Запускаем проверку
-            testImg.src = photo.url;
-        });
-    });
-}
-
-// ФУНКЦИЯ ДЛЯ ПРЕДЛОЖЕНИЯ ВОЗМОЖНЫХ ИМЕН ФАЙЛОВ
-function suggestAlternativeNames(currentPath) {
-    const commonVariations = [
-        currentPath.toLowerCase(),
-        currentPath.toUpperCase(),
-        currentPath.replace('.png', '.jpg'),
-        currentPath.replace('.png', '.jpeg'),
-        currentPath.replace('.jpeg', '.jpg'),
-        currentPath.replace('.jpg', '.jpeg'),
-        currentPath.replace('.jpg', '.png'),
-        currentPath.replace('white', 'White'),
-        currentPath.replace('blue', 'Blue'),
-        currentPath.replace('red', 'Red'),
-        currentPath.replace('grey', 'gray'),
-        currentPath.replace('gray', 'grey')
-    ];
-    
-    console.log(`         Возможные альтернативные имена:`);
-    const uniqueVariations = [...new Set(commonVariations)];
-    uniqueVariations.forEach(variation => {
-        if (variation !== currentPath) {
-            console.log(`         - ${variation}`);
+            if (isLoaded) {
+                console.log(`   ✅ ${photo.url} - OK`);
+                results.push({productId, index, success: true, url: photo.url});
+            } else {
+                console.log(`   ❌ ${photo.url} - ФАЙЛ НЕ НАЙДЕН!`);
+                console.log(`      Проверьте: существует ли файл "${photo.url}"?`);
+                results.push({productId, index, success: false, url: photo.url});
+            }
         }
-    });
+    }
+    
+    // Показываем сводку
+    const totalFiles = results.length;
+    const successfulFiles = results.filter(r => r.success).length;
+    
+    console.log('\n📊 СВОДКА:');
+    console.log(`   Всего файлов: ${totalFiles}`);
+    console.log(`   Успешно загружено: ${successfulFiles}`);
+    console.log(`   Ошибок: ${totalFiles - successfulFiles}`);
+    
+    return results;
 }
 
-// ЗАПУСКАЕМ ОТЛАДКУ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Запуск отладки изображений...');
+// Функция для поиска альтернативных имен файлов (если текущие не работают)
+function findAlternativeImage(productId, currentUrl) {
+    const alternatives = {
+        'dragon': [
+            'toys-images/dragons/white.png',
+            'toys-images/dragons/dragon-white.png',
+            'toys-images/dragons/white-dragon.png'
+        ],
+        'kakashi': [
+            'toys-images/kakashi/blu.png',
+            'toys-images/kakashi/blue.png', // На случай если файл переименуют
+            'toys-images/kakashi/kakashi.png'
+        ],
+        'pistol': [
+            'toys-images/pistol/yellow.png',
+            'toys-images/pistol/white.png',
+            'toys-images/pistol/pistol-yellow.png'
+        ],
+        'labubu': [
+            'toys-images/labubu/grey.jpg',
+            'toys-images/labubu/gray.jpg',
+            'toys-images/labubu/purple.jpg',
+            'toys-images/labubu/red.jpg',
+            'toys-images/labubu/white.jpg'
+        ],
+        'house': [
+            'toys-images/house/newyear.png',
+            'toys-images/house/christmas.png',
+            'toys-images/house/house.png'
+        ],
+        'uno': [
+            'toys-images/uno/uno.png',
+            'toys-images/uno/game.png',
+            'toys-images/uno/uno-game.png'
+        ]
+    };
     
-    // Запускаем отладку через 1 секунду
-    setTimeout(debugImageLoading, 1000);
-    
-    // Также запускаем проверку каждую картинку при создании галереи
-    Object.keys(productPhotos).forEach(productId => {
-        initGalleryWithDebug(productId);
-    });
-});
+    return alternatives[productId] || [currentUrl];
+}
 
-// ОБНОВЛЕННАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ГАЛЕРЕИ С ОТЛАДКОЙ
-function initGalleryWithDebug(productId) {
+// Улучшенная функция инициализации с автоматическим поиском файлов
+async function initGalleryWithAutoFind(productId) {
     const product = productPhotos[productId];
     if (!product || !product.photos || product.photos.length === 0) {
-        console.error(`❌ Нет данных для товара: ${productId}`);
+        console.warn(`Нет фото для товара: ${productId}`);
         createFallbackGallery(productId);
         return;
     }
     
-    const photos = product.photos;
     const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
-    
-    if (!galleryElement) {
-        console.error(`❌ Не найден элемент галереи для: ${productId}`);
-        return;
-    }
+    if (!galleryElement) return;
     
     // Очищаем галерею
     galleryElement.innerHTML = '';
@@ -816,167 +822,161 @@ function initGalleryWithDebug(productId) {
     imagesContainer.style.height = '100%';
     imagesContainer.style.position = 'relative';
     
-    // Счетчик успешно загруженных изображений
-    let loadedCount = 0;
-    let totalCount = photos.length;
-    
-    // Создаем все изображения с улучшенной отладкой
-    photos.forEach((photo, index) => {
+    // Для каждого фото пытаемся найти работающий файл
+    for (let i = 0; i < product.photos.length; i++) {
+        const originalPhoto = product.photos[i];
         const img = document.createElement('img');
-        img.id = `${productId}-image-${index}`;
-        img.dataset.originalSrc = photo.url; // Сохраняем оригинальный путь
-        img.alt = photo.alt;
+        img.id = `${productId}-image-${i}`;
+        img.alt = originalPhoto.alt;
         img.style.width = '100%';
         img.style.height = '100%';
         img.style.objectFit = 'contain';
         img.style.position = 'absolute';
         img.style.top = '0';
         img.style.left = '0';
-        img.style.display = index === 0 ? 'block' : 'none';
+        img.style.display = i === 0 ? 'block' : 'none';
         img.style.background = 'white';
         img.style.padding = '10px';
         img.style.borderRadius = '5px';
         
-        // УСИЛЕННЫЙ ОБРАБОТЧИК ОШИБОК
-        img.onerror = function() {
-            console.error(`❌ Ошибка загрузки для ${productId}: ${photo.url}`);
+        // Функция для попытки загрузки с разных путей
+        const tryLoadImage = async (url) => {
+            return new Promise((resolve) => {
+                const testImg = new Image();
+                testImg.onload = () => resolve({success: true, url});
+                testImg.onerror = () => resolve({success: false, url});
+                testImg.src = url;
+            });
+        };
+        
+        // Пробуем загрузить оригинальный файл
+        let loadResult = await tryLoadImage(originalPhoto.url);
+        
+        // Если не получилось, пробуем альтернативные пути
+        if (!loadResult.success) {
+            const alternativeUrls = findAlternativeImage(productId, originalPhoto.url);
             
-            // Пробуем альтернативные расширения
-            const alternativeExtensions = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
-            let foundAlternative = false;
-            
-            for (let ext of alternativeExtensions) {
-                const testUrl = photo.url.replace(/\.[^.]+$/, ext);
-                if (testUrl !== photo.url) {
-                    const testImg = new Image();
-                    testImg.onload = function() {
-                        console.log(`✅ Найдена альтернатива: ${testUrl}`);
-                        img.src = testUrl;
-                        loadedCount++;
-                        updateGalleryStatus(productId, loadedCount, totalCount);
-                    };
-                    testImg.onerror = function() {
-                        // Продолжаем пробовать другие расширения
-                    };
-                    testImg.src = testUrl;
+            for (const altUrl of alternativeUrls) {
+                if (altUrl !== originalPhoto.url) {
+                    loadResult = await tryLoadImage(altUrl);
+                    if (loadResult.success) {
+                        console.log(`🔄 ${productId}: Используем альтернативу ${altUrl} вместо ${originalPhoto.url}`);
+                        break;
+                    }
                 }
             }
-            
-            // Если альтернативы не найдены, используем placeholder
-            setTimeout(() => {
-                if (!img.complete || img.naturalWidth === 0) {
-                    console.log(`⏳ Используем placeholder для ${productId}`);
-                    img.src = getPlaceholderUrl(productId, index);
-                    img.alt = 'Фото временно недоступно';
-                    img.style.background = '#f5f5f5';
-                    img.style.padding = '20px';
-                }
-            }, 1000);
-        };
+        }
         
-        // Обработчик успешной загрузки
-        img.onload = function() {
-            console.log(`✅ Успешно загружено: ${photo.url}`);
-            loadedCount++;
-            updateGalleryStatus(productId, loadedCount, totalCount);
-        };
-        
-        // Начинаем загрузку
-        img.src = photo.url;
+        // Устанавливаем src (рабочий URL или placeholder)
+        if (loadResult.success) {
+            img.src = loadResult.url;
+        } else {
+            console.log(`⚠️ ${productId}: Не удалось найти файл, используем placeholder`);
+            img.src = getPlaceholderUrl(productId, i);
+            img.alt = 'Фото временно недоступно';
+            img.style.background = '#f5f5f5';
+            img.style.padding = '20px';
+        }
         
         imagesContainer.appendChild(img);
-    });
+    }
     
     galleryElement.appendChild(imagesContainer);
     
-    // Создаем статус-бар для отладки (только в режиме разработки)
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        const statusBar = document.createElement('div');
-        statusBar.id = `${productId}-status`;
-        statusBar.style.cssText = `
-            position: absolute;
-            bottom: 30px;
-            left: 10px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 10px;
-            z-index: 10;
-        `;
-        statusBar.textContent = `Загрузка: 0/${totalCount}`;
-        galleryElement.appendChild(statusBar);
+    // Добавляем остальные элементы (кнопки, точки и т.д.)
+    // ... остальной код инициализации галереи ...
+    
+    // Добавляем обработчик клика
+    galleryElement.onclick = function() {
+        openPhotoModal(productId, 0);
+    };
+}
+
+// ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🛒 Инициализация магазина игрушек...');
+    
+    // Запускаем проверку файлов (можно отключить в продакшене)
+    verifyAllFiles().then(results => {
+        const errors = results.filter(r => !r.success);
+        if (errors.length > 0) {
+            console.warn('⚠️ Обнаружены проблемы с файлами:');
+            errors.forEach(error => {
+                console.warn(`   - ${error.productId}: ${error.url}`);
+            });
+        }
+    });
+    
+    // Инициализируем все галереи
+    Object.keys(productPhotos).forEach(productId => {
+        initGalleryWithAutoFind(productId);
+    });
+    
+    // Инициализация корзины
+    if (!window.shoppingCart) {
+        window.shoppingCart = {
+            items: [],
+            addItem: function(item) {
+                const existingIndex = this.items.findIndex(i => 
+                    i.id === item.id && i.title === item.title
+                );
+                
+                if (existingIndex >= 0) {
+                    this.items[existingIndex].quantity += 1;
+                } else {
+                    this.items.push(item);
+                }
+                
+                updateCart();
+                showNotification(`Добавлено: ${item.title}`, 'success');
+            },
+            getTotal: function() {
+                return this.items.reduce((sum, item) => {
+                    return sum + (parseInt(item.price) * item.quantity);
+                }, 0);
+            }
+        };
     }
     
-    // Добавляем элементы управления и т.д. (остальной код как было)
-    // ... [остальной код функции initGallery] ...
-}
+    // Назначаем обработчик для иконки корзины
+    document.getElementById('cart-icon').addEventListener('click', showCart);
+});
 
-// ФУНКЦИЯ ДЛЯ ОБНОВЛЕНИЯ СТАТУСА ЗАГРУЗКИ
-function updateGalleryStatus(productId, loaded, total) {
-    const statusBar = document.getElementById(`${productId}-status`);
-    if (statusBar) {
-        statusBar.textContent = `Загрузка: ${loaded}/${total}`;
-        if (loaded === total) {
-            statusBar.style.background = 'rgba(76, 175, 80, 0.7)';
-        }
-    }
-}
-
-// КОМАНДЫ ДЛЯ КОНСОЛИ
+// КОМАНДЫ ДЛЯ КОНСОЛИ БРАУЗЕРА
 console.log(`
-💡 КОМАНДЫ ДЛЯ ОТЛАДКИ В КОНСОЛИ:
-1. debugImageLoading() - проверить все изображения
-2. testSingleImage('toys-images/kakashi/blue.png') - проверить одно изображение
-3. showFolderStructure() - показать ожидаемую структуру папок
+🎯 КОМАНДЫ ДЛЯ ОТЛАДКИ:
+
+1. verifyAllFiles() - проверить все файлы изображений
+2. findCorrectImage('kakashi') - найти файл для Какаши
+3. testFile('toys-images/kakashi/blu.png') - проверить конкретный файл
+4. showCurrentPaths() - показать текущие пути
+
+📁 ТЕКУЩАЯ СТРУКТУРА ФАЙЛОВ:
+• dragons/white.png
+• kakashi/blu.png (важно: blu без "e")
+• pistol/yellow.png (желтый пистолет)
+• labubu/grey.jpg
+• labubu/purple.jpg
+• labubu/red.jpg
+• labubu/white.jpg
+• house/[нужно указать имя]
+• uno/[нужно указать имя]
 `);
 
-// ФУНКЦИЯ ДЛЯ ПРОВЕРКИ ОДНОГО ИЗОБРАЖЕНИЯ
-function testSingleImage(url) {
-    console.log(`🔍 Тестируем: ${url}`);
+// Вспомогательные функции для отладки
+function testFile(url) {
     const img = new Image();
-    img.onload = function() {
-        console.log(`✅ УСПЕХ: ${url}`);
-        console.log(`   Размер: ${this.naturalWidth}×${this.naturalHeight}px`);
-        console.log(`   Полный URL: ${this.src}`);
-    };
-    img.onerror = function() {
-        console.log(`❌ ОШИБКА: ${url}`);
-        console.log(`   Попробуйте открыть этот URL в браузере:`);
-        console.log(`   ${window.location.origin}/${url}`);
-    };
+    console.log(`Тестируем: ${url}`);
+    img.onload = () => console.log(`✅ Файл существует: ${url}`);
+    img.onerror = () => console.log(`❌ Файл не найден: ${url}`);
     img.src = url;
 }
 
-// ФУНКЦИЯ ДЛЯ ПОКАЗА СТРУКТУРЫ ПАПОК
-function showFolderStructure() {
-    console.log(`
-📁 ОЖИДАЕМАЯ СТРУКТУРА ПАПОК:
-toys-images/
-├── dragons/
-│   ├── white.png
-│   ├── blue.png
-│   └── red.png
-├── kakashi/
-│   └── blue.png
-├── pistol/
-│   └── white.png
-├── labubu/
-│   ├── grey.jpeg
-│   ├── purple.jpeg
-│   ├── red.jpeg
-│   └── white.jpeg
-├── house/
-│   └── newyear.png
-└── uno/
-    └── uno.png
-
-💡 СОВЕТЫ:
-1. Проверьте ЧУВСТВИТЕЛЬНОСТЬ К РЕГИСТРУ: white.png ≠ White.PNG
-2. Проверьте РАСШИРЕНИЯ: .png, .jpg, .jpeg
-3. Проверьте РАСПОЛОЖЕНИЕ: файлы должны быть в папке toys-images/
-4. Проверьте ИМЕНА ФАЙЛОВ: должны точно совпадать
-    `);
+function showCurrentPaths() {
+    Object.entries(productPhotos).forEach(([id, product]) => {
+        console.log(`\n${product.name}:`);
+        product.photos.forEach(p => console.log(`  ${p.url}`));
+    });
 }
     
     // Инициализируем корзину
