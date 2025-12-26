@@ -82,7 +82,7 @@ function getPlaceholderUrl(productId, index) {
     const name = names[productId] || 'Товар';
     return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="${color}"/><text x="200" y="150" font-family="Arial" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">${name}</text></svg>`;
 }
-
+2
 // ОСНОВНАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ГАЛЕРЕИ
 function initGallery(productId) {
     const product = productPhotos[productId];
