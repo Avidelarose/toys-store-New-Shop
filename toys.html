@@ -186,7 +186,7 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 30px;
             margin-top: 40px;
             animation: fadeIn 1s ease-out 0.9s both;
@@ -200,6 +200,7 @@
             transition: all 0.4s ease;
             position: relative;
             animation: slideUp 0.5s ease-out;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -224,11 +225,21 @@
         }
 
         .product-gallery {
-            height: 250px;
+            height: 300px;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .product-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-gallery img {
+            transform: scale(1.05);
         }
 
         .gallery-nav {
@@ -238,7 +249,7 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            padding: 0 10px;
+            padding: 0 15px;
             z-index: 2;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -252,14 +263,14 @@
             background: rgba(0,0,0,0.7);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
         }
@@ -281,8 +292,8 @@
         }
 
         .gallery-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: rgba(255,255,255,0.5);
             cursor: pointer;
@@ -318,7 +329,7 @@
         }
 
         .product-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 600;
             margin-bottom: 10px;
             color: #2c3e50;
@@ -326,13 +337,13 @@
 
         .product-description {
             color: #7f8c8d;
-            font-size: 14px;
+            font-size: 15px;
             margin-bottom: 15px;
             line-height: 1.5;
         }
 
         .product-price {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             color: #e74c3c;
             margin-bottom: 20px;
@@ -343,7 +354,7 @@
 
         .product-price::before {
             content: '₽';
-            font-size: 18px;
+            font-size: 20px;
         }
 
         .add-to-cart {
@@ -401,7 +412,7 @@
             transform: scale(1.2) rotate(10deg);
         }
 
-        /* Модальное окно для фотографий */
+        /* Улучшенное модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -414,14 +425,22 @@
             align-items: center;
             justify-content: center;
             animation: fadeIn 0.3s ease;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            padding: 20px;
         }
 
         .modal-content {
             position: relative;
             max-width: 90%;
             max-height: 90%;
+            width: 900px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             animation: scaleIn 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
 
         @keyframes scaleIn {
@@ -429,38 +448,25 @@
             to { transform: scale(1); opacity: 1; }
         }
 
-        #modalImage {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 10px;
-            background: white;
-            padding: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .modal-header {
+            padding: 25px 30px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .modal-info {
-            position: absolute;
-            bottom: -40px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: white;
-            font-size: 18px;
-            padding: 10px;
-            background: rgba(0,0,0,0.7);
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
+        .modal-title {
+            font-size: 28px;
+            font-weight: 600;
         }
 
         .modal-close {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            font-size: 30px;
+            font-size: 32px;
             cursor: pointer;
             width: 50px;
             height: 50px;
@@ -469,15 +475,48 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
         }
 
         .modal-close:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.3);
             transform: rotate(90deg) scale(1.1);
         }
 
-        .modal-nav {
+        .modal-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .modal-gallery {
+            flex: 1;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .modal-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #modalImage {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal-gallery-nav {
             position: absolute;
             top: 50%;
             width: 100%;
@@ -485,11 +524,11 @@
             justify-content: space-between;
             padding: 0 20px;
             transform: translateY(-50%);
-            z-index: 1;
+            z-index: 2;
         }
 
-        .modal-nav-btn {
-            background: rgba(255,255,255,0.2);
+        .modal-gallery-btn {
+            background: rgba(0,0,0,0.7);
             color: white;
             border: none;
             width: 60px;
@@ -504,9 +543,106 @@
             justify-content: center;
         }
 
-        .modal-nav-btn:hover {
-            background: rgba(255,255,255,0.4);
+        .modal-gallery-btn:hover {
+            background: rgba(0,0,0,0.9);
             transform: scale(1.1);
+        }
+
+        .modal-info-section {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            max-width: 400px;
+            background: white;
+        }
+
+        .modal-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .modal-details {
+            margin-bottom: 30px;
+        }
+
+        .modal-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-detail-label {
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .modal-detail-value {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .modal-price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .modal-price::before {
+            content: '₽';
+            font-size: 24px;
+        }
+
+        .modal-add-to-cart {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-add-to-cart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 117, 252, 0.4);
+        }
+
+        .modal-gallery-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-gallery-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-gallery-dot.active {
+            background: #6a11cb;
+            transform: scale(1.2);
         }
 
         .loading-spinner {
@@ -515,11 +651,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255,255,255,0.3);
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(106, 17, 203, 0.3);
             border-radius: 50%;
-            border-top-color: #2575fc;
+            border-top-color: #6a11cb;
             animation: spin 1s linear infinite;
         }
 
@@ -629,6 +765,29 @@
                 grid-template-columns: 1fr;
             }
 
+            .modal-content {
+                flex-direction: column;
+                max-height: 95%;
+                width: 95%;
+            }
+
+            .modal-body {
+                flex-direction: column;
+            }
+
+            .modal-info-section {
+                max-width: 100%;
+                max-height: 40%;
+            }
+
+            .modal-gallery {
+                min-height: 300px;
+            }
+
+            #modalImage {
+                max-height: 50vh;
+            }
+
             .footer-links {
                 flex-direction: column;
                 gap: 15px;
@@ -654,6 +813,14 @@
 
             .product-card {
                 margin: 0 10px;
+            }
+
+            .modal-header {
+                padding: 20px;
+            }
+
+            .modal-title {
+                font-size: 24px;
             }
         }
 
@@ -698,6 +865,40 @@
         @keyframes loading {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
+        }
+
+        /* Кнопка быстрого просмотра */
+        .quick-view-btn {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(106, 17, 203, 0.9);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 3;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .product-card:hover .quick-view-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quick-view-btn:hover {
+            background: rgba(106, 17, 203, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
         }
     </style>
 </head>
@@ -751,6 +952,9 @@
                 <!-- Дракон -->
                 <div class="product-card" data-product="dragon">
                     <div class="product-gallery"></div>
+                    <button class="quick-view-btn" onclick="openProductModal('dragon')">
+                        <i class="fas fa-eye"></i> Быстрый просмотр
+                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Дракон светящийся в темноте</h3>
                         <p class="product-description">Великолепный светящийся дракон с подвижными крыльями. Светится в темноте! Безопасен для детей от 5 лет.</p>
@@ -764,6 +968,9 @@
                 <!-- Какаши -->
                 <div class="product-card" data-product="kakashi">
                     <div class="product-gallery"></div>
+                    <button class="quick-view-btn" onclick="openProductModal('kakashi')">
+                        <i class="fas fa-eye"></i> Быстрый просмотр
+                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Фигурка Какаши Хатаке</h3>
                         <p class="product-description">Детализированная коллекционная фигурка из аниме Наруто. Высота: 18 см, материал: высококачественный ПВХ.</p>
@@ -777,6 +984,9 @@
                 <!-- Пистолет -->
                 <div class="product-card" data-product="pistol">
                     <div class="product-gallery"></div>
+                    <button class="quick-view-btn" onclick="openProductModal('pistol')">
+                        <i class="fas fa-eye"></i> Быстрый просмотр
+                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Пистолет с мягкими пульками</h3>
                         <p class="product-description">Безопасный пистолет для детей. В комплекте: пистолет, 20 мягких пулек, мишень. Для детей от 6 лет.</p>
@@ -790,6 +1000,9 @@
                 <!-- Лабубу -->
                 <div class="product-card" data-product="labubu">
                     <div class="product-gallery"></div>
+                    <button class="quick-view-btn" onclick="openProductModal('labubu')">
+                        <i class="fas fa-eye"></i> Быстрый просмотр
+                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Коллекционная фигурка Лабубу</h3>
                         <p class="product-description">Милая фигурка Лабубу разных цветов. Высота: 10 см. Идеально для коллекции или подарка.</p>
@@ -803,6 +1016,9 @@
                 <!-- Домик -->
                 <div class="product-card" data-product="house">
                     <div class="product-gallery"></div>
+                    <button class="quick-view-btn" onclick="openProductModal('house')">
+                        <i class="fas fa-eye"></i> Быстрый просмотр
+                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Волшебный новогодний домик</h3>
                         <p class="product-description">Светящийся новогодний домик с подсветкой и зимним декором. Создает праздничное настроение! Работает от батареек.</p>
@@ -816,6 +1032,9 @@
                 <!-- UNO -->
                 <div class="product-card" data-product="uno">
                     <div class="product-gallery"></div>
+                    <button class="quick-view-btn" onclick="openProductModal('uno')">
+                        <i class="fas fa-eye"></i> Быстрый просмотр
+                    </button>
                     <div class="product-info">
                         <h3 class="product-title">Настольная игра UNO</h3>
                         <p class="product-description">Классическая карточная игра для всей семьи. От 2 до 10 игроков. Отличный подарок для детей и взрослых.</p>
@@ -859,21 +1078,59 @@
         </section>
     </div>
 
-    <!-- Модальное окно для фотографий -->
-    <div id="photoModal" class="modal">
+    <!-- Модальное окно товара -->
+    <div id="productModal" class="modal">
         <div class="loading-spinner" id="modalSpinner"></div>
         <div class="modal-content">
-            <button class="modal-close" onclick="closePhotoModal()" aria-label="Закрыть">×</button>
-            <div class="modal-nav">
-                <button class="modal-nav-btn" onclick="changeModalPhoto(-1)" aria-label="Предыдущее фото">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="modal-nav-btn" onclick="changeModalPhoto(1)" aria-label="Следующее фото">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <div class="modal-header">
+                <div class="modal-title" id="modalProductTitle"></div>
+                <button class="modal-close" onclick="closeProductModal()" aria-label="Закрыть">×</button>
             </div>
-            <img id="modalImage" src="" alt="Фото товара" onload="hideModalSpinner()">
-            <div class="modal-info" id="modalInfo"></div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="modal-image-container">
+                        <img id="modalProductImage" src="" alt="Фото товара" onload="hideModalSpinner()">
+                    </div>
+                    <div class="modal-gallery-nav">
+                        <button class="modal-gallery-btn" onclick="changeModalProductPhoto(-1)" aria-label="Предыдущее фото">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="modal-gallery-btn" onclick="changeModalProductPhoto(1)" aria-label="Следующее фото">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="modal-gallery-controls" id="modalGalleryDots"></div>
+                </div>
+                <div class="modal-info-section">
+                    <div class="modal-description" id="modalProductDescription"></div>
+                    <div class="modal-details">
+                        <div class="modal-detail-item">
+                            <span class="modal-detail-label">Артикул:</span>
+                            <span class="modal-detail-value" id="modalProductCode"></span>
+                        </div>
+                        <div class="modal-detail-item">
+                            <span class="modal-detail-label">Возраст:</span>
+                            <span class="modal-detail-value" id="modalProductAge"></span>
+                        </div>
+                        <div class="modal-detail-item">
+                            <span class="modal-detail-label">Материал:</span>
+                            <span class="modal-detail-value" id="modalProductMaterial"></span>
+                        </div>
+                        <div class="modal-detail-item">
+                            <span class="modal-detail-label">Размер:</span>
+                            <span class="modal-detail-value" id="modalProductSize"></span>
+                        </div>
+                        <div class="modal-detail-item">
+                            <span class="modal-detail-label">В наличии:</span>
+                            <span class="modal-detail-value" id="modalProductStock"></span>
+                        </div>
+                    </div>
+                    <div class="modal-price" id="modalProductPrice"></div>
+                    <button class="modal-add-to-cart" id="modalAddToCartBtn">
+                        <i class="fas fa-cart-plus"></i> Добавить в корзину
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -897,32 +1154,82 @@
     </footer>
 
 <script>
-// ДАННЫЕ ТОВАРОВ С ПРАВИЛЬНЫМИ ПУТЯМИ
-const productPhotos = {
+// ДАННЫЕ ТОВАРОВ С ПРАВИЛЬНЫМИ ПУТЯМИ И ДЕТАЛЬНЫМИ ОПИСАНИЯМИ
+const productData = {
     'dragon': {
         name: 'Дракон светящийся в темноте',
+        price: '1299',
+        description: 'Великолепный светящийся дракон с подвижными крыльями и реалистичными звуковыми эффектами. Игрушка полностью безопасна для детей, изготовлена из высококачественного пластика без острых краев. В темноте дракон светится нежным зеленым свечением, что создает волшебную атмосферу в детской комнате. Крылья подвижные, позволяют принимать различные позы. Работает от 3-х батареек АА (в комплект не входят).',
+        details: {
+            артикул: 'DRG-2024',
+            возраст: '5+ лет',
+            материал: 'Пластик, электронные компоненты',
+            размер: '25 × 18 × 12 см',
+            наличие: 'Есть в наличии',
+            цвет: 'Белый с зеленой подсветкой',
+            вес: '450 г',
+            особенности: 'Светится в темноте, звуковые эффекты'
+        },
         photos: [
             {url: 'toys-images/dragons/white.png', alt: 'Белый светящийся дракон'},
-            {url: 'https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Дракон+вид+2', alt: 'Дракон сбоку'},
-            {url: 'https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Дракон+вид+3', alt: 'Дракон с подсветкой'}
+            {url: 'https://via.placeholder.com/800x600/4CAF50/FFFFFF?text=Дракон+вид+2', alt: 'Дракон сбоку'},
+            {url: 'https://via.placeholder.com/800x600/4CAF50/FFFFFF?text=Дракон+вид+3', alt: 'Дракон с подсветкой'}
         ]
     },
     'kakashi': {
         name: 'Фигурка Какаши Хатаке',
+        price: '899',
+        description: 'Детализированная коллекционная фигурка легендарного персонажа из аниме "Наруто" - Какаши Хатаке. Выполнена с высокой точностью: проработаны все детали костюма, включая маску, шрам на глазу и знак деревни. Фигурка имеет 12 точек артикуляции, что позволяет воссоздавать любые позы из сериала. В комплекте идут сменные руки и оружие. Отличный подарок для фанатов Наруто и коллекционеров.',
+        details: {
+            артикул: 'KKSH-001',
+            возраст: '14+ лет',
+            материал: 'ПВХ, ABS пластик',
+            размер: '18 × 8 × 6 см',
+            наличие: 'Есть в наличии',
+            цвет: 'Серебристый, синий, черный',
+            вес: '320 г',
+            особенности: '12 точек артикуляции, сменные аксессуары'
+        },
         photos: [
             {url: 'toys-images/kakahi/blu.png', alt: 'Фигурка Какаши'},
-            {url: 'https://via.placeholder.com/400x300/2196F3/FFFFFF?text=Какаши+вид+2', alt: 'Какаши вид сбоку'}
+            {url: 'https://via.placeholder.com/800x600/2196F3/FFFFFF?text=Какаши+вид+2', alt: 'Какаши вид сбоку'},
+            {url: 'https://via.placeholder.com/800x600/2196F3/FFFFFF?text=Какаши+вид+3', alt: 'Какаши с оружием'}
         ]
     },
     'pistol': {
         name: 'Пистолет с мягкими пульками',
+        price: '599',
+        description: 'Безопасный пистолет для детей с мягкими пульками. Идеально подходит для активных игр на свежем воздухе. Пульки изготовлены из мягкого поролона, совершенно безопасны при попадании. Пистолет имеет реалистичный дизайн, но выполнен в ярких цветах для привлечения внимания детей. В комплекте: пистолет, 20 мягких пулек, мишень. Развивает координацию движений и меткость.',
+        details: {
+            артикул: 'PST-2024',
+            возраст: '6+ лет',
+            материал: 'Пластик, поролон',
+            размер: '22 × 15 × 5 см',
+            наличие: 'Есть в наличии',
+            цвет: 'Желтый, оранжевый',
+            вес: '280 г',
+            особенности: '20 пулек в комплекте, безопасные материалы'
+        },
         photos: [
             {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет с пульками'},
-            {url: 'https://via.placeholder.com/400x300/FFC107/000000?text=Пистолет+вид+2', alt: 'Комплект пулек'}
+            {url: 'https://via.placeholder.com/800x600/FFC107/000000?text=Пистолет+вид+2', alt: 'Комплект пулек'},
+            {url: 'https://via.placeholder.com/800x600/FFC107/000000?text=Пистолет+вид+3', alt: 'Пистолет и мишень'}
         ]
     },
     'labubu': {
         name: 'Коллекционная фигурка Лабубу',
+        price: '1499',
+        description: 'Очаровательная коллекционная фигурка Лабубу от популярной серии. Каждая фигурка уникальна и имеет свои характерные черты. Выполнена из высококачественного винила с детальной росписью. Отличный подарок для коллекционеров фигурок и поклонников современной поп-культуры. Фигурка упакована в фирменную подарочную коробку.',
+        details: {
+            артикул: 'LBB-001',
+            возраст: '12+ лет',
+            материал: 'Винил, акриловая краска',
+            размер: '10 × 8 × 8 см',
+            наличие: 'Есть в наличии',
+            цвет: 'Разные цвета',
+            вес: '180 г',
+            особенности: 'Коллекционная, подарочная упаковка'
+        },
         photos: [
             {url: 'toys-images/labubu/grey.jpg', alt: 'Серый Лабубу'},
             {url: 'toys-images/labubu/purple.jpg', alt: 'Фиолетовый Лабубу'},
@@ -932,21 +1239,46 @@ const productPhotos = {
     },
     'house': {
         name: 'Волшебный новогодний домик',
+        price: '1799',
+        description: 'Сказочный новогодний домик с подсветкой и зимним декором. Идеально создает праздничное настроение! Домик имеет реалистичную архитектуру с детализированными элементами: снег на крыше, светящиеся окна, дым из трубы. Внутри домика находится миниатюрная новогодняя сцена. Работает от 2-х батареек АА. Отличное украшение для новогоднего стола или интерьера.',
+        details: {
+            артикул: 'HSE-2024',
+            возраст: '3+ лет',
+            материал: 'Пластик, светодиоды',
+            размер: '20 × 15 × 18 см',
+            наличие: 'Есть в наличии',
+            цвет: 'Белый, голубой, золотой',
+            вес: '520 г',
+            особенности: 'Светящиеся окна, новогодний декор'
+        },
         photos: [
-            {url: 'https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Новогодний+домик', alt: 'Новогодний домик с подсветкой'}
+            {url: 'https://via.placeholder.com/800x600/FF5722/FFFFFF?text=Новогодний+домик', alt: 'Новогодний домик с подсветкой'}
         ]
     },
     'uno': {
         name: 'Настольная игра UNO',
+        price: '399',
+        description: 'Классическая карточная игра для всей семьи. Правила просты и понятны даже детям: нужно быстрее всех избавиться от своих карт, выполняя специальные действия. Игра развивает логическое мышление, внимание и скорость реакции. В комплекте: 112 карт, правила игры на русском языке. Отличный подарок для семейного досуга и вечеринок с друзьями.',
+        details: {
+            артикул: 'UNO-001',
+            возраст: '7+ лет',
+            материал: 'Картон',
+            размер: '9.5 × 6 × 2.5 см',
+            наличие: 'Есть в наличии',
+            цвет: 'Разноцветный',
+            вес: '150 г',
+            особенности: '2-10 игроков, правила на русском'
+        },
         photos: [
-            {url: 'https://via.placeholder.com/400x300/3F51B5/FFFFFF?text=Игра+UNO+коробка', alt: 'Коробка игры UNO'}
+            {url: 'https://via.placeholder.com/800x600/3F51B5/FFFFFF?text=Игра+UNO+коробка', alt: 'Коробка игры UNO'},
+            {url: 'https://via.placeholder.com/800x600/3F51B5/FFFFFF?text=Карты+UNO', alt: 'Карты игры UNO'}
         ]
     }
 };
 
-// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ДЛЯ МОДАЛЬНОГО ОКНА
 let currentModalProduct = null;
-let currentModalIndex = 0;
+let currentModalPhotoIndex = 0;
 
 // КОРЗИНА
 let shoppingCart = {
@@ -1003,16 +1335,15 @@ let shoppingCart = {
     }
 };
 
-// ФУНКЦИИ ГАЛЕРЕИ
+// ФУНКЦИИ ГАЛЕРЕИ НА ГЛАВНОЙ СТРАНИЦЕ
 function initGallery(productId) {
-    const product = productPhotos[productId];
+    const product = productData[productId];
     const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
     
     if (!galleryElement) return;
     
     galleryElement.innerHTML = '';
     
-    // Если нет фото - создаем placeholder
     if (!product || !product.photos || product.photos.length === 0) {
         createPlaceholderGallery(productId);
         return;
@@ -1025,49 +1356,28 @@ function initGallery(productId) {
         position: relative;
     `;
 
-    // Создаем изображения с проверкой загрузки
-    product.photos.forEach((photo, index) => {
-        const img = document.createElement('img');
-        img.id = `${productId}-image-${index}`;
-        img.alt = photo.alt;
-        img.loading = "lazy";
-        img.style.cssText = `
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: ${index === 0 ? 'block' : 'none'};
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        `;
+    // Создаем первое изображение
+    const firstPhoto = product.photos[0];
+    const img = document.createElement('img');
+    img.id = `${productId}-main-image`;
+    img.alt = firstPhoto.alt;
+    img.loading = "lazy";
+    img.style.cssText = `
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+    `;
 
-        // Сначала ставим placeholder
-        img.src = getPlaceholderUrl(productId, index);
-        
-        // Пробуем загрузить реальное изображение
-        const realImg = new Image();
-        realImg.onload = () => {
-            img.src = photo.url;
-            img.style.opacity = '1';
-        };
-        realImg.onerror = () => {
-            console.log(`Изображение не найдено: ${photo.url}`);
-            // Оставляем placeholder
-            img.style.opacity = '0.8';
-        };
-        realImg.src = photo.url;
+    // Устанавливаем изображение с проверкой
+    setImageWithFallback(img, firstPhoto.url, productId, 0);
 
-        imagesContainer.appendChild(img);
-    });
-
+    imagesContainer.appendChild(img);
     galleryElement.appendChild(imagesContainer);
 
-    // Навигация
+    // Навигация если фото больше 1
     if (product.photos.length > 1) {
         addGalleryNavigation(galleryElement, productId, product.photos.length);
     }
@@ -1075,27 +1385,26 @@ function initGallery(productId) {
     addGalleryCounter(galleryElement, 1, product.photos.length);
 
     // Клик для открытия модального окна
-    galleryElement.onclick = () => {
-        if (product.photos.length > 0) {
-            openPhotoModal(productId, 0);
-        }
-    };
+    galleryElement.onclick = () => openProductModal(productId);
 }
 
-function createPlaceholderGallery(productId) {
-    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
-    if (!gallery) return;
+function setImageWithFallback(imgElement, url, productId, index) {
+    // Сначала ставим placeholder
+    imgElement.src = getPlaceholderUrl(productId, index);
+    imgElement.style.opacity = '0.7';
     
-    const product = productPhotos[productId];
-    const color = getProductColor(productId);
-    
-    gallery.innerHTML = `
-        <div class="placeholder-container">
-            <i class="fas fa-image placeholder-icon"></i>
-            <div class="placeholder-text">Фото скоро появится</div>
-            <div class="placeholder-subtext">${product?.name || 'Товар'}</div>
-        </div>
-    `;
+    // Пробуем загрузить реальное изображение
+    const realImg = new Image();
+    realImg.onload = () => {
+        imgElement.src = url;
+        imgElement.style.opacity = '1';
+    };
+    realImg.onerror = () => {
+        console.log(`Изображение не найдено: ${url}`);
+        // Оставляем placeholder
+        imgElement.style.opacity = '0.8';
+    };
+    realImg.src = url;
 }
 
 function getPlaceholderUrl(productId, index) {
@@ -1121,27 +1430,30 @@ function getPlaceholderUrl(productId, index) {
     const name = names[productId] || 'Товар';
     const hexColor = color.startsWith('#') ? color.substring(1) : '2196F3';
     
-    return `https://via.placeholder.com/400x300/${hexColor}/FFFFFF?text=${encodeURIComponent(name)}+${index + 1}`;
+    return `https://via.placeholder.com/600x400/${hexColor}/FFFFFF?text=${encodeURIComponent(name)}+${index + 1}`;
 }
 
-function getProductColor(productId) {
-    const colors = {
-        'dragon': '#4CAF50',
-        'kakashi': '#2196F3',
-        'pistol': '#FFC107',
-        'labubu': '#9C27B0',
-        'house': '#FF5722',
-        'uno': '#3F51B5'
-    };
-    return colors[productId] || '#2196F3';
+function createPlaceholderGallery(productId) {
+    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
+    if (!gallery) return;
+    
+    const product = productData[productId];
+    
+    gallery.innerHTML = `
+        <div class="placeholder-container">
+            <i class="fas fa-image placeholder-icon"></i>
+            <div class="placeholder-text">Фото скоро появится</div>
+            <div class="placeholder-subtext">${product?.name || 'Товар'}</div>
+        </div>
+    `;
 }
 
 function addGalleryNavigation(galleryElement, productId, totalPhotos) {
     const navDiv = document.createElement('div');
     navDiv.className = 'gallery-nav';
     
-    const prevBtn = createGalleryButton('prev-btn', '<i class="fas fa-chevron-left"></i>', () => changePhoto(productId, -1));
-    const nextBtn = createGalleryButton('next-btn', '<i class="fas fa-chevron-right"></i>', () => changePhoto(productId, 1));
+    const prevBtn = createGalleryButton('prev-btn', '<i class="fas fa-chevron-left"></i>', () => changeGalleryPhoto(productId, -1));
+    const nextBtn = createGalleryButton('next-btn', '<i class="fas fa-chevron-right"></i>', () => changeGalleryPhoto(productId, 1));
     
     navDiv.appendChild(prevBtn);
     navDiv.appendChild(nextBtn);
@@ -1155,7 +1467,7 @@ function addGalleryNavigation(galleryElement, productId, totalPhotos) {
         dot.className = `gallery-dot ${i === 0 ? 'active' : ''}`;
         dot.onclick = (e) => {
             e.stopPropagation();
-            goToPhoto(productId, i);
+            goToGalleryPhoto(productId, i);
         };
         controlsDiv.appendChild(dot);
     }
@@ -1181,42 +1493,30 @@ function addGalleryCounter(galleryElement, current, total) {
     galleryElement.appendChild(counter);
 }
 
-function changePhoto(productId, direction) {
-    const product = productPhotos[productId];
+function changeGalleryPhoto(productId, direction) {
+    const product = productData[productId];
     if (!product || product.photos.length <= 1) return;
     
     const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
     if (!gallery) return;
     
-    const currentImg = gallery.querySelector('img[style*="display: block"]');
-    if (!currentImg) return;
+    const dots = gallery.querySelectorAll('.gallery-dot');
+    const currentActive = Array.from(dots).findIndex(dot => dot.classList.contains('active'));
     
-    const match = currentImg.id.match(/\d+$/);
-    if (!match) return;
-    
-    let currentIndex = parseInt(match[0]);
-    const total = product.photos.length;
-    let newIndex = (currentIndex + direction + total) % total;
-    
-    goToPhoto(productId, newIndex);
+    let newIndex = (currentActive + direction + product.photos.length) % product.photos.length;
+    goToGalleryPhoto(productId, newIndex);
 }
 
-function goToPhoto(productId, index) {
-    const product = productPhotos[productId];
+function goToGalleryPhoto(productId, index) {
+    const product = productData[productId];
     if (!product || index < 0 || index >= product.photos.length) return;
     
     const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
     if (!gallery) return;
     
-    // Скрываем все изображения
-    gallery.querySelectorAll('img').forEach(img => {
-        img.style.display = 'none';
-    });
-    
-    // Показываем выбранное
-    const targetImg = document.getElementById(`${productId}-image-${index}`);
-    if (targetImg) {
-        targetImg.style.display = 'block';
+    const img = gallery.querySelector('img');
+    if (img) {
+        setImageWithFallback(img, product.photos[index].url, productId, index);
     }
     
     // Обновляем точки
@@ -1232,17 +1532,51 @@ function goToPhoto(productId, index) {
     }
 }
 
-// МОДАЛЬНОЕ ОКНО
-function openPhotoModal(productId, index) {
-    const product = productPhotos[productId];
-    if (!product || !product.photos || product.photos.length === 0) return;
+// МОДАЛЬНОЕ ОКНО ТОВАРА
+function openProductModal(productId) {
+    const product = productData[productId];
+    if (!product) return;
     
-    const photos = product.photos;
-    if (index < 0 || index >= photos.length) index = 0;
+    currentModalProduct = productId;
+    currentModalPhotoIndex = 0;
     
-    const modal = document.getElementById('photoModal');
-    const modalImg = document.getElementById('modalImage');
-    const modalInfo = document.getElementById('modalInfo');
+    // Заполняем информацию о товаре
+    document.getElementById('modalProductTitle').textContent = product.name;
+    document.getElementById('modalProductDescription').textContent = product.description;
+    document.getElementById('modalProductPrice').textContent = product.price;
+    
+    // Заполняем детали
+    const details = product.details;
+    document.getElementById('modalProductCode').textContent = details.артикул;
+    document.getElementById('modalProductAge').textContent = details.возраст;
+    document.getElementById('modalProductMaterial').textContent = details.материал;
+    document.getElementById('modalProductSize').textContent = details.размер;
+    document.getElementById('modalProductStock').textContent = details.наличие;
+    
+    // Настраиваем кнопку добавления в корзину
+    const addToCartBtn = document.getElementById('modalAddToCartBtn');
+    addToCartBtn.onclick = () => {
+        addToCart(productId, product.name, product.price);
+        closeProductModal();
+    };
+    
+    // Загружаем первое изображение
+    loadModalProductPhoto(productId, 0);
+    
+    // Создаем точки навигации
+    createModalGalleryDots(product.photos.length);
+    
+    // Показываем модальное окно
+    const modal = document.getElementById('productModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function loadModalProductPhoto(productId, index) {
+    const product = productData[productId];
+    if (!product || !product.photos || index >= product.photos.length) return;
+    
+    const modalImg = document.getElementById('modalProductImage');
     const spinner = document.getElementById('modalSpinner');
     
     // Показываем спиннер
@@ -1250,31 +1584,55 @@ function openPhotoModal(productId, index) {
     modalImg.style.opacity = '0';
     
     // Загружаем изображение
-    modalImg.onload = function() {
-        if (spinner) spinner.style.display = 'none';
-        modalImg.style.opacity = '1';
-    };
+    setImageWithFallback(modalImg, product.photos[index].url, productId, index);
     
-    modalImg.onerror = function() {
-        if (spinner) spinner.style.display = 'none';
-        this.src = getPlaceholderUrl(productId, index);
-        this.style.opacity = '1';
-    };
+    // Скрываем спиннер после загрузки
+    const checkImageLoaded = setInterval(() => {
+        if (modalImg.complete) {
+            clearInterval(checkImageLoaded);
+            if (spinner) spinner.style.display = 'none';
+            modalImg.style.opacity = '1';
+        }
+    }, 100);
     
-    modalImg.src = photos[index].url;
-    modalImg.alt = photos[index].alt;
-    
-    modalInfo.textContent = `${product.name} (${index + 1}/${photos.length})`;
-    
-    currentModalProduct = productId;
-    currentModalIndex = index;
-    
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    // Обновляем активную точку
+    updateModalGalleryDots(index);
+    currentModalPhotoIndex = index;
 }
 
-function closePhotoModal() {
-    const modal = document.getElementById('photoModal');
+function createModalGalleryDots(total) {
+    const dotsContainer = document.getElementById('modalGalleryDots');
+    dotsContainer.innerHTML = '';
+    
+    for (let i = 0; i < total; i++) {
+        const dot = document.createElement('span');
+        dot.className = `modal-gallery-dot ${i === 0 ? 'active' : ''}`;
+        dot.onclick = () => loadModalProductPhoto(currentModalProduct, i);
+        dotsContainer.appendChild(dot);
+    }
+}
+
+function updateModalGalleryDots(activeIndex) {
+    const dots = document.querySelectorAll('.modal-gallery-dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === activeIndex);
+    });
+}
+
+function changeModalProductPhoto(direction) {
+    if (!currentModalProduct) return;
+    
+    const product = productData[currentModalProduct];
+    if (!product || !product.photos || product.photos.length <= 1) return;
+    
+    const total = product.photos.length;
+    let newIndex = (currentModalPhotoIndex + direction + total) % total;
+    
+    loadModalProductPhoto(currentModalProduct, newIndex);
+}
+
+function closeProductModal() {
+    const modal = document.getElementById('productModal');
     const spinner = document.getElementById('modalSpinner');
     
     if (modal) {
@@ -1285,22 +1643,12 @@ function closePhotoModal() {
     document.body.style.overflow = 'auto';
 }
 
-function changeModalPhoto(direction) {
-    if (!currentModalProduct) return;
-    
-    const photos = productPhotos[currentModalProduct].photos;
-    if (!photos || photos.length === 0) return;
-    
-    currentModalIndex = (currentModalIndex + direction + photos.length) % photos.length;
-    openPhotoModal(currentModalProduct, currentModalIndex);
-}
-
 function hideModalSpinner() {
     const spinner = document.getElementById('modalSpinner');
     if (spinner) spinner.style.display = 'none';
 }
 
-// КОРЗИНА
+// КОРЗИНА - ОСНОВНЫЕ ФУНКЦИИ
 function addToCart(productId, productName, productPrice) {
     const item = { 
         id: productId, 
@@ -1614,7 +1962,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Магазин игрушек загружается...');
     
     // Инициализация галерей
-    Object.keys(productPhotos).forEach(productId => {
+    Object.keys(productData).forEach(productId => {
         initGallery(productId);
     });
     
@@ -1632,7 +1980,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Глобальные обработчики
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closePhotoModal();
+        if (e.key === 'Escape') closeProductModal();
     });
     
     // Плавная прокрутка для ссылок
@@ -1683,9 +2031,9 @@ window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
 window.checkout = checkout;
 window.clearCart = clearCart;
-window.openPhotoModal = openPhotoModal;
-window.closePhotoModal = closePhotoModal;
-window.changeModalPhoto = changeModalPhoto;
+window.openProductModal = openProductModal;
+window.closeProductModal = closeProductModal;
+window.changeModalProductPhoto = changeModalProductPhoto;
 window.addToCart = addToCart;
 window.showCart = showCart;
 </script>
