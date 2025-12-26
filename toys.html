@@ -1,672 +1,3 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Игрушки | Магазин "Всё в одном месте"</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Стили остаются такими же как в предыдущем коде */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            min-height: 100vh;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.15);
-            overflow: hidden;
-        }
-
-        header {
-            background: linear-gradient(90deg, #2196f3, #0d47a1);
-            color: white;
-            padding: 25px;
-            position: relative;
-        }
-
-        .back-button {
-            position: absolute;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            text-align: center;
-            margin: 0 80px;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            padding: 40px;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 2px solid #e3f2fd;
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(33, 150, 243, 0.2);
-        }
-
-        .product-header {
-            background: linear-gradient(135deg, #2196f3, #1976d2);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .product-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .product-content {
-            padding: 25px;
-        }
-
-        .product-price {
-            font-size: 2em;
-            color: #2196f3;
-            font-weight: bold;
-            margin: 15px 0;
-            text-align: center;
-        }
-
-        .product-description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-        }
-
-        .features-list {
-            list-style: none;
-            margin: 20px 0;
-            padding: 0;
-        }
-
-        .features-list li {
-            padding: 8px 0;
-            border-bottom: 1px dashed #e0e0e0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .features-list li:last-child {
-            border-bottom: none;
-        }
-
-        .buy-button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(90deg, #2196f3, #0d47a1);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .buy-button:hover {
-            background: linear-gradient(90deg, #0d47a1, #2196f3);
-            transform: scale(1.02);
-        }
-
-        .special-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #ff5722;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            z-index: 1;
-        }
-
-        .stock-info {
-            color: #4caf50;
-            font-weight: bold;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #666;
-            border-top: 1px solid #eee;
-            background: #f5f9ff;
-        }
-
-        /* СТИЛИ ДЛЯ ГАЛЕРЕИ ФОТО ТОВАРА */
-        .product-gallery {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 10px;
-            margin-bottom: 15px;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .gallery-controls {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 2;
-        }
-
-        .gallery-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            border: 2px solid rgba(33, 150, 243, 0.5);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .gallery-dot.active {
-            background: #2196f3;
-            transform: scale(1.2);
-        }
-
-        .gallery-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 10px;
-            transform: translateY(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 2;
-        }
-
-        .product-gallery:hover .gallery-nav {
-            opacity: 1;
-        }
-
-        .gallery-btn {
-            background: rgba(33, 150, 243, 0.8);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .gallery-btn:hover {
-            background: rgba(33, 150, 243, 1);
-            transform: scale(1.1);
-        }
-
-        .photo-counter {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            z-index: 2;
-        }
-
-        /* МОДАЛЬНОЕ ОКНО ПРОСМОТРА ФОТО */
-        .photo-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-        }
-
-        .modal-img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 10px;
-        }
-
-        .modal-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-        }
-
-        .modal-btn {
-            background: rgba(33, 150, 243, 0.8);
-            border: none;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            margin: 0 20px;
-            transition: all 0.3s;
-        }
-
-        .modal-btn:hover {
-            background: rgba(33, 150, 243, 1);
-            transform: scale(1.1);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 30px;
-            cursor: pointer;
-            z-index: 10001;
-            transition: all 0.3s;
-        }
-
-        .close-modal:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
-        }
-
-        .modal-info {
-            color: white;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 18px;
-        }
-
-        /* ИКОНКА КОРЗИНЫ */
-        #cart-icon {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #2196f3, #0d47a1);
-            color: white;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
-            z-index: 9999;
-            transition: all 0.3s;
-        }
-
-        #cart-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
-        }
-
-        #cart-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff5722;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 2em;
-                margin: 0 60px;
-            }
-
-            .back-button {
-                position: static;
-                transform: none;
-                margin-bottom: 15px;
-                width: fit-content;
-            }
-
-            header {
-                text-align: center;
-                padding: 20px;
-            }
-
-            .product-gallery {
-                height: 200px;
-            }
-
-            .modal-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-                margin: 0 10px;
-            }
-
-            #cart-icon {
-                bottom: 20px;
-                right: 20px;
-                width: 60px;
-                height: 60px;
-                font-size: 24px;
-            }
-        }
-
-        /* АНИМАЦИИ */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <a href="index.html" class="back-button">
-                <i class="fas fa-arrow-left"></i> На главную
-            </a>
-            <h1>🧸 ИГРУШКИ И ИГРЫ</h1>
-        </header>
-
-        <div class="products-grid">
-            <!-- Дракон -->
-            <div class="product-card" data-product="dragon">
-                <div class="special-badge">ХИТ ПРОДАЖ</div>
-                <div class="product-header">
-                    <div class="product-title">Дракон светящийся в темноте</div>
-                </div>
-                <div class="product-content">
-                    <!-- Галерея фотографий дракона -->
-                    <div class="product-gallery">
-                        <!-- Изображения будут вставлены через JavaScript -->
-                    </div>
-                    
-                    <div class="stock-info">✅ В наличии: 15 шт</div>
-                    <div class="product-price">450 ₽</div>
-                    <div class="product-description">
-                        <p>30 см подвижный дракон светится в темноте. Развивает мелкую моторику, 3D дизайн.</p>
-                    </div>
-                    <ul class="features-list">
-                        <li>🎨 3D дизайн с детальной проработкой</li>
-                        <li>✨ Свечение в полной темноте</li>
-                        <li>🎮 Подвижные элементы</li>
-                        <li>🎄 Можно как ёлочная игрушка</li>
-                    </ul>
-                    <button class="buy-button" onclick="addToCart('dragon', 'Дракон светящийся в темноте', '450')">
-                        <i class="fas fa-shopping-cart"></i> Купить за 450 ₽
-                    </button>
-                </div>
-            </div>
-
-            <!-- Какаши -->
-            <div class="product-card" data-product="kakashi">
-                <div class="special-badge">КОЛЛЕКЦИОННАЯ</div>
-                <div class="product-header">
-                    <div class="product-title">Фигурка Какаши (Наруто)</div>
-                </div>
-                <div class="product-content">
-                    <!-- Галерея фотографий Какаши -->
-                    <div class="product-gallery">
-                        <!-- Изображения будут вставлены через JavaScript -->
-                    </div>
-                    
-                    <div class="stock-info">⏳ В наличии: 3 шт</div>
-                    <div class="product-price">3 900 ₽</div>
-                    <div class="product-description">
-                        <p>Эксклюзивная фигурка Какаши Хатаке 1/6, 10 см, из Японии. Детализированная роспись.</p>
-                    </div>
-                    <ul class="features-list">
-                        <li>🇯🇵 Привезена из Японии</li>
-                        <li>📏 Масштаб 1/6 (10 см)</li>
-                        <li>⚡ В комплекте молния для руки</li>
-                        <li>🎭 Детализированная роспись</li>
-                    </ul>
-                    <button class="buy-button" onclick="addToCart('kakashi', 'Фигурка Какаши (Наруто)', '3900')">
-                        <i class="fas fa-shopping-cart"></i> Купить за 3 900 ₽
-                    </button>
-                </div>
-            </div>
-
-            <!-- Пистолет -->
-            <div class="product-card" data-product="pistol">
-                <div class="special-badge">ПОСЛЕДНИЙ</div>
-                <div class="product-header">
-                    <div class="product-title">Пистолет с пульками и гильзами</div>
-                </div>
-                <div class="product-content">
-                    <!-- Галерея фотографий пистолета -->
-                    <div class="product-gallery">
-                        <!-- Изображения будут вставлены через JavaScript -->
-                    </div>
-                    
-                    <div class="stock-info">✅ В наличии: 12 шт</div>
-                    <div class="product-price">1 600 ₽</div>
-                    <div class="product-description">
-                        <p>Пистолет с пульками и выбросом гильз. Автоматика, подвижный затвор. 2 магазина в комплекте.</p>
-                    </div>
-                    <ul class="features-list">
-                        <li>🎯 2 магазина в комплекте</li>
-                        <li>🔊 Реалистичные звуковые эффекты</li>
-                        <li>⚡ Автоматическая работа</li>
-                        <li>🛡️ Безопасные пульки</li>
-                    </ul>
-                    <button class="buy-button" onclick="addToCart('pistol', 'Пистолет с пульками и гильзами', '1600')">
-                        <i class="fas fa-shopping-cart"></i> Купить за 1 600 ₽
-                    </button>
-                </div>
-            </div>
-
-            <!-- Лабубу -->
-            <div class="product-card" data-product="labubu">
-                <div class="special-badge">РАЗНЫЕ ЦВЕТА</div>
-                <div class="product-header">
-                    <div class="product-title">Коллекционная фигурка Лабубу</div>
-                </div>
-                <div class="product-content">
-                    <!-- Галерея фотографий Лабубу -->
-                    <div class="product-gallery">
-                        <!-- Изображения будут вставлены через JavaScript -->
-                    </div>
-                    
-                    <div class="stock-info">✅ В наличии: 8 шт</div>
-                    <div class="product-price">800 ₽</div>
-                    <div class="product-description">
-                        <p>Коллекционная фигурка Лабубу из популярной серии. Высокое качество изготовления.</p>
-                    </div>
-                    <ul class="features-list">
-                        <li>🎨 4 варианта расцветок</li>
-                        <li>📏 Высота: 12 см</li>
-                        <li>✨ Глянцевое покрытие</li>
-                        <li>🎁 Идеально для коллекции</li>
-                    </ul>
-                    <button class="buy-button" onclick="addToCart('labubu', 'Коллекционная фигурка Лабубу', '800')">
-                        <i class="fas fa-shopping-cart"></i> Купить за 800 ₽
-                    </button>
-                </div>
-            </div>
-
-            <!-- Новогодний домик -->
-            <div class="product-card" data-product="house">
-                <div class="special-badge">НОВИНКА</div>
-                <div class="product-header">
-                    <div class="product-title">Светящийся новогодний домик</div>
-                </div>
-                <div class="product-content">
-                    <!-- Галерея фотографий домика -->
-                    <div class="product-gallery">
-                        <!-- Изображения будут вставлены через JavaScript -->
-                    </div>
-                    
-                    <div class="stock-info">✅ В наличии: 22 шт</div>
-                    <div class="product-price">550 ₽</div>
-                    <div class="product-description">
-                        <p>Подарите себе и своим близким волшебную атмосферу Нового года! Светится в темноте.</p>
-                    </div>
-                    <ul class="features-list">
-                        <li>✨ Автоматическое свечение</li>
-                        <li>🔋 Работает от батареек</li>
-                        <li>🎅 Новогодний дизайн</li>
-                        <li>🎁 Идеальный подарок</li>
-                    </ul>
-                    <button class="buy-button" onclick="addToCart('house', 'Светящийся новогодний домик', '550')">
-                        <i class="fas fa-shopping-cart"></i> Купить за 550 ₽
-                    </button>
-                </div>
-            </div>
-
-            <!-- UNO -->
-            <div class="product-card" data-product="uno">
-                <div class="special-badge">НАСТОЛЬНАЯ ИГРА</div>
-                <div class="product-header">
-                    <div class="product-title">Настольная игра UNO</div>
-                </div>
-                <div class="product-content">
-                    <!-- Галерея фотографий UNO -->
-                    <div class="product-gallery">
-                        <!-- Изображения будут вставлены через JavaScript -->
-                    </div>
-                    
-                    <div class="stock-info">✅ В наличии: 25 шт</div>
-                    <div class="product-price">400 ₽</div>
-                    <div class="product-description">
-                        <p>Классическая настольная игра UNO для веселого времяпровождения! От 2 до 10 игроков.</p>
-                    </div>
-                    <ul class="features-list">
-                        <li>👨‍👩‍👧‍👦 Для 2-10 игроков</li>
-                        <li>⏱️ Быстрая и динамичная игра</li>
-                        <li>🎯 Простые правила</li>
-                        <li>🎉 Для любого возраста</li>
-                    </ul>
-                    <button class="buy-button" onclick="addToCart('uno', 'Настольная игра UNO', '400')">
-                        <i class="fas fa-shopping-cart"></i> Купить за 400 ₽
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2024 Магазин игрушек | 8-800-123-45-67</p>
-            <p style="margin-top: 10px; font-size: 0.9em; color: #888;">
-                Доставка по всей России • Гарантия 14 дней • Возврат товара
-            </p>
-        </footer>
-    </div>
-
-    <!-- МОДАЛЬНОЕ ОКНО ПРОСМОТРА ФОТО -->
-    <div class="photo-modal" id="photoModal">
-        <button class="close-modal" onclick="closePhotoModal()">×</button>
-        <div class="modal-content">
-            <div class="modal-nav">
-                <button class="modal-btn prev-btn" onclick="changeModalPhoto(-1)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="modal-btn next-btn" onclick="changeModalPhoto(1)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-            <img class="modal-img" id="modalImage" src="" alt="Фото товара">
-            <div class="modal-info" id="modalInfo">1/1</div>
-        </div>
-    </div>
-
-    <!-- ИКОНКА КОРЗИНЫ -->
-    <div id="cart-icon">
-        <i class="fas fa-shopping-cart"></i>
-        <div id="cart-badge">0</div>
-    </div>
-
 <script>
 // ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ - ИСПРАВЛЕННЫЕ ПУТИ
 const productPhotos = {
@@ -679,13 +10,13 @@ const productPhotos = {
     'kakashi': {
         name: 'Фигурка Какаши',
         photos: [
-            {url: 'toys-images/kakashi/blu.png', alt: 'Фигурка Какаши'} // Важно: blu без "e"
+            {url: 'toys-images/kakashi/blu.png', alt: 'Фигурка Какаши'}
         ]
     },
     'pistol': {
         name: 'Пистолет с пульками',
         photos: [
-            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет'} // Желтый пистолет
+            {url: 'toys-images/pistol/yellow.png', alt: 'Желтый пистолет'}
         ]
     },
     'labubu': {
@@ -699,23 +30,35 @@ const productPhotos = {
     },
     'house': {
         name: 'Новогодний домик',
-        photos: [
-            // УКАЖИТЕ ТОЧНОЕ ИМЯ ФАЙЛА! Если файла нет, удалите эту строку.
-            // {url: 'toys-images/house/newyear.png', alt: 'Новогодний домик'}
-        ]
+        photos: []
     },
     'uno': {
         name: 'Игра UNO',
-        photos: [
-            // УКАЖИТЕ ТОЧНОЕ ИМЯ ФАЙЛА! Если файла нет, удалите эту строку.
-            // {url: 'toys-images/uno/uno.png', alt: 'Настольная игра UNO'}
-        ]
+        photos: []
     }
 };
 
 // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ДЛЯ МОДАЛЬНОГО ОКНА
 let currentModalProduct = null;
 let currentModalIndex = 0;
+
+// КОРЗИНА
+let shoppingCart = {
+    items: [],
+    addItem: function(item) {
+        const existing = this.items.find(i => i.id === item.id && i.title === item.title);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            this.items.push(item);
+        }
+        updateCart();
+        showNotification(`Добавлено: ${item.title}`, 'success');
+    },
+    getTotal: function() {
+        return this.items.reduce((sum, item) => sum + (parseInt(item.price) * item.quantity), 0);
+    }
+};
 
 // ФУНКЦИЯ ДЛЯ СОЗДАНИЯ PLACEHOLDER-ИЗОБРАЖЕНИЙ
 function getPlaceholderUrl(productId, index) {
@@ -737,7 +80,6 @@ function getPlaceholderUrl(productId, index) {
     };
     const color = colors[productId] || '#2196F3';
     const name = names[productId] || 'Товар';
-    // Используем простой цветной блок, так как через placeholder.com могут быть проблемы с доступом
     return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="${color}"/><text x="200" y="150" font-family="Arial" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">${name}</text></svg>`;
 }
 
@@ -745,7 +87,6 @@ function getPlaceholderUrl(productId, index) {
 function initGallery(productId) {
     const product = productPhotos[productId];
     if (!product) {
-        console.error(`Нет данных для товара: ${productId}`);
         createFallbackGallery(productId);
         return;
     }
@@ -753,10 +94,7 @@ function initGallery(productId) {
     const photos = product.photos || [];
     const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
     
-    if (!galleryElement) {
-        console.error(`Не найден элемент галереи для: ${productId}`);
-        return;
-    }
+    if (!galleryElement) return;
 
     // Очищаем галерею
     galleryElement.innerHTML = '';
@@ -798,11 +136,9 @@ function initGallery(productId) {
         const realImg = new Image();
         realImg.onload = function() {
             img.src = photo.url;
-            console.log(`✅ Загружено: ${photo.url}`);
         };
         realImg.onerror = function() {
-            console.error(`❌ Ошибка загрузки: ${photo.url}`);
-            // Оставляем placeholder
+            console.error(`Ошибка загрузки: ${photo.url}`);
         };
         realImg.src = photo.url;
 
@@ -979,362 +315,26 @@ function changeModalPhoto(direction) {
     openPhotoModal(currentModalProduct, currentModalIndex);
 }
 
-// ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Инициализация страницы игрушек...');
-    
-    // Инициализируем все галереи
-    Object.keys(productPhotos).forEach(productId => {
-        initGallery(productId);
-    });
-    
-    // Инициализация корзины
-    if (!window.shoppingCart) {
-        window.shoppingCart = {
-            items: [],
-            addItem: function(item) {
-                const existing = this.items.find(i => i.id === item.id && i.title === item.title);
-                if (existing) {
-                    existing.quantity += 1;
-                } else {
-                    this.items.push(item);
-                }
-                updateCart();
-                showNotification(`Добавлено: ${item.title}`);
-            },
-            getTotal: function() {
-                return this.items.reduce((sum, item) => sum + (parseInt(item.price) * item.quantity), 0);
-            }
-        };
-    }
-    
-    // Иконка корзины
-    document.getElementById('cart-icon').addEventListener('click', showCart);
-    
-    // Закрытие модального окна по ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closePhotoModal();
-    });
-});
-
-// Функции корзины (оставьте ваши существующие функции без изменений)
+// ФУНКЦИИ КОРЗИНЫ
 function addToCart(productId, productName, productPrice) {
-    const item = { id: productId, title: productName, price: productPrice, quantity: 1 };
-    window.shoppingCart.addItem(item);
+    const item = { 
+        id: productId, 
+        title: productName, 
+        price: productPrice, 
+        quantity: 1 
+    };
+    shoppingCart.addItem(item);
 }
 
 function updateCart() {
     const badge = document.getElementById('cart-badge');
-    if (badge && window.shoppingCart) {
-        const total = window.shoppingCart.items.reduce((sum, item) => sum + item.quantity, 0);
+    if (badge) {
+        const total = shoppingCart.items.reduce((sum, item) => sum + item.quantity, 0);
         badge.textContent = total;
         badge.style.display = total > 0 ? 'flex' : 'none';
     }
 }
 
-function showNotification(message) {
-    // Ваш существующий код для уведомлений
-    alert(message); // Временная заглушка
-}
-
-function showCart() {
-    // Ваш существующий код для отображения корзины
-    alert('Функция корзины'); // Временная заглушка
-}
-    
-    // Назначаем обработчик для иконки корзины
-    document.getElementById('cart-icon').addEventListener('click', showCart);
-});
-
-// Функция для инициализации галереи
-function initGallery(productId) {
-    const product = productPhotos[productId];
-    if (!product || !product.photos || product.photos.length === 0) {
-        console.warn(`Нет фото для товара: ${productId}`);
-        createFallbackGallery(productId);
-        return;
-    }
-    
-    const photos = product.photos;
-    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
-    
-    if (!galleryElement) {
-        console.warn(`Не найден элемент галереи для товара: ${productId}`);
-        return;
-    }
-    
-    // Очищаем галерею
-    galleryElement.innerHTML = '';
-    
-    // Создаем контейнер для изображений
-    const imagesContainer = document.createElement('div');
-    imagesContainer.style.width = '100%';
-    imagesContainer.style.height = '100%';
-    imagesContainer.style.position = 'relative';
-    
-    // Создаем все изображения
-    photos.forEach((photo, index) => {
-        const img = document.createElement('img');
-        img.id = `${productId}-image-${index}`;
-        img.src = photo.url;
-        img.alt = photo.alt;
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'contain';
-        img.style.position = 'absolute';
-        img.style.top = '0';
-        img.style.left = '0';
-        img.style.display = index === 0 ? 'block' : 'none';
-        img.style.background = 'white';
-        img.style.padding = '10px';
-        img.style.borderRadius = '5px';
-        
-        // Обработчик ошибок загрузки
-        img.onerror = function() {
-            console.error(`Не удалось загрузить фото: ${photo.url}`);
-            this.src = getPlaceholderUrl(productId, index);
-            this.alt = 'Фото временно недоступно';
-            this.style.background = '#f5f5f5';
-            this.style.padding = '20px';
-        };
-        
-        imagesContainer.appendChild(img);
-    });
-    
-    galleryElement.appendChild(imagesContainer);
-    
-    // Создаем элементы управления если фото больше 1
-    if (photos.length > 1) {
-        // Создаем кнопки навигации
-        const navDiv = document.createElement('div');
-        navDiv.className = 'gallery-nav';
-        
-        const prevBtn = document.createElement('button');
-        prevBtn.className = 'gallery-btn prev-btn';
-        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-        prevBtn.onclick = (e) => {
-            e.stopPropagation();
-            changePhoto(productId, -1);
-        };
-        
-        const nextBtn = document.createElement('button');
-        nextBtn.className = 'gallery-btn next-btn';
-        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-        nextBtn.onclick = (e) => {
-            e.stopPropagation();
-            changePhoto(productId, 1);
-        };
-        
-        navDiv.appendChild(prevBtn);
-        navDiv.appendChild(nextBtn);
-        galleryElement.appendChild(navDiv);
-        
-        // Создаем точки навигации
-        const controlsDiv = document.createElement('div');
-        controlsDiv.id = `${productId}-controls`;
-        controlsDiv.className = 'gallery-controls';
-        
-        photos.forEach((_, index) => {
-            const dot = document.createElement('span');
-            dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
-            dot.onclick = (e) => {
-                e.stopPropagation();
-                goToPhoto(productId, index);
-            };
-            controlsDiv.appendChild(dot);
-        });
-        
-        galleryElement.appendChild(controlsDiv);
-        
-        // Создаем счетчик
-        const counterDiv = document.createElement('div');
-        counterDiv.className = 'photo-counter';
-        counterDiv.textContent = `1/${photos.length}`;
-        galleryElement.appendChild(counterDiv);
-    } else {
-        // Для одного фото тоже добавляем счетчик
-        const counterDiv = document.createElement('div');
-        counterDiv.className = 'photo-counter';
-        counterDiv.textContent = `1/1`;
-        galleryElement.appendChild(counterDiv);
-    }
-    
-    // Добавляем обработчик клика для открытия модального окна
-    galleryElement.onclick = function() {
-        openPhotoModal(productId, 0);
-    };
-}
-
-// Функции для управления галереей
-function changePhoto(productId, direction) {
-    const product = productPhotos[productId];
-    if (!product || product.photos.length <= 1) return;
-    
-    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
-    if (!galleryElement) return;
-    
-    // Находим текущее активное изображение
-    const currentImg = galleryElement.querySelector('img[style*="display: block"]');
-    if (!currentImg) return;
-    
-    const currentId = currentImg.id;
-    const match = currentId.match(/\d+$/);
-    if (!match) return;
-    
-    let currentIndex = parseInt(match[0]);
-    const total = product.photos.length;
-    
-    // Вычисляем новый индекс
-    let newIndex = (currentIndex + direction + total) % total;
-    
-    // Переключаем фото
-    goToPhoto(productId, newIndex);
-}
-
-function goToPhoto(productId, index) {
-    const product = productPhotos[productId];
-    if (!product || index < 0 || index >= product.photos.length) return;
-    
-    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
-    if (!galleryElement) return;
-    
-    // Скрываем все фото
-    const allImages = galleryElement.querySelectorAll('img');
-    allImages.forEach(img => {
-        img.style.display = 'none';
-    });
-    
-    // Показываем выбранное фото
-    const targetImg = document.getElementById(`${productId}-image-${index}`);
-    if (targetImg) {
-        targetImg.style.display = 'block';
-    }
-    
-    // Обновляем активную точку
-    const controls = galleryElement.querySelector('.gallery-controls');
-    if (controls) {
-        const dots = controls.querySelectorAll('.gallery-dot');
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-    }
-    
-    // Обновляем счетчик
-    const counter = galleryElement.querySelector('.photo-counter');
-    if (counter) {
-        counter.textContent = `${index + 1}/${product.photos.length}`;
-    }
-}
-
-// Функция для создания заглушки если нет фото
-function createFallbackGallery(productId) {
-    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
-    if (!galleryElement) return;
-    
-    galleryElement.innerHTML = `
-        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 10px;">
-            <div style="text-align: center; padding: 20px;">
-                <i class="fas fa-image" style="font-size: 60px; color: #2196f3; margin-bottom: 15px;"></i>
-                <div style="color: #666; font-size: 16px;">Фото товара</div>
-                <div style="color: #999; font-size: 14px; margin-top: 5px;">Скоро будет добавлено</div>
-            </div>
-        </div>
-    `;
-}
-
-// Функция открытия модального окна с фото
-function openPhotoModal(productId, index) {
-    const product = productPhotos[productId];
-    if (!product || !product.photos || product.photos.length === 0) return;
-    
-    const photos = product.photos;
-    if (index < 0 || index >= photos.length) index = 0;
-    
-    const modal = document.getElementById('photoModal');
-    const modalImg = document.getElementById('modalImage');
-    const modalInfo = document.getElementById('modalInfo');
-    
-    // Устанавливаем фото
-    modalImg.src = photos[index].url;
-    modalImg.alt = photos[index].alt;
-    
-    // Обработчик ошибок для модального окна
-    modalImg.onerror = function() {
-        this.src = getPlaceholderUrl(productId, index);
-        this.alt = 'Фото временно недоступно';
-    };
-    
-    // Устанавливаем информацию
-    modalInfo.textContent = `${product.name} - ${index + 1}/${photos.length}`;
-    
-    // Сохраняем текущий продукт и индекс для навигации
-    currentModalProduct = productId;
-    currentModalIndex = index;
-    
-    // Показываем модальное окно
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-// ЗАКРЫТЬ МОДАЛЬНОЕ ОКНО
-function closePhotoModal() {
-    const modal = document.getElementById('photoModal');
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-// СМЕНА ФОТО В МОДАЛЬНОМ ОКНЕ
-function changeModalPhoto(direction) {
-    if (!currentModalProduct) return;
-    
-    const photos = productPhotos[currentModalProduct].photos;
-    if (!photos || photos.length === 0) return;
-    
-    // Вычисляем новый индекс
-    currentModalIndex = (currentModalIndex + direction + photos.length) % photos.length;
-    
-    // Обновляем фото
-    const modalImg = document.getElementById('modalImage');
-    const modalInfo = document.getElementById('modalInfo');
-    
-    modalImg.src = photos[currentModalIndex].url;
-    modalImg.alt = photos[currentModalIndex].alt;
-    
-    // Обработчик ошибок
-    modalImg.onerror = function() {
-        this.src = getPlaceholderUrl(currentModalProduct, currentModalIndex);
-        this.alt = 'Фото временно недоступно';
-    };
-    
-    modalInfo.textContent = `${productPhotos[currentModalProduct].name} - ${currentModalIndex + 1}/${photos.length}`;
-}
-
-// ДОБАВИТЬ В КОРЗИНУ
-function addToCart(productId, productName, productPrice) {
-    // Добавляем в корзину
-    const item = {
-        id: productId,
-        title: productName,
-        price: productPrice,
-        quantity: 1
-    };
-    
-    window.shoppingCart.addItem(item);
-}
-
-// ОБНОВИТЬ КОРЗИНУ
-function updateCart() {
-    if (!window.shoppingCart) return;
-    
-    const badge = document.getElementById('cart-badge');
-    if (badge) {
-        const totalItems = window.shoppingCart.items.reduce((sum, item) => sum + item.quantity, 0);
-        badge.textContent = totalItems;
-        badge.style.display = totalItems > 0 ? 'flex' : 'none';
-    }
-}
-
-// ПОКАЗАТЬ УВЕДОМЛЕНИЕ
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -1361,9 +361,8 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// ПОКАЗАТЬ КОРЗИНУ
 function showCart() {
-    if (!window.shoppingCart || window.shoppingCart.items.length === 0) {
+    if (!shoppingCart || shoppingCart.items.length === 0) {
         showNotification('Корзина пуста', 'info');
         return;
     }
@@ -1397,7 +396,7 @@ function showCart() {
     `;
     
     let itemsHTML = '';
-    window.shoppingCart.items.forEach((item, index) => {
+    shoppingCart.items.forEach((item, index) => {
         const itemTotal = parseInt(item.price) * item.quantity;
         itemsHTML += `
             <div style="border-bottom: 1px solid #eee; padding: 15px 0;">
@@ -1419,7 +418,7 @@ function showCart() {
         `;
     });
     
-    const total = window.shoppingCart.getTotal();
+    const total = shoppingCart.getTotal();
     
     modal.innerHTML = `
         <h2 style="margin-top: 0; color: #2196f3; display: flex; align-items: center; gap: 10px;">
@@ -1454,50 +453,47 @@ function showCart() {
     });
 }
 
-// УПРАВЛЕНИЕ КОРЗИНОЙ
 function updateQuantity(index, newQuantity) {
-    if (window.shoppingCart && window.shoppingCart.items[index]) {
+    if (shoppingCart && shoppingCart.items[index]) {
         if (newQuantity < 1) {
             removeFromCart(index);
         } else {
-            window.shoppingCart.items[index].quantity = newQuantity;
+            shoppingCart.items[index].quantity = newQuantity;
             updateCart();
-            showCart(); // Переоткрываем корзину с обновленными данными
+            showCart();
         }
     }
 }
 
 function removeFromCart(index) {
-    if (window.shoppingCart && window.shoppingCart.items[index]) {
-        window.shoppingCart.items.splice(index, 1);
+    if (shoppingCart && shoppingCart.items[index]) {
+        shoppingCart.items.splice(index, 1);
         updateCart();
         showNotification('Товар удален из корзины', 'info');
-        showCart(); // Переоткрываем корзину
+        showCart();
     }
 }
 
 function clearCart() {
-    if (window.shoppingCart) {
-        window.shoppingCart.items = [];
-        updateCart();
-        document.querySelector('[style*="background: rgba(0,0,0,0.5)"]')?.remove();
-        showNotification('Корзина очищена', 'info');
-    }
+    shoppingCart.items = [];
+    updateCart();
+    document.querySelector('[style*="background: rgba(0,0,0,0.5)"]')?.remove();
+    showNotification('Корзина очищена', 'info');
 }
 
 function checkout() {
-    if (!window.shoppingCart || window.shoppingCart.items.length === 0) return;
+    if (!shoppingCart || shoppingCart.items.length === 0) return;
     
     let orderText = "Здравствуйте! Хочу приобрести:\n\n";
     
-    window.shoppingCart.items.forEach((item, index) => {
+    shoppingCart.items.forEach((item, index) => {
         const itemTotal = parseInt(item.price) * item.quantity;
         orderText += `${index + 1}. ${item.title}\n`;
         orderText += `   Количество: ${item.quantity} шт.\n`;
         orderText += `   Цена: ${item.price} ₽ × ${item.quantity} = ${itemTotal} ₽\n\n`;
     });
     
-    const total = window.shoppingCart.getTotal();
+    const total = shoppingCart.getTotal();
     orderText += `Итого: ${total} ₽\n\n`;
     orderText += "---\n";
     orderText += "Ожидаю информацию о доставке и оплате.";
@@ -1510,33 +506,22 @@ function checkout() {
     clearCart();
 }
 
-// Функция для проверки доступности изображений (запустить в консоли)
-function testImageLoading() {
-    console.log('Тестирование загрузки изображений...');
+// ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Инициализация страницы игрушек...');
     
+    // Инициализируем все галереи
     Object.keys(productPhotos).forEach(productId => {
-        const product = productPhotos[productId];
-        console.log(`\n${product.name}:`);
-        
-        product.photos.forEach((photo, index) => {
-            const img = new Image();
-            img.onload = function() {
-                console.log(`  ✅ ${photo.url} - OK`);
-            };
-            img.onerror = function() {
-                console.log(`  ❌ ${photo.url} - ОШИБКА`);
-                console.log(`     Проверьте наличие файла: ${photo.url}`);
-            };
-            img.src = photo.url;
-        });
+        initGallery(productId);
     });
-}
-
-// Закрытие модального окна по ESC
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closePhotoModal();
-    }
+    
+    // Иконка корзины
+    document.getElementById('cart-icon').addEventListener('click', showCart);
+    
+    // Закрытие модального окна по ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closePhotoModal();
+    });
 });
 
 // Добавляем стили для анимаций
@@ -1560,8 +545,6 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
-// Для отладки: откройте консоль (F12) и выполните testImageLoading()
 </script>
     
     <script src="newyear.js"></script>
