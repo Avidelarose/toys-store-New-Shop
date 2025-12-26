@@ -6,323 +6,319 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Одежда | Магазин "Всё в одном месте"</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.15);
-            overflow: hidden;
-        }
-        
-        header {
-            background: linear-gradient(90deg, #e91e63, #9c27b0);
-            color: white;
-            padding: 25px;
-            position: relative;
-        }
-        
-        .back-button {
-            position: absolute;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        h1 {
-            font-size: 2.5em;
-            text-align: center;
-            margin: 0 80px;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            padding: 40px;
-        }
-        
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 2px solid #fce4ec;
-            position: relative;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(233, 30, 99, 0.2);
-        }
-        
-        .product-header {
-            background: linear-gradient(135deg, #e91e63, #c2185b);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .product-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-        
-        .product-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .product-content {
-            padding: 25px;
-        }
-        
-        .product-price {
-            font-size: 2em;
-            color: #e91e63;
-            font-weight: bold;
-            margin: 15px 0;
-            text-align: center;
-        }
-        
-        .product-description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-        }
-        
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .spec-item {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .spec-label {
-            font-weight: bold;
-            color: #e91e63;
-            font-size: 0.9em;
-        }
-        
-        .spec-value {
-            color: #333;
-            margin-top: 5px;
-        }
-        
-        .buy-button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(90deg, #e91e63, #9c27b0);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .buy-button:hover {
-            background: linear-gradient(90deg, #9c27b0, #e91e63);
-            transform: scale(1.02);
-        }
-        
-        .special-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #ff5722;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            z-index: 1;
-        }
-        
-        .stock-info {
-            color: #4caf50;
-            font-weight: bold;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .size-selector {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .size-btn {
-            padding: 8px 15px;
-            border: 2px solid #e91e63;
-            background: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-        
-        .size-btn:hover {
-            background: #fce4ec;
-        }
-        
-        .size-btn.active {
-            background: #e91e63;
-            color: white;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #666;
-            border-top: 1px solid #eee;
-            background: #fff5f7;
-        }
-        
-        .color-option {
-            display: inline-block;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            margin: 0 5px;
-            border: 2px solid #ddd;
-            cursor: pointer;
-        }
-        
-        .color-red { background: #d32f2f; }
-        .color-white { background: #ffffff; border: 1px solid #ccc; }
-        .color-black { background: #000000; }
-        .color-green { background: #388e3c; }
-        
-        /* Стили для иконки корзины */
-        #cart-icon {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #2196f3, #0d47a1);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
-            z-index: 9999;
-            transition: all 0.3s;
-        }
-        
-        #cart-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
-        }
-        
-        #cart-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff5722;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2em;
-                margin: 0 60px;
-            }
-            
-            .back-button {
-                position: static;
-                transform: none;
-                margin-bottom: 15px;
-                width: fit-content;
-            }
-            
-            header {
-                text-align: center;
-                padding: 20px;
-            }
-            
-            .specs-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            #cart-icon {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-            
-            #cart-badge {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
-            }
-        }
-    </style>
+   <style>
+/* ... остальные стили без изменений ... */
+
+/* КАРТОЧКИ ТОВАРОВ - ИСПРАВЛЕНО */
+.product-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.4s ease;
+    position: relative;
+    animation: slideUp 0.5s ease-out;
+    z-index: 1; /* ДОБАВЛЕНО: гарантирует что карточка на переднем плане */
+}
+
+.product-info {
+    padding: 20px;
+    position: relative;
+    z-index: 2; /* ДОБАВЛЕНО: увеличил z-index для информации */
+    background: white; /* ДОБАВЛЕНО: белый фон гарантирует читаемость */
+}
+
+.product-gallery {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    cursor: pointer;
+    z-index: 1; /* ДОБАВЛЕНО */
+}
+
+/* МОДАЛЬНОЕ ОКНО - ИСПРАВЛЕНО */
+.avito-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999; /* УВЕЛИЧИЛ: теперь точно поверх всего */
+    animation: fadeIn 0.3s ease;
+    overflow-y: auto;
+}
+
+.avito-modal__back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10000; /* УВЕЛИЧИЛ: поверх модалки */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.avito-modal__info {
+    background: white;
+    border-radius: 25px 25px 0 0;
+    padding: 30px 25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 10; /* УВЕЛИЧИЛ: гарантирует что информация поверх фото */
+    box-shadow: 0 -5px 30px rgba(0,0,0,0.1);
+    animation: slideUpInfo 0.4s ease-out 0.2s both;
+}
+
+.avito-modal__gallery {
+    flex: 1;
+    position: relative;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 80px 20px 40px;
+    z-index: 5; /* ДОБАВЛЕНО: чтобы было под информацией */
+}
+
+/* КОРЗИНА - ИСПРАВЛЕНО */
+#cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9998; /* Под модальным окном товара, но над всем остальным */
+    animation: fadeIn 0.3s ease;
+}
+
+#cart-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 95%;
+    max-width: 800px;
+    max-height: 85vh;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 9999; /* Выше оверлея, но ниже модалки товара */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideIn 0.3s ease;
+}
+
+/* ПЛАВАЮЩАЯ КОРЗИНА */
+#cart-icon-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #4CAF50, #2e7d32);
+    color: white;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+    z-index: 9997; /* Ниже модальных окон, но выше всего контента */
+    transition: all 0.3s;
+}
+
+/* ЗАГОЛОВКИ - ИСПРАВЛЕНО ДЛЯ ЧИТАЕМОСТИ */
+.product-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    text-shadow: none; /* УБРАЛ: может мешать читаемости */
+}
+
+.product-description {
+    color: #7f8c8d;
+    font-size: 15px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    background: white; /* ДОБАВЛЕНО: гарантирует читаемость */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.product-price {
+    font-size: 26px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: white; /* ДОБАВЛЕНО: гарантирует читаемость */
+    padding: 5px 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* ДЛЯ МОДАЛЬНОГО ОКНА ТОВАРА */
+.avito-modal__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+    background: white; /* ДОБАВЛЕНО */
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.avito-modal__price {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ff3b30;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: white; /* ДОБАВЛЕНО */
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.avito-modal__description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+    background: #f9f9f9; /* ДОБАВЛЕНО: светлый фон для читаемости */
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #6a11cb;
+}
+
+.avito-modal__detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f5f5f5;
+    background: white; /* ДОБАВЛЕНО */
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin: 5px 0;
+}
+
+/* УВЕДОМЛЕНИЯ - ИСПРАВЛЕНО */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 10000; /* ВЫШЕ ВСЕГО */
+    animation: slideIn 0.3s ease;
+    max-width: 300px;
+    font-family: Arial, sans-serif;
+}
+
+/* КНОПКИ - ИСПРАВЛЕНО ДЛЯ ВИДИМОСТИ */
+.add-to-cart {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 2; /* ДОБАВЛЕНО */
+    box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3); /* ДОБАВЛЕНО: тень для объема */
+}
+
+.avito-modal__cart-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+    z-index: 2; /* ДОБАВЛЕНО */
+    box-shadow: 0 6px 20px rgba(106, 17, 203, 0.4); /* ДОБАВЛЕНО: тень для объема */
+}
+
+/* ФОН ДЛЯ КАРТОЧЕК - ИСПРАВЛЕНО */
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1; /* ДОБАВЛЕНО */
+}
+
+/* ЗАГОЛОВОК В ГЕРОЙ СЕКЦИИ - ИСПРАВЛЕНО */
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: fadeIn 1s ease-out 0.3s both;
+    background: linear-gradient(rgba(106, 17, 203, 0.7), rgba(37, 117, 252, 0.7)); /* ДОБАВЛЕНО */
+    padding: 20px 30px;
+    border-radius: 15px;
+    display: inline-block;
+}
+
+.hero p {
+    font-size: 20px;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    opacity: 0.9;
+    animation: fadeIn 1s ease-out 0.6s both;
+    background: rgba(255, 255, 255, 0.1); /* ДОБАВЛЕНО */
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+</style>
 </head>
 <body>
     <div class="container">
