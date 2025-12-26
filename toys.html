@@ -668,7 +668,7 @@
     </div>
 
 <script>
-// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ (с правильными расширениями)
+// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ - ВЕРСИЯ ДЛЯ ОТЛАДКИ
 const productPhotos = {
     'dragon': {
         name: 'Дракон светящийся в темноте',
@@ -681,15 +681,13 @@ const productPhotos = {
     'kakashi': {
         name: 'Фигурка Какаши',
         photos: [
-            {url: 'toys-images/kakashi/blue.png', alt: 'Фигурка Какаши'},
-            {url: 'toys-images/kakashi/blue2.png', alt: 'Фигурка Какаши сбоку'}
+            {url: 'toys-images/kakashi/blue.png', alt: 'Фигурка Какаши'}
         ]
     },
     'pistol': {
         name: 'Пистолет с пульками',
         photos: [
-            {url: 'toys-images/pistol/white.png', alt: 'Белый пистолет'},
-            {url: 'toys-images/pistol/black.png', alt: 'Черный пистолет'}
+            {url: 'toys-images/pistol/white.png', alt: 'Белый пистолет'}
         ]
     },
     'labubu': {
@@ -704,57 +702,282 @@ const productPhotos = {
     'house': {
         name: 'Новогодний домик',
         photos: [
-            {url: 'toys-images/house/newyear.png', alt: 'Новогодний домик'},
-            {url: 'toys-images/house/newyear2.png', alt: 'Домик с подсветкой'}
+            {url: 'toys-images/house/newyear.png', alt: 'Новогодний домик'}
         ]
     },
     'uno': {
         name: 'Игра UNO',
         photos: [
-            {url: 'toys-images/uno/uno.png', alt: 'Настольная игра UNO'},
-            {url: 'toys-images/uno/uno2.png', alt: 'Карты UNO'}
+            {url: 'toys-images/uno/uno.png', alt: 'Настольная игра UNO'}
         ]
     }
 };
 
-// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
-let currentModalProduct = null;
-let currentModalIndex = 0;
-
-// Функция для получения placeholder'а при ошибке загрузки
-function getPlaceholderUrl(productId, index) {
-    const colors = {
-        'dragon': '#4CAF50',
-        'kakashi': '#2196F3',
-        'pistol': '#9E9E9E',
-        'labubu': '#9C27B0',
-        'house': '#FF5722',
-        'uno': '#FFC107'
-    };
+// УЛУЧШЕННАЯ ФУНКЦИЯ ДЛЯ ОТЛАДКИ
+function debugImageLoading() {
+    console.log('🔍 ОТЛАДКА ЗАГРУЗКИ ИЗОБРАЖЕНИЙ');
+    console.log('================================');
     
-    const names = {
-        'dragon': 'Дракон',
-        'kakashi': 'Какаши',
-        'pistol': 'Пистолет',
-        'labubu': 'Лабубу',
-        'house': 'Новогодний домик',
-        'uno': 'UNO'
-    };
-    
-    const color = colors[productId] || '#2196F3';
-    const name = names[productId] || 'Товар';
-    
-    return `https://via.placeholder.com/400x300/${color.replace('#', '')}/FFFFFF?text=${encodeURIComponent(name + ' ' + (index + 1))}`;
+    Object.keys(productPhotos).forEach(productId => {
+        const product = productPhotos[productId];
+        console.log(`\n📦 Товар: ${product.name} (${productId})`);
+        
+        product.photos.forEach((photo, index) => {
+            console.log(`   📸 Фото ${index + 1}: ${photo.url}`);
+            
+            // Создаем тестовое изображение для проверки
+            const testImg = new Image();
+            
+            testImg.onload = function() {
+                console.log(`      ✅ ЗАГРУЖЕНО УСПЕШНО`);
+                console.log(`         Размер: ${this.naturalWidth}×${this.naturalHeight}px`);
+            };
+            
+            testImg.onerror = function() {
+                console.log(`      ❌ ОШИБКА ЗАГРУЗКИ`);
+                console.log(`         Проверьте следующие моменты:`);
+                console.log(`         1. Существует ли файл: ${photo.url}`);
+                console.log(`         2. Правильное ли расширение (.png/.jpeg/.jpg)?`);
+                console.log(`         3. Нет ли опечаток в имени файла?`);
+                console.log(`         4. Размещен ли файл в правильной папке?`);
+                
+                // Предлагаем возможные альтернативные имена
+                suggestAlternativeNames(photo.url);
+            };
+            
+            // Запускаем проверку
+            testImg.src = photo.url;
+        });
+    });
 }
 
-// ИНИЦИАЛИЗАЦИЯ ГАЛЕРЕЙ ПРИ ЗАГРУЗКЕ
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Инициализация галереи товаров...');
+// ФУНКЦИЯ ДЛЯ ПРЕДЛОЖЕНИЯ ВОЗМОЖНЫХ ИМЕН ФАЙЛОВ
+function suggestAlternativeNames(currentPath) {
+    const commonVariations = [
+        currentPath.toLowerCase(),
+        currentPath.toUpperCase(),
+        currentPath.replace('.png', '.jpg'),
+        currentPath.replace('.png', '.jpeg'),
+        currentPath.replace('.jpeg', '.jpg'),
+        currentPath.replace('.jpg', '.jpeg'),
+        currentPath.replace('.jpg', '.png'),
+        currentPath.replace('white', 'White'),
+        currentPath.replace('blue', 'Blue'),
+        currentPath.replace('red', 'Red'),
+        currentPath.replace('grey', 'gray'),
+        currentPath.replace('gray', 'grey')
+    ];
     
-    // Инициализируем все галереи
-    Object.keys(productPhotos).forEach(productId => {
-        initGallery(productId);
+    console.log(`         Возможные альтернативные имена:`);
+    const uniqueVariations = [...new Set(commonVariations)];
+    uniqueVariations.forEach(variation => {
+        if (variation !== currentPath) {
+            console.log(`         - ${variation}`);
+        }
     });
+}
+
+// ЗАПУСКАЕМ ОТЛАДКУ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Запуск отладки изображений...');
+    
+    // Запускаем отладку через 1 секунду
+    setTimeout(debugImageLoading, 1000);
+    
+    // Также запускаем проверку каждую картинку при создании галереи
+    Object.keys(productPhotos).forEach(productId => {
+        initGalleryWithDebug(productId);
+    });
+});
+
+// ОБНОВЛЕННАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ ГАЛЕРЕИ С ОТЛАДКОЙ
+function initGalleryWithDebug(productId) {
+    const product = productPhotos[productId];
+    if (!product || !product.photos || product.photos.length === 0) {
+        console.error(`❌ Нет данных для товара: ${productId}`);
+        createFallbackGallery(productId);
+        return;
+    }
+    
+    const photos = product.photos;
+    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
+    
+    if (!galleryElement) {
+        console.error(`❌ Не найден элемент галереи для: ${productId}`);
+        return;
+    }
+    
+    // Очищаем галерею
+    galleryElement.innerHTML = '';
+    
+    // Создаем контейнер для изображений
+    const imagesContainer = document.createElement('div');
+    imagesContainer.style.width = '100%';
+    imagesContainer.style.height = '100%';
+    imagesContainer.style.position = 'relative';
+    
+    // Счетчик успешно загруженных изображений
+    let loadedCount = 0;
+    let totalCount = photos.length;
+    
+    // Создаем все изображения с улучшенной отладкой
+    photos.forEach((photo, index) => {
+        const img = document.createElement('img');
+        img.id = `${productId}-image-${index}`;
+        img.dataset.originalSrc = photo.url; // Сохраняем оригинальный путь
+        img.alt = photo.alt;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'contain';
+        img.style.position = 'absolute';
+        img.style.top = '0';
+        img.style.left = '0';
+        img.style.display = index === 0 ? 'block' : 'none';
+        img.style.background = 'white';
+        img.style.padding = '10px';
+        img.style.borderRadius = '5px';
+        
+        // УСИЛЕННЫЙ ОБРАБОТЧИК ОШИБОК
+        img.onerror = function() {
+            console.error(`❌ Ошибка загрузки для ${productId}: ${photo.url}`);
+            
+            // Пробуем альтернативные расширения
+            const alternativeExtensions = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
+            let foundAlternative = false;
+            
+            for (let ext of alternativeExtensions) {
+                const testUrl = photo.url.replace(/\.[^.]+$/, ext);
+                if (testUrl !== photo.url) {
+                    const testImg = new Image();
+                    testImg.onload = function() {
+                        console.log(`✅ Найдена альтернатива: ${testUrl}`);
+                        img.src = testUrl;
+                        loadedCount++;
+                        updateGalleryStatus(productId, loadedCount, totalCount);
+                    };
+                    testImg.onerror = function() {
+                        // Продолжаем пробовать другие расширения
+                    };
+                    testImg.src = testUrl;
+                }
+            }
+            
+            // Если альтернативы не найдены, используем placeholder
+            setTimeout(() => {
+                if (!img.complete || img.naturalWidth === 0) {
+                    console.log(`⏳ Используем placeholder для ${productId}`);
+                    img.src = getPlaceholderUrl(productId, index);
+                    img.alt = 'Фото временно недоступно';
+                    img.style.background = '#f5f5f5';
+                    img.style.padding = '20px';
+                }
+            }, 1000);
+        };
+        
+        // Обработчик успешной загрузки
+        img.onload = function() {
+            console.log(`✅ Успешно загружено: ${photo.url}`);
+            loadedCount++;
+            updateGalleryStatus(productId, loadedCount, totalCount);
+        };
+        
+        // Начинаем загрузку
+        img.src = photo.url;
+        
+        imagesContainer.appendChild(img);
+    });
+    
+    galleryElement.appendChild(imagesContainer);
+    
+    // Создаем статус-бар для отладки (только в режиме разработки)
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        const statusBar = document.createElement('div');
+        statusBar.id = `${productId}-status`;
+        statusBar.style.cssText = `
+            position: absolute;
+            bottom: 30px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            z-index: 10;
+        `;
+        statusBar.textContent = `Загрузка: 0/${totalCount}`;
+        galleryElement.appendChild(statusBar);
+    }
+    
+    // Добавляем элементы управления и т.д. (остальной код как было)
+    // ... [остальной код функции initGallery] ...
+}
+
+// ФУНКЦИЯ ДЛЯ ОБНОВЛЕНИЯ СТАТУСА ЗАГРУЗКИ
+function updateGalleryStatus(productId, loaded, total) {
+    const statusBar = document.getElementById(`${productId}-status`);
+    if (statusBar) {
+        statusBar.textContent = `Загрузка: ${loaded}/${total}`;
+        if (loaded === total) {
+            statusBar.style.background = 'rgba(76, 175, 80, 0.7)';
+        }
+    }
+}
+
+// КОМАНДЫ ДЛЯ КОНСОЛИ
+console.log(`
+💡 КОМАНДЫ ДЛЯ ОТЛАДКИ В КОНСОЛИ:
+1. debugImageLoading() - проверить все изображения
+2. testSingleImage('toys-images/kakashi/blue.png') - проверить одно изображение
+3. showFolderStructure() - показать ожидаемую структуру папок
+`);
+
+// ФУНКЦИЯ ДЛЯ ПРОВЕРКИ ОДНОГО ИЗОБРАЖЕНИЯ
+function testSingleImage(url) {
+    console.log(`🔍 Тестируем: ${url}`);
+    const img = new Image();
+    img.onload = function() {
+        console.log(`✅ УСПЕХ: ${url}`);
+        console.log(`   Размер: ${this.naturalWidth}×${this.naturalHeight}px`);
+        console.log(`   Полный URL: ${this.src}`);
+    };
+    img.onerror = function() {
+        console.log(`❌ ОШИБКА: ${url}`);
+        console.log(`   Попробуйте открыть этот URL в браузере:`);
+        console.log(`   ${window.location.origin}/${url}`);
+    };
+    img.src = url;
+}
+
+// ФУНКЦИЯ ДЛЯ ПОКАЗА СТРУКТУРЫ ПАПОК
+function showFolderStructure() {
+    console.log(`
+📁 ОЖИДАЕМАЯ СТРУКТУРА ПАПОК:
+toys-images/
+├── dragons/
+│   ├── white.png
+│   ├── blue.png
+│   └── red.png
+├── kakashi/
+│   └── blue.png
+├── pistol/
+│   └── white.png
+├── labubu/
+│   ├── grey.jpeg
+│   ├── purple.jpeg
+│   ├── red.jpeg
+│   └── white.jpeg
+├── house/
+│   └── newyear.png
+└── uno/
+    └── uno.png
+
+💡 СОВЕТЫ:
+1. Проверьте ЧУВСТВИТЕЛЬНОСТЬ К РЕГИСТРУ: white.png ≠ White.PNG
+2. Проверьте РАСШИРЕНИЯ: .png, .jpg, .jpeg
+3. Проверьте РАСПОЛОЖЕНИЕ: файлы должны быть в папке toys-images/
+4. Проверьте ИМЕНА ФАЙЛОВ: должны точно совпадать
+    `);
+}
     
     // Инициализируем корзину
     if (!window.shoppingCart) {
