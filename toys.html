@@ -200,7 +200,6 @@
             transition: all 0.4s ease;
             position: relative;
             animation: slideUp 0.5s ease-out;
-            cursor: pointer;
         }
 
         .product-card:hover {
@@ -229,6 +228,7 @@
             position: relative;
             overflow: hidden;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            cursor: pointer;
         }
 
         .product-gallery img {
@@ -236,6 +236,7 @@
             height: 100%;
             object-fit: contain;
             transition: transform 0.5s ease;
+            padding: 15px;
         }
 
         .product-card:hover .product-gallery img {
@@ -413,7 +414,7 @@
         }
 
         /* Улучшенное модальное окно */
-        .modal {
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0;
@@ -427,6 +428,11 @@
             animation: fadeIn 0.3s ease;
             backdrop-filter: blur(10px);
             padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
         }
 
         .modal-content {
@@ -455,6 +461,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .modal-title {
@@ -486,6 +495,7 @@
             display: flex;
             flex: 1;
             overflow: hidden;
+            max-height: 70vh;
         }
 
         .modal-gallery {
@@ -495,7 +505,7 @@
             align-items: center;
             justify-content: center;
             padding: 30px;
-            min-height: 500px;
+            min-height: 400px;
             position: relative;
         }
 
@@ -508,9 +518,9 @@
             position: relative;
         }
 
-        #modalImage {
+        .modal-product-image {
             max-width: 100%;
-            max-height: 70vh;
+            max-height: 400px;
             object-fit: contain;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -767,25 +777,26 @@
 
             .modal-content {
                 flex-direction: column;
-                max-height: 95%;
+                max-height: 90vh;
                 width: 95%;
             }
 
             .modal-body {
                 flex-direction: column;
+                max-height: none;
             }
 
             .modal-info-section {
                 max-width: 100%;
-                max-height: 40%;
+                max-height: 40vh;
             }
 
             .modal-gallery {
                 min-height: 300px;
             }
 
-            #modalImage {
-                max-height: 50vh;
+            .modal-product-image {
+                max-height: 300px;
             }
 
             .footer-links {
@@ -852,19 +863,6 @@
         .placeholder-subtext {
             color: #999;
             font-size: 12px;
-        }
-
-        /* Анимации загрузки */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: 4px;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
         }
 
         /* Кнопка быстрого просмотра */
@@ -951,7 +949,9 @@
             <div class="products-grid">
                 <!-- Дракон -->
                 <div class="product-card" data-product="dragon">
-                    <div class="product-gallery"></div>
+                    <div class="product-gallery" onclick="openProductModal('dragon')">
+                        <img id="dragon-img" src="" alt="Дракон светящийся в темноте">
+                    </div>
                     <button class="quick-view-btn" onclick="openProductModal('dragon')">
                         <i class="fas fa-eye"></i> Быстрый просмотр
                     </button>
@@ -967,7 +967,9 @@
 
                 <!-- Какаши -->
                 <div class="product-card" data-product="kakashi">
-                    <div class="product-gallery"></div>
+                    <div class="product-gallery" onclick="openProductModal('kakashi')">
+                        <img id="kakashi-img" src="" alt="Фигурка Какаши">
+                    </div>
                     <button class="quick-view-btn" onclick="openProductModal('kakashi')">
                         <i class="fas fa-eye"></i> Быстрый просмотр
                     </button>
@@ -983,7 +985,9 @@
 
                 <!-- Пистолет -->
                 <div class="product-card" data-product="pistol">
-                    <div class="product-gallery"></div>
+                    <div class="product-gallery" onclick="openProductModal('pistol')">
+                        <img id="pistol-img" src="" alt="Пистолет с пульками">
+                    </div>
                     <button class="quick-view-btn" onclick="openProductModal('pistol')">
                         <i class="fas fa-eye"></i> Быстрый просмотр
                     </button>
@@ -999,7 +1003,9 @@
 
                 <!-- Лабубу -->
                 <div class="product-card" data-product="labubu">
-                    <div class="product-gallery"></div>
+                    <div class="product-gallery" onclick="openProductModal('labubu')">
+                        <img id="labubu-img" src="" alt="Фигурка Лабубу">
+                    </div>
                     <button class="quick-view-btn" onclick="openProductModal('labubu')">
                         <i class="fas fa-eye"></i> Быстрый просмотр
                     </button>
@@ -1015,7 +1021,9 @@
 
                 <!-- Домик -->
                 <div class="product-card" data-product="house">
-                    <div class="product-gallery"></div>
+                    <div class="product-gallery" onclick="openProductModal('house')">
+                        <img id="house-img" src="" alt="Новогодний домик">
+                    </div>
                     <button class="quick-view-btn" onclick="openProductModal('house')">
                         <i class="fas fa-eye"></i> Быстрый просмотр
                     </button>
@@ -1031,7 +1039,9 @@
 
                 <!-- UNO -->
                 <div class="product-card" data-product="uno">
-                    <div class="product-gallery"></div>
+                    <div class="product-gallery" onclick="openProductModal('uno')">
+                        <img id="uno-img" src="" alt="Игра UNO">
+                    </div>
                     <button class="quick-view-btn" onclick="openProductModal('uno')">
                         <i class="fas fa-eye"></i> Быстрый просмотр
                     </button>
@@ -1079,9 +1089,8 @@
     </div>
 
     <!-- Модальное окно товара -->
-    <div id="productModal" class="modal">
-        <div class="loading-spinner" id="modalSpinner"></div>
-        <div class="modal-content">
+    <div id="productModal" class="modal-overlay" onclick="closeProductModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <div class="modal-title" id="modalProductTitle"></div>
                 <button class="modal-close" onclick="closeProductModal()" aria-label="Закрыть">×</button>
@@ -1089,7 +1098,7 @@
             <div class="modal-body">
                 <div class="modal-gallery">
                     <div class="modal-image-container">
-                        <img id="modalProductImage" src="" alt="Фото товара" onload="hideModalSpinner()">
+                        <img id="modalProductImage" class="modal-product-image" src="" alt="Фото товара">
                     </div>
                     <div class="modal-gallery-nav">
                         <button class="modal-gallery-btn" onclick="changeModalProductPhoto(-1)" aria-label="Предыдущее фото">
@@ -1154,7 +1163,7 @@
     </footer>
 
 <script>
-// ДАННЫЕ ТОВАРОВ С ПРАВИЛЬНЫМИ ПУТЯМИ И ДЕТАЛЬНЫМИ ОПИСАНИЯМИ
+// ДАННЫЕ ТОВАРОВ
 const productData = {
     'dragon': {
         name: 'Дракон светящийся в темноте',
@@ -1276,7 +1285,7 @@ const productData = {
     }
 };
 
-// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ДЛЯ МОДАЛЬНОГО ОКНА
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
 let currentModalProduct = null;
 let currentModalPhotoIndex = 0;
 
@@ -1335,76 +1344,34 @@ let shoppingCart = {
     }
 };
 
-// ФУНКЦИИ ГАЛЕРЕИ НА ГЛАВНОЙ СТРАНИЦЕ
-function initGallery(productId) {
-    const product = productData[productId];
-    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
+// ИНИЦИАЛИЗАЦИЯ ИЗОБРАЖЕНИЙ ПРИ ЗАГРУЗКЕ
+function loadProductImages() {
+    const products = ['dragon', 'kakashi', 'pistol', 'labubu', 'house', 'uno'];
     
-    if (!galleryElement) return;
-    
-    galleryElement.innerHTML = '';
-    
-    if (!product || !product.photos || product.photos.length === 0) {
-        createPlaceholderGallery(productId);
-        return;
-    }
-
-    const imagesContainer = document.createElement('div');
-    imagesContainer.style.cssText = `
-        width: 100%;
-        height: 100%;
-        position: relative;
-    `;
-
-    // Создаем первое изображение
-    const firstPhoto = product.photos[0];
-    const img = document.createElement('img');
-    img.id = `${productId}-main-image`;
-    img.alt = firstPhoto.alt;
-    img.loading = "lazy";
-    img.style.cssText = `
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        background: white;
-        padding: 15px;
-        border-radius: 5px;
-    `;
-
-    // Устанавливаем изображение с проверкой
-    setImageWithFallback(img, firstPhoto.url, productId, 0);
-
-    imagesContainer.appendChild(img);
-    galleryElement.appendChild(imagesContainer);
-
-    // Навигация если фото больше 1
-    if (product.photos.length > 1) {
-        addGalleryNavigation(galleryElement, productId, product.photos.length);
-    }
-
-    addGalleryCounter(galleryElement, 1, product.photos.length);
-
-    // Клик для открытия модального окна
-    galleryElement.onclick = () => openProductModal(productId);
-}
-
-function setImageWithFallback(imgElement, url, productId, index) {
-    // Сначала ставим placeholder
-    imgElement.src = getPlaceholderUrl(productId, index);
-    imgElement.style.opacity = '0.7';
-    
-    // Пробуем загрузить реальное изображение
-    const realImg = new Image();
-    realImg.onload = () => {
-        imgElement.src = url;
-        imgElement.style.opacity = '1';
-    };
-    realImg.onerror = () => {
-        console.log(`Изображение не найдено: ${url}`);
-        // Оставляем placeholder
-        imgElement.style.opacity = '0.8';
-    };
-    realImg.src = url;
+    products.forEach(productId => {
+        const product = productData[productId];
+        if (!product || !product.photos || product.photos.length === 0) return;
+        
+        const imgElement = document.getElementById(`${productId}-img`);
+        if (!imgElement) return;
+        
+        // Пробуем загрузить первое фото
+        const firstPhoto = product.photos[0];
+        const realImg = new Image();
+        
+        realImg.onload = () => {
+            imgElement.src = firstPhoto.url;
+            imgElement.alt = firstPhoto.alt;
+        };
+        
+        realImg.onerror = () => {
+            // Если фото не загружается, используем placeholder
+            imgElement.src = getPlaceholderUrl(productId, 0);
+            imgElement.alt = product.name;
+        };
+        
+        realImg.src = firstPhoto.url;
+    });
 }
 
 function getPlaceholderUrl(productId, index) {
@@ -1433,109 +1400,15 @@ function getPlaceholderUrl(productId, index) {
     return `https://via.placeholder.com/600x400/${hexColor}/FFFFFF?text=${encodeURIComponent(name)}+${index + 1}`;
 }
 
-function createPlaceholderGallery(productId) {
-    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
-    if (!gallery) return;
-    
-    const product = productData[productId];
-    
-    gallery.innerHTML = `
-        <div class="placeholder-container">
-            <i class="fas fa-image placeholder-icon"></i>
-            <div class="placeholder-text">Фото скоро появится</div>
-            <div class="placeholder-subtext">${product?.name || 'Товар'}</div>
-        </div>
-    `;
-}
-
-function addGalleryNavigation(galleryElement, productId, totalPhotos) {
-    const navDiv = document.createElement('div');
-    navDiv.className = 'gallery-nav';
-    
-    const prevBtn = createGalleryButton('prev-btn', '<i class="fas fa-chevron-left"></i>', () => changeGalleryPhoto(productId, -1));
-    const nextBtn = createGalleryButton('next-btn', '<i class="fas fa-chevron-right"></i>', () => changeGalleryPhoto(productId, 1));
-    
-    navDiv.appendChild(prevBtn);
-    navDiv.appendChild(nextBtn);
-    galleryElement.appendChild(navDiv);
-
-    const controlsDiv = document.createElement('div');
-    controlsDiv.className = 'gallery-controls';
-    
-    for (let i = 0; i < totalPhotos; i++) {
-        const dot = document.createElement('span');
-        dot.className = `gallery-dot ${i === 0 ? 'active' : ''}`;
-        dot.onclick = (e) => {
-            e.stopPropagation();
-            goToGalleryPhoto(productId, i);
-        };
-        controlsDiv.appendChild(dot);
-    }
-    
-    galleryElement.appendChild(controlsDiv);
-}
-
-function createGalleryButton(className, html, onClick) {
-    const button = document.createElement('button');
-    button.className = `gallery-btn ${className}`;
-    button.innerHTML = html;
-    button.onclick = (e) => {
-        e.stopPropagation();
-        onClick();
-    };
-    return button;
-}
-
-function addGalleryCounter(galleryElement, current, total) {
-    const counter = document.createElement('div');
-    counter.className = 'photo-counter';
-    counter.textContent = `${current}/${total}`;
-    galleryElement.appendChild(counter);
-}
-
-function changeGalleryPhoto(productId, direction) {
-    const product = productData[productId];
-    if (!product || product.photos.length <= 1) return;
-    
-    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
-    if (!gallery) return;
-    
-    const dots = gallery.querySelectorAll('.gallery-dot');
-    const currentActive = Array.from(dots).findIndex(dot => dot.classList.contains('active'));
-    
-    let newIndex = (currentActive + direction + product.photos.length) % product.photos.length;
-    goToGalleryPhoto(productId, newIndex);
-}
-
-function goToGalleryPhoto(productId, index) {
-    const product = productData[productId];
-    if (!product || index < 0 || index >= product.photos.length) return;
-    
-    const gallery = document.querySelector(`[data-product="${productId}"] .product-gallery`);
-    if (!gallery) return;
-    
-    const img = gallery.querySelector('img');
-    if (img) {
-        setImageWithFallback(img, product.photos[index].url, productId, index);
-    }
-    
-    // Обновляем точки
-    const dots = gallery.querySelectorAll('.gallery-dot');
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-    });
-    
-    // Обновляем счетчик
-    const counter = gallery.querySelector('.photo-counter');
-    if (counter) {
-        counter.textContent = `${index + 1}/${product.photos.length}`;
-    }
-}
-
 // МОДАЛЬНОЕ ОКНО ТОВАРА
 function openProductModal(productId) {
+    console.log('Opening modal for:', productId);
+    
     const product = productData[productId];
-    if (!product) return;
+    if (!product) {
+        console.error('Product not found:', productId);
+        return;
+    }
     
     currentModalProduct = productId;
     currentModalPhotoIndex = 0;
@@ -1568,8 +1441,10 @@ function openProductModal(productId) {
     
     // Показываем модальное окно
     const modal = document.getElementById('productModal');
-    modal.style.display = 'flex';
+    modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    console.log('Modal opened successfully');
 }
 
 function loadModalProductPhoto(productId, index) {
@@ -1577,23 +1452,10 @@ function loadModalProductPhoto(productId, index) {
     if (!product || !product.photos || index >= product.photos.length) return;
     
     const modalImg = document.getElementById('modalProductImage');
-    const spinner = document.getElementById('modalSpinner');
+    const photo = product.photos[index];
     
-    // Показываем спиннер
-    if (spinner) spinner.style.display = 'block';
-    modalImg.style.opacity = '0';
-    
-    // Загружаем изображение
-    setImageWithFallback(modalImg, product.photos[index].url, productId, index);
-    
-    // Скрываем спиннер после загрузки
-    const checkImageLoaded = setInterval(() => {
-        if (modalImg.complete) {
-            clearInterval(checkImageLoaded);
-            if (spinner) spinner.style.display = 'none';
-            modalImg.style.opacity = '1';
-        }
-    }, 100);
+    modalImg.src = photo.url;
+    modalImg.alt = photo.alt;
     
     // Обновляем активную точку
     updateModalGalleryDots(index);
@@ -1607,7 +1469,10 @@ function createModalGalleryDots(total) {
     for (let i = 0; i < total; i++) {
         const dot = document.createElement('span');
         dot.className = `modal-gallery-dot ${i === 0 ? 'active' : ''}`;
-        dot.onclick = () => loadModalProductPhoto(currentModalProduct, i);
+        dot.onclick = (e) => {
+            e.stopPropagation();
+            loadModalProductPhoto(currentModalProduct, i);
+        };
         dotsContainer.appendChild(dot);
     }
 }
@@ -1631,21 +1496,17 @@ function changeModalProductPhoto(direction) {
     loadModalProductPhoto(currentModalProduct, newIndex);
 }
 
-function closeProductModal() {
-    const modal = document.getElementById('productModal');
-    const spinner = document.getElementById('modalSpinner');
-    
-    if (modal) {
-        modal.style.display = 'none';
-        if (spinner) spinner.style.display = 'none';
+function closeProductModal(event) {
+    if (event) {
+        event.stopPropagation();
     }
     
+    const modal = document.getElementById('productModal');
+    modal.classList.remove('active');
     document.body.style.overflow = 'auto';
-}
-
-function hideModalSpinner() {
-    const spinner = document.getElementById('modalSpinner');
-    if (spinner) spinner.style.display = 'none';
+    
+    currentModalProduct = null;
+    currentModalPhotoIndex = 0;
 }
 
 // КОРЗИНА - ОСНОВНЫЕ ФУНКЦИИ
@@ -1961,10 +1822,8 @@ class MobileMenu {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Магазин игрушек загружается...');
     
-    // Инициализация галерей
-    Object.keys(productData).forEach(productId => {
-        initGallery(productId);
-    });
+    // Загружаем изображения товаров
+    loadProductImages();
     
     // Инициализация корзины
     updateCart();
@@ -1998,29 +1857,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
-    });
-    
-    // Анимация при скролле
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Наблюдаем за карточками товаров
-    document.querySelectorAll('.product-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
     });
     
     console.log('✅ Магазин готов к работе!');
