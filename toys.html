@@ -6,6 +6,7 @@
     <title>Игрушки | Магазин "Всё в одном месте"</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Стили остаются такими же как в предыдущем коде */
         * {
             margin: 0;
             padding: 0;
@@ -195,15 +196,6 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-        }
-
-        .product-gallery img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.5s ease;
-            background: white;
-            padding: 10px;
         }
 
         .gallery-controls {
@@ -477,20 +469,8 @@
                 </div>
                 <div class="product-content">
                     <!-- Галерея фотографий дракона -->
-                    <div class="product-gallery" onclick="openPhotoModal('dragon', 0)">
-                        <img id="dragon-image-0" src="https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/dragons/white.jpg" alt="Дракон белый">
-                        <div class="gallery-nav">
-                            <button class="gallery-btn prev-btn" onclick="event.stopPropagation(); changePhoto('dragon', -1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="gallery-btn next-btn" onclick="event.stopPropagation(); changePhoto('dragon', 1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="gallery-controls" id="dragon-controls">
-                            <span class="gallery-dot active" onclick="event.stopPropagation(); goToPhoto('dragon', 0)"></span>
-                        </div>
-                        <div class="photo-counter">1/1</div>
+                    <div class="product-gallery">
+                        <!-- Изображения будут вставлены через JavaScript -->
                     </div>
                     
                     <div class="stock-info">✅ В наличии: 15 шт</div>
@@ -518,20 +498,8 @@
                 </div>
                 <div class="product-content">
                     <!-- Галерея фотографий Какаши -->
-                    <div class="product-gallery" onclick="openPhotoModal('kakashi', 0)">
-                        <img id="kakashi-image-0" src="https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/kakahi/blu.jpg" alt="Какаши синий">
-                        <div class="gallery-nav">
-                            <button class="gallery-btn prev-btn" onclick="event.stopPropagation(); changePhoto('kakashi', -1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="gallery-btn next-btn" onclick="event.stopPropagation(); changePhoto('kakashi', 1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="gallery-controls" id="kakashi-controls">
-                            <span class="gallery-dot active" onclick="event.stopPropagation(); goToPhoto('kakashi', 0)"></span>
-                        </div>
-                        <div class="photo-counter">1/1</div>
+                    <div class="product-gallery">
+                        <!-- Изображения будут вставлены через JavaScript -->
                     </div>
                     
                     <div class="stock-info">⏳ В наличии: 3 шт</div>
@@ -559,20 +527,8 @@
                 </div>
                 <div class="product-content">
                     <!-- Галерея фотографий пистолета -->
-                    <div class="product-gallery" onclick="openPhotoModal('pistol', 0)">
-                        <img id="pistol-image-0" src="https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/pistol/white.jpg" alt="Пистолет белый">
-                        <div class="gallery-nav">
-                            <button class="gallery-btn prev-btn" onclick="event.stopPropagation(); changePhoto('pistol', -1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="gallery-btn next-btn" onclick="event.stopPropagation(); changePhoto('pistol', 1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="gallery-controls" id="pistol-controls">
-                            <span class="gallery-dot active" onclick="event.stopPropagation(); goToPhoto('pistol', 0)"></span>
-                        </div>
-                        <div class="photo-counter">1/1</div>
+                    <div class="product-gallery">
+                        <!-- Изображения будут вставлены через JavaScript -->
                     </div>
                     
                     <div class="stock-info">✅ В наличии: 12 шт</div>
@@ -600,20 +556,8 @@
                 </div>
                 <div class="product-content">
                     <!-- Галерея фотографий Лабубу -->
-                    <div class="product-gallery" onclick="openPhotoModal('labubu', 0)">
-                        <img id="labubu-image-0" src="https://raw.githubusercontent.com/Avidelarose/Avidelarose.github.io/main/toys%20image/labubu/grey.jpg" alt="Лабубу серый">
-                        <div class="gallery-nav">
-                            <button class="gallery-btn prev-btn" onclick="event.stopPropagation(); changePhoto('labubu', -1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="gallery-btn next-btn" onclick="event.stopPropagation(); changePhoto('labubu', 1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="gallery-controls" id="labubu-controls">
-                            <span class="gallery-dot active" onclick="event.stopPropagation(); goToPhoto('labubu', 0)"></span>
-                        </div>
-                        <div class="photo-counter">1/4</div>
+                    <div class="product-gallery">
+                        <!-- Изображения будут вставлены через JavaScript -->
                     </div>
                     
                     <div class="stock-info">✅ В наличии: 8 шт</div>
@@ -641,20 +585,8 @@
                 </div>
                 <div class="product-content">
                     <!-- Галерея фотографий домика -->
-                    <div class="product-gallery" onclick="openPhotoModal('house', 0)">
-                        <img id="house-image-0" src="https://via.placeholder.com/400x300/FF5722/FFFFFF?text=Новогодний+домик" alt="Новогодний домик">
-                        <div class="gallery-nav">
-                            <button class="gallery-btn prev-btn" onclick="event.stopPropagation(); changePhoto('house', -1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="gallery-btn next-btn" onclick="event.stopPropagation(); changePhoto('house', 1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="gallery-controls" id="house-controls">
-                            <span class="gallery-dot active" onclick="event.stopPropagation(); goToPhoto('house', 0)"></span>
-                        </div>
-                        <div class="photo-counter">1/1</div>
+                    <div class="product-gallery">
+                        <!-- Изображения будут вставлены через JavaScript -->
                     </div>
                     
                     <div class="stock-info">✅ В наличии: 22 шт</div>
@@ -682,20 +614,8 @@
                 </div>
                 <div class="product-content">
                     <!-- Галерея фотографий UNO -->
-                    <div class="product-gallery" onclick="openPhotoModal('uno', 0)">
-                        <img id="uno-image-0" src="https://via.placeholder.com/400x300/2196F3/FFFFFF?text=UNO+Игра" alt="Настольная игра UNO">
-                        <div class="gallery-nav">
-                            <button class="gallery-btn prev-btn" onclick="event.stopPropagation(); changePhoto('uno', -1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="gallery-btn next-btn" onclick="event.stopPropagation(); changePhoto('uno', 1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="gallery-controls" id="uno-controls">
-                            <span class="gallery-dot active" onclick="event.stopPropagation(); goToPhoto('uno', 0)"></span>
-                        </div>
-                        <div class="photo-counter">1/1</div>
+                    <div class="product-gallery">
+                        <!-- Изображения будут вставлены через JavaScript -->
                     </div>
                     
                     <div class="stock-info">✅ В наличии: 25 шт</div>
@@ -748,159 +668,89 @@
     </div>
 
 <script>
-// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ
+// ДАННЫЕ ФОТОГРАФИЙ ТОВАРОВ (с правильными расширениями)
 const productPhotos = {
     'dragon': {
-        name: 'Дракон',
+        name: 'Дракон светящийся в темноте',
         photos: [
-            {url: 'toys-images/dragons/white.jpg', alt: 'Белый дракон'},
-            {url: 'toys-images/dragons/blue.jpg', alt: 'Синий дракон'},
-            {url: 'toys-images/dragons/red.jpg', alt: 'Красный дракон'}
+            {url: 'toys-images/dragons/white.png', alt: 'Белый дракон'},
+            {url: 'toys-images/dragons/blue.png', alt: 'Синий дракон'},
+            {url: 'toys-images/dragons/red.png', alt: 'Красный дракон'}
         ]
     },
     'kakashi': {
-        name: 'Какаши',
+        name: 'Фигурка Какаши',
         photos: [
-            {url: 'toys-images/kakashi/blue.jpg', alt: 'Фигурка Какаши'}
+            {url: 'toys-images/kakashi/blue.png', alt: 'Фигурка Какаши'},
+            {url: 'toys-images/kakashi/blue2.png', alt: 'Фигурка Какаши сбоку'}
         ]
     },
     'pistol': {
-        name: 'Пистолет',
+        name: 'Пистолет с пульками',
         photos: [
-            {url: 'toys-images/pistol/white.jpg', alt: 'Белый пистолет'},
-            {url: 'toys-images/pistol/black.jpg', alt: 'Черный пистолет'}
+            {url: 'toys-images/pistol/white.png', alt: 'Белый пистолет'},
+            {url: 'toys-images/pistol/black.png', alt: 'Черный пистолет'}
         ]
     },
     'labubu': {
-        name: 'Лабубу',
+        name: 'Фигурка Лабубу',
         photos: [
-            {url: 'toys-images/labubu/grey.jpg', alt: 'Серый Лабубу'},
-            {url: 'toys-images/labubu/purple.jpg', alt: 'Фиолетовый Лабубу'},
-            {url: 'toys-images/labubu/red.jpg', alt: 'Красный Лабубу'},
-            {url: 'toys-images/labubu/white.jpg', alt: 'Белый Лабубу'}
+            {url: 'toys-images/labubu/grey.jpeg', alt: 'Серый Лабубу'},
+            {url: 'toys-images/labubu/purple.jpeg', alt: 'Фиолетовый Лабубу'},
+            {url: 'toys-images/labubu/red.jpeg', alt: 'Красный Лабубу'},
+            {url: 'toys-images/labubu/white.jpeg', alt: 'Белый Лабубу'}
         ]
     },
     'house': {
         name: 'Новогодний домик',
         photos: [
-            {url: 'toys-images/house/christmas.jpg', alt: 'Новогодний домик'},
-            {url: 'toys-images/house/christmas2.jpg', alt: 'Новогодний домик с подсветкой'}
+            {url: 'toys-images/house/newyear.png', alt: 'Новогодний домик'},
+            {url: 'toys-images/house/newyear2.png', alt: 'Домик с подсветкой'}
         ]
     },
     'uno': {
-        name: 'UNO',
+        name: 'Игра UNO',
         photos: [
-            {url: 'toys-images/uno/game.jpg', alt: 'Настольная игра UNO'},
-            {url: 'toys-images/uno/cards.jpg', alt: 'Карты UNO крупным планом'}
+            {url: 'toys-images/uno/uno.png', alt: 'Настольная игра UNO'},
+            {url: 'toys-images/uno/uno2.png', alt: 'Карты UNO'}
         ]
     }
 };
 
-// ИНИЦИАЛИЗАЦИЯ ГАЛЕРЕЙ ПРИ ЗАГРУЗКЕ
-document.addEventListener('DOMContentLoaded', function() {
-    // Инициализируем все галереи
-    Object.keys(productPhotos).forEach(productId => {
-        initGallery(productId);
-    });
-});
-
-// ИНИЦИАЛИЗАЦИЯ ГАЛЕРЕИ ТОВАРА
-function initGallery(productId) {
-    const product = productPhotos[productId];
-    if (!product || !product.photos || product.photos.length === 0) {
-        console.warn(`Нет фото для товара: ${productId}`);
-        return;
-    }
-    
-    const photos = product.photos;
-    
-    // Создаем точки для навигации
-    if (photos.length > 1) {
-        const controlsContainer = document.getElementById(`${productId}-controls`);
-        if (controlsContainer) {
-            controlsContainer.innerHTML = '';
-            
-            photos.forEach((_, index) => {
-                const dot = document.createElement('span');
-                dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
-                dot.onclick = (e) => {
-                    e.stopPropagation();
-                    goToPhoto(productId, index);
-                };
-                controlsContainer.appendChild(dot);
-            });
-            
-            // Обновляем счетчик
-            const counter = controlsContainer.parentElement.querySelector('.photo-counter');
-            if (counter) {
-                counter.textContent = `1/${photos.length}`;
-            }
-        }
-    }
-    
-    // Загружаем первую фотографию
-    const gallery = document.querySelector(`[onclick*="openPhotoModal('${productId}'"]`);
-    if (gallery) {
-        const firstImg = gallery.querySelector('img');
-        if (firstImg && photos[0]) {
-            firstImg.src = photos[0].url;
-            firstImg.alt = photos[0].alt;
-            
-            // Добавляем обработчик ошибок
-            firstImg.onerror = function() {
-                console.error(`Не удалось загрузить фото: ${photos[0].url}`);
-                this.src = 'https://via.placeholder.com/400x300/cccccc/666666?text=Фото+не+загружено';
-                this.alt = 'Фото не загружено';
-            };
-        }
-        
-        // Предзагружаем остальные фото
-        photos.forEach((photo, index) => {
-            if (index > 0) {
-                const img = new Image();
-                img.src = photo.url;
-                img.onerror = function() {
-                    console.error(`Не удалось загрузить фото: ${photo.url}`);
-                };
-            }
-        });
-    }
-}
-
-// ДОПОЛНИТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ДЕБАГГИНГА
-function checkImageUrls() {
-    console.log('Проверка доступности изображений:');
-    
-    Object.keys(productPhotos).forEach(productId => {
-        const product = productPhotos[productId];
-        console.log(`\nТовар: ${product.name} (${productId})`);
-        
-        product.photos.forEach((photo, index) => {
-            console.log(`  Фото ${index + 1}: ${photo.url}`);
-            
-            // Проверяем доступность изображения
-            const img = new Image();
-            img.onload = function() {
-                console.log(`    ✓ Доступно`);
-            };
-            img.onerror = function() {
-                console.log(`    ✗ Не доступно`);
-            };
-            img.src = photo.url;
-        });
-    });
-}
-
-// Запустите эту функцию в консоли браузера для проверки
-// checkImageUrls();
 // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
-let currentProduct = null;
-let currentPhotoIndex = 0;
 let currentModalProduct = null;
 let currentModalIndex = 0;
 
+// Функция для получения placeholder'а при ошибке загрузки
+function getPlaceholderUrl(productId, index) {
+    const colors = {
+        'dragon': '#4CAF50',
+        'kakashi': '#2196F3',
+        'pistol': '#9E9E9E',
+        'labubu': '#9C27B0',
+        'house': '#FF5722',
+        'uno': '#FFC107'
+    };
+    
+    const names = {
+        'dragon': 'Дракон',
+        'kakashi': 'Какаши',
+        'pistol': 'Пистолет',
+        'labubu': 'Лабубу',
+        'house': 'Новогодний домик',
+        'uno': 'UNO'
+    };
+    
+    const color = colors[productId] || '#2196F3';
+    const name = names[productId] || 'Товар';
+    
+    return `https://via.placeholder.com/400x300/${color.replace('#', '')}/FFFFFF?text=${encodeURIComponent(name + ' ' + (index + 1))}`;
+}
+
 // ИНИЦИАЛИЗАЦИЯ ГАЛЕРЕЙ ПРИ ЗАГРУЗКЕ
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Инициализация галереи товаров...');
+    
     // Инициализируем все галереи
     Object.keys(productPhotos).forEach(productId => {
         initGallery(productId);
@@ -936,88 +786,160 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cart-icon').addEventListener('click', showCart);
 });
 
-// ИНИЦИАЛИЗАЦИЯ ГАЛЕРЕИ ТОВАРА
+// Функция для инициализации галереи
 function initGallery(productId) {
-    const photos = productPhotos[productId];
-    if (!photos || photos.length === 0) return;
-    
-    // Создаем точки для навигации, если фотографий больше 1
-    if (photos.length > 1) {
-        const controlsContainer = document.getElementById(`${productId}-controls`);
-        if (controlsContainer) {
-            controlsContainer.innerHTML = '';
-            
-            photos.forEach((_, index) => {
-                const dot = document.createElement('span');
-                dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
-                dot.onclick = (e) => {
-                    e.stopPropagation();
-                    goToPhoto(productId, index);
-                };
-                controlsContainer.appendChild(dot);
-            });
-            
-            // Обновляем счетчик
-            const counter = controlsContainer.parentElement.querySelector('.photo-counter');
-            if (counter) {
-                counter.textContent = `1/${photos.length}`;
-            }
-        }
-        
-        // Создаем элементы для всех фотографий
-        const gallery = document.querySelector(`[onclick*="${productId}"]`);
-        if (gallery) {
-            // Загружаем все фото в скрытые элементы
-            photos.forEach((photoUrl, index) => {
-                if (index > 0) {
-                    const img = document.createElement('img');
-                    img.id = `${productId}-image-${index}`;
-                    img.src = photoUrl;
-                    img.alt = `Фото товара ${index + 1}`;
-                    img.style.display = 'none';
-                    img.style.width = '100%';
-                    img.style.height = '100%';
-                    img.style.objectFit = 'contain';
-                    gallery.appendChild(img);
-                }
-            });
-        }
+    const product = productPhotos[productId];
+    if (!product || !product.photos || product.photos.length === 0) {
+        console.warn(`Нет фото для товара: ${productId}`);
+        createFallbackGallery(productId);
+        return;
     }
+    
+    const photos = product.photos;
+    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
+    
+    if (!galleryElement) {
+        console.warn(`Не найден элемент галереи для товара: ${productId}`);
+        return;
+    }
+    
+    // Очищаем галерею
+    galleryElement.innerHTML = '';
+    
+    // Создаем контейнер для изображений
+    const imagesContainer = document.createElement('div');
+    imagesContainer.style.width = '100%';
+    imagesContainer.style.height = '100%';
+    imagesContainer.style.position = 'relative';
+    
+    // Создаем все изображения
+    photos.forEach((photo, index) => {
+        const img = document.createElement('img');
+        img.id = `${productId}-image-${index}`;
+        img.src = photo.url;
+        img.alt = photo.alt;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'contain';
+        img.style.position = 'absolute';
+        img.style.top = '0';
+        img.style.left = '0';
+        img.style.display = index === 0 ? 'block' : 'none';
+        img.style.background = 'white';
+        img.style.padding = '10px';
+        img.style.borderRadius = '5px';
+        
+        // Обработчик ошибок загрузки
+        img.onerror = function() {
+            console.error(`Не удалось загрузить фото: ${photo.url}`);
+            this.src = getPlaceholderUrl(productId, index);
+            this.alt = 'Фото временно недоступно';
+            this.style.background = '#f5f5f5';
+            this.style.padding = '20px';
+        };
+        
+        imagesContainer.appendChild(img);
+    });
+    
+    galleryElement.appendChild(imagesContainer);
+    
+    // Создаем элементы управления если фото больше 1
+    if (photos.length > 1) {
+        // Создаем кнопки навигации
+        const navDiv = document.createElement('div');
+        navDiv.className = 'gallery-nav';
+        
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'gallery-btn prev-btn';
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        prevBtn.onclick = (e) => {
+            e.stopPropagation();
+            changePhoto(productId, -1);
+        };
+        
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'gallery-btn next-btn';
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.onclick = (e) => {
+            e.stopPropagation();
+            changePhoto(productId, 1);
+        };
+        
+        navDiv.appendChild(prevBtn);
+        navDiv.appendChild(nextBtn);
+        galleryElement.appendChild(navDiv);
+        
+        // Создаем точки навигации
+        const controlsDiv = document.createElement('div');
+        controlsDiv.id = `${productId}-controls`;
+        controlsDiv.className = 'gallery-controls';
+        
+        photos.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
+            dot.onclick = (e) => {
+                e.stopPropagation();
+                goToPhoto(productId, index);
+            };
+            controlsDiv.appendChild(dot);
+        });
+        
+        galleryElement.appendChild(controlsDiv);
+        
+        // Создаем счетчик
+        const counterDiv = document.createElement('div');
+        counterDiv.className = 'photo-counter';
+        counterDiv.textContent = `1/${photos.length}`;
+        galleryElement.appendChild(counterDiv);
+    } else {
+        // Для одного фото тоже добавляем счетчик
+        const counterDiv = document.createElement('div');
+        counterDiv.className = 'photo-counter';
+        counterDiv.textContent = `1/1`;
+        galleryElement.appendChild(counterDiv);
+    }
+    
+    // Добавляем обработчик клика для открытия модального окна
+    galleryElement.onclick = function() {
+        openPhotoModal(productId, 0);
+    };
 }
 
-// СМЕНА ФОТО В ГАЛЕРЕЕ
+// Функции для управления галереей
 function changePhoto(productId, direction) {
-    const photos = productPhotos[productId];
-    if (!photos || photos.length <= 1) return;
+    const product = productPhotos[productId];
+    if (!product || product.photos.length <= 1) return;
     
-    const gallery = document.querySelector(`[onclick*="${productId}"]`);
-    if (!gallery) return;
+    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
+    if (!galleryElement) return;
     
-    // Получаем текущий индекс
-    let currentIndex = 0;
-    const currentImg = gallery.querySelector('img[style*="display: block"], img:first-child');
-    if (currentImg) {
-        const match = currentImg.id.match(/\d+$/);
-        currentIndex = match ? parseInt(match[0]) : 0;
-    }
+    // Находим текущее активное изображение
+    const currentImg = galleryElement.querySelector('img[style*="display: block"]');
+    if (!currentImg) return;
+    
+    const currentId = currentImg.id;
+    const match = currentId.match(/\d+$/);
+    if (!match) return;
+    
+    let currentIndex = parseInt(match[0]);
+    const total = product.photos.length;
     
     // Вычисляем новый индекс
-    let newIndex = (currentIndex + direction + photos.length) % photos.length;
+    let newIndex = (currentIndex + direction + total) % total;
     
     // Переключаем фото
     goToPhoto(productId, newIndex);
 }
 
-// ПЕРЕЙТИ К КОНКРЕТНОЙ ФОТО
 function goToPhoto(productId, index) {
-    const photos = productPhotos[productId];
-    if (!photos || index < 0 || index >= photos.length) return;
+    const product = productPhotos[productId];
+    if (!product || index < 0 || index >= product.photos.length) return;
     
-    const gallery = document.querySelector(`[onclick*="${productId}"]`);
-    if (!gallery) return;
+    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
+    if (!galleryElement) return;
     
     // Скрываем все фото
-    const allImages = gallery.querySelectorAll('img');
+    const allImages = galleryElement.querySelectorAll('img');
     allImages.forEach(img => {
         img.style.display = 'none';
     });
@@ -1029,7 +951,7 @@ function goToPhoto(productId, index) {
     }
     
     // Обновляем активную точку
-    const controls = document.getElementById(`${productId}-controls`);
+    const controls = galleryElement.querySelector('.gallery-controls');
     if (controls) {
         const dots = controls.querySelectorAll('.gallery-dot');
         dots.forEach((dot, i) => {
@@ -1038,30 +960,56 @@ function goToPhoto(productId, index) {
     }
     
     // Обновляем счетчик
-    const counter = gallery.querySelector('.photo-counter');
+    const counter = galleryElement.querySelector('.photo-counter');
     if (counter) {
-        counter.textContent = `${index + 1}/${photos.length}`;
+        counter.textContent = `${index + 1}/${product.photos.length}`;
     }
 }
 
-// ОТКРЫТЬ МОДАЛЬНОЕ ОКНО С ФОТО
-function openPhotoModal(productId, index) {
-    currentModalProduct = productId;
-    currentModalIndex = index;
+// Функция для создания заглушки если нет фото
+function createFallbackGallery(productId) {
+    const galleryElement = document.querySelector(`.product-card[data-product="${productId}"] .product-gallery`);
+    if (!galleryElement) return;
     
-    const photos = productPhotos[productId];
-    if (!photos || photos.length === 0) return;
+    galleryElement.innerHTML = `
+        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 10px;">
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-image" style="font-size: 60px; color: #2196f3; margin-bottom: 15px;"></i>
+                <div style="color: #666; font-size: 16px;">Фото товара</div>
+                <div style="color: #999; font-size: 14px; margin-top: 5px;">Скоро будет добавлено</div>
+            </div>
+        </div>
+    `;
+}
+
+// Функция открытия модального окна с фото
+function openPhotoModal(productId, index) {
+    const product = productPhotos[productId];
+    if (!product || !product.photos || product.photos.length === 0) return;
+    
+    const photos = product.photos;
+    if (index < 0 || index >= photos.length) index = 0;
     
     const modal = document.getElementById('photoModal');
     const modalImg = document.getElementById('modalImage');
     const modalInfo = document.getElementById('modalInfo');
     
     // Устанавливаем фото
-    modalImg.src = photos[index];
-    modalImg.alt = `Фото товара ${index + 1}`;
+    modalImg.src = photos[index].url;
+    modalImg.alt = photos[index].alt;
+    
+    // Обработчик ошибок для модального окна
+    modalImg.onerror = function() {
+        this.src = getPlaceholderUrl(productId, index);
+        this.alt = 'Фото временно недоступно';
+    };
     
     // Устанавливаем информацию
-    modalInfo.textContent = `${index + 1}/${photos.length}`;
+    modalInfo.textContent = `${product.name} - ${index + 1}/${photos.length}`;
+    
+    // Сохраняем текущий продукт и индекс для навигации
+    currentModalProduct = productId;
+    currentModalIndex = index;
     
     // Показываем модальное окно
     modal.style.display = 'flex';
@@ -1079,7 +1027,7 @@ function closePhotoModal() {
 function changeModalPhoto(direction) {
     if (!currentModalProduct) return;
     
-    const photos = productPhotos[currentModalProduct];
+    const photos = productPhotos[currentModalProduct].photos;
     if (!photos || photos.length === 0) return;
     
     // Вычисляем новый индекс
@@ -1089,9 +1037,16 @@ function changeModalPhoto(direction) {
     const modalImg = document.getElementById('modalImage');
     const modalInfo = document.getElementById('modalInfo');
     
-    modalImg.src = photos[currentModalIndex];
-    modalImg.alt = `Фото товара ${currentModalIndex + 1}`;
-    modalInfo.textContent = `${currentModalIndex + 1}/${photos.length}`;
+    modalImg.src = photos[currentModalIndex].url;
+    modalImg.alt = photos[currentModalIndex].alt;
+    
+    // Обработчик ошибок
+    modalImg.onerror = function() {
+        this.src = getPlaceholderUrl(currentModalProduct, currentModalIndex);
+        this.alt = 'Фото временно недоступно';
+    };
+    
+    modalInfo.textContent = `${productPhotos[currentModalProduct].name} - ${currentModalIndex + 1}/${photos.length}`;
 }
 
 // ДОБАВИТЬ В КОРЗИНУ
@@ -1295,6 +1250,28 @@ function checkout() {
     clearCart();
 }
 
+// Функция для проверки доступности изображений (запустить в консоли)
+function testImageLoading() {
+    console.log('Тестирование загрузки изображений...');
+    
+    Object.keys(productPhotos).forEach(productId => {
+        const product = productPhotos[productId];
+        console.log(`\n${product.name}:`);
+        
+        product.photos.forEach((photo, index) => {
+            const img = new Image();
+            img.onload = function() {
+                console.log(`  ✅ ${photo.url} - OK`);
+            };
+            img.onerror = function() {
+                console.log(`  ❌ ${photo.url} - ОШИБКА`);
+                console.log(`     Проверьте наличие файла: ${photo.url}`);
+            };
+            img.src = photo.url;
+        });
+    });
+}
+
 // Закрытие модального окна по ESC
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
@@ -1323,7 +1300,10 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Для отладки: откройте консоль (F12) и выполните testImageLoading()
 </script>
+    
     <script src="newyear.js"></script>
 
 <script>
